@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Quest — HTML, CSS & JavaScript</title>
+<style>
+:root{--bg:#071522;--panel:#0d2232;--panel2:#102b3f;--ink:#f5fbff;--muted:#a9c0cf;--green:#25d69a;--green2:#7cf0c5;--yellow:#ffd65a;--purple:#9b7cff;--blue:#51b9ff;--line:#244457;--danger:#ff6b7a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#17405b 0,#071522 42%,#050e16 100%);color:var(--ink);font-family:Inter,system-ui,sans-serif}button{font:inherit;cursor:pointer;border:0}
+.top{height:82px;display:flex;align-items:center;gap:16px;padding:10px 22px;border-bottom:1px solid #173447;background:#06131edb;position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:11px;min-width:245px}.brand h1{font-size:22px;margin:0}.brand small{color:var(--green2);font-weight:700}
+.mascot{width:55px;height:55px}.stats{display:flex;gap:10px;margin-left:auto}.stat{background:#0d2434;border:1px solid var(--line);padding:7px 13px;border-radius:13px;min-width:82px}.stat b{display:block;color:var(--yellow)}.stat span{font-size:10px;color:var(--muted)}
+.lang{background:#18394d;color:#fff;padding:8px 11px;border-radius:10px}.lang.active{background:var(--green);color:#062116}
+.courses{display:flex;gap:8px;padding:12px 20px;background:#081b29;border-bottom:1px solid #173447;overflow:auto}.course{padding:9px 16px;border-radius:10px;background:#102d40;color:#dcebf2;font-weight:800;white-space:nowrap;border:1px solid transparent}.course.active{background:#174f47;border-color:var(--green)}
+.layout{display:grid;grid-template-columns:235px minmax(450px,1fr) 330px;min-height:calc(100vh - 132px)}
+.sidebar{padding:17px;border-right:1px solid #173447;background:#05121bd9}.side-title{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin:6px 8px 12px}.mission{display:flex;gap:10px;align-items:center;padding:11px;border-radius:12px;color:#d8e8ef;margin-bottom:6px;border:1px solid transparent;text-align:left;width:100%;background:transparent}.mission:hover{background:#102d40}.mission.active{background:#103a42;border-color:#1dd394}.dot{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:#18384a;font-size:12px}.done .dot{background:var(--green);color:#062116}.mission strong{display:block;font-size:12px}.mission small{color:#88a5b4;font-size:10px}
+.progress{margin-top:18px;padding:14px;background:#0b2638;border:1px solid var(--line);border-radius:14px}.bar{height:8px;background:#173b4e;border-radius:99px;overflow:hidden;margin:9px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#68efbf);width:0}
+.main{padding:18px;min-width:0}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.head h2{margin:0;font-size:20px}.pill{padding:5px 9px;border-radius:99px;background:#123b38;color:var(--green2);font-size:10px;font-weight:900}
+.editor-card{border:1px solid #29485a;border-radius:16px;overflow:hidden;background:#06131d;box-shadow:0 16px 45px #0005}.editor-top{display:flex;gap:7px;align-items:center;padding:9px;background:#0b1e2c;border-bottom:1px solid #234052}.tab{background:#102c40;padding:8px 12px;border-radius:9px;font-size:12px}.run{margin-left:auto;background:var(--green);color:#062218;padding:9px 15px;border-radius:9px;font-weight:900}.secondary{background:#173244;color:#dcecf3;padding:9px 12px;border-radius:9px}
+.editor{display:grid;grid-template-columns:45px 1fr}.lines{padding:16px 7px;text-align:right;color:#506b7b;background:#06121c;font:13px/1.7 monospace;user-select:none;overflow:hidden}.code{width:100%;height:370px;resize:vertical;background:#06121c;color:#d7f8e9;border:0;outline:0;padding:16px 13px;font:14px/1.7 ui-monospace,monospace;tab-size:4}
+.preview{margin-top:12px;background:#f8fbfd;border:1px solid #d5e4eb;border-radius:14px;overflow:hidden;color:#183547}.preview-head{padding:8px 12px;background:#eaf2f6;font-size:11px;font-weight:800}.preview iframe{display:block;width:100%;height:230px;border:0;background:#fff}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.box{background:#0a1c29;border:1px solid var(--line);border-radius:14px;padding:13px}.box h3{margin:0 0 8px;font-size:13px}.output{min-height:75px;white-space:pre-wrap;color:#c9f8e4;font:12px/1.6 monospace}.challenge input{width:100%;padding:9px;border-radius:8px;border:1px solid #2c4b5c;background:#071522;color:white;margin:7px 0}.check{background:var(--purple);color:#fff;padding:9px 12px;border-radius:8px;font-weight:800}.feedback{margin-top:8px;font-size:11px;min-height:17px}.ok{color:var(--green2)}.err{color:#ff9ca8}
+.right{padding:17px;border-left:1px solid #173447;background:#f4f9fb;color:#102b3c}.card{border-radius:15px;background:#fff;border:1px solid #d8e6ed;overflow:hidden}.banner{padding:16px;background:linear-gradient(135deg,#e8fff5,#eef7ff)}.banner h2{margin:0 0 4px;font-size:17px}.banner p{margin:0;color:#567080;font-size:12px}.info{padding:15px}.info h3{margin:0 0 7px;font-size:14px}.info p{color:#536b78;font-size:12px;line-height:1.55}.sample{background:#0a1d2a;color:#d9f8ea;border-radius:9px;padding:10px;font:11px/1.55 monospace;white-space:pre-wrap}.tip{margin-top:10px;background:#e8fff6;border:1px solid #a8e7ce;border-radius:10px;padding:10px;font-size:11px;color:#245d4d}.reward{margin-top:10px;padding:11px;border-radius:10px;background:#fff7d8;border:1px solid #f3dd8d;color:#765c00;font-weight:800;display:flex;justify-content:space-between}
+footer{text-align:center;padding:13px;color:#668293;font-size:10px}
+@media(max-width:1050px){.layout{grid-template-columns:190px 1fr}.right{display:none}}@media(max-width:720px){.layout{grid-template-columns:1fr}.sidebar{display:none}.top{height:auto;flex-wrap:wrap}.brand{min-width:0}.stats{order:3;width:100%;margin:0}.main{padding:10px}.bottom{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand">
+<svg class="mascot" viewBox="0 0 80 80"><ellipse cx="40" cy="43" rx="26" ry="29" fill="#58c95d"/><circle cx="31" cy="32" r="9" fill="#fff"/><circle cx="49" cy="32" r="9" fill="#fff"/><circle cx="33" cy="33" r="4" fill="#102b3f"/><circle cx="47" cy="33" r="4" fill="#102b3f"/><path d="M30 50 Q40 59 50 50" fill="none" stroke="#14543d" stroke-width="4" stroke-linecap="round"/><path d="M21 52 Q8 61 18 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/><path d="M59 52 Q72 61 62 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/></svg>
+<div><h1>Web Quest</h1><small data-t="tagline">Build the web. One mission at a time.</small></div>
+</div>
+<div class="stats"><div class="stat"><b id="level">1</b><span data-t="level">Level</span></div><div class="stat"><b id="xp">0</b><span>XP</span></div><div class="stat"><b id="doneCount">0</b><span data-t="missionsDone">Missions</span></div></div>
+<button class="lang active" id="enBtn">EN</button><button class="lang" id="arBtn">عربي</button>
+</header>
+<nav class="courses">
+<button class="course active" data-course="html">🌐 HTML Quest</button>
+<button class="course" data-course="css">🎨 CSS Quest</button>
+<button class="course" data-course="js">⚡ JavaScript Quest</button>
+</nav>
+<div class="layout">
+<aside class="sidebar"><div class="side-title" data-t="missions">Missions</div><div id="missionList"></div><div class="progress"><b data-t="progress">Course progress</b><div class="bar"><i id="progressBar"></i></div><small id="progressText"></small></div></aside>
+<main class="main">
+<div class="head"><div><h2 id="title"></h2><small id="subtitle" style="color:var(--muted)"></small></div><span class="pill" id="difficulty">BEGINNER</span></div>
+<div class="editor-card">
+<div class="editor-top"><div class="tab" id="fileTab">📄 index.html</div><button class="secondary" id="resetBtn">↺ Reset</button><button class="secondary" id="saveBtn">💾 Save</button><button class="run" id="runBtn">▶ Run</button></div>
+<div class="editor"><div class="lines" id="lines">1</div><textarea id="code" class="code" spellcheck="false"></textarea></div>
+</div>
+<div class="preview"><div class="preview-head">👀 <span data-t="livePreview">Live preview</span></div><iframe id="preview" sandbox="allow-scripts"></iframe></div>
+<div class="bottom">
+<div class="box"><h3>✓ <span data-t="status">Lesson status</span></h3><div class="output" id="output"></div></div>
+<div class="box challenge"><h3>🎯 <span data-t="challenge">Challenge</span></h3><div id="challengeText"></div><input id="answer" placeholder="Type your answer…"><button class="check" id="checkBtn" data-t="check">Check</button><div class="feedback" id="feedback"></div></div>
+</div>
+</main>
+<aside class="right"><div class="card"><div class="banner"><h2 id="sideTitle"></h2><p id="sideIntro"></p></div><div class="info"><h3>💡 <span data-t="learn">Learn</span></h3><p id="explain"></p><div class="sample" id="sample"></div><div class="tip">🌱 <b>Tip:</b> <span id="tip"></span></div><div class="reward">⭐ +100 XP <span>🎁</span></div></div></div></aside>
+</div>
+<footer>Web Quest · HTML · CSS · JavaScript · Learn · Build · Grow</footer>
+
+<script>
+const data={
+html:[
+{title:["Mission 01 — Build Your First Page","المهمة 01 — ابنِ أول صفحة"],sub:["HTML basics","أساسيات HTML"],intro:["Create the structure of a webpage.","أنشئ هيكل صفحة ويب."],explain:["HTML gives a webpage its structure: headings, paragraphs, buttons and more.","HTML يعطي صفحة الويب هيكلها: العناوين والفقرات والأزرار وغيرها."],sample:"<h1>Hello!</h1>\\n<p>My first webpage.</p>",tip:["Change the heading and paragraph text.","غيّر نص العنوان والفقرة."],challenge:["Make the page contain an h1 and a p element.","اجعل الصفحة تحتوي على h1 و p."],code:"<h1>Hello, Web!</h1>\\n<p>My first webpage.</p>",answer:"h1",xp:100},
+{title:["Mission 02 — Add a Link","المهمة 02 — أضف رابطاً"],sub:["Links","الروابط"],intro:["Connect your page to the world.","اربط صفحتك بالعالم."],explain:["The anchor tag creates links. The href attribute tells the browser where to go.","وسم a ينشئ الروابط، و href يحدد الوجهة."],sample:'<a href="https://example.com">Visit</a>',tip:["Try changing the link text.","جرّب تغيير نص الرابط."],challenge:["Add an <a> element with an href attribute.","أضف عنصر a يحتوي على href."],code:'<h1>My Links</h1>\\n<a href="https://example.com">Visit my favorite site</a>',answer:"href",xp:100},
+{title:["Mission 03 — Add an Image","المهمة 03 — أضف صورة"],sub:["Images","الصور"],intro:["Make your page visual.","اجعل صفحتك مرئية وجميلة."],explain:["The img tag displays an image. src gives its address and alt describes it.","وسم img يعرض صورة، و src يحدد المصدر و alt يصفها."],sample:'<img src="..." alt="A cute cat">',tip:["You can use an online image URL.","يمكنك استخدام رابط صورة على الإنترنت."],challenge:["Add an img element with src and alt.","أضف عنصر img مع src و alt."],code:'<h1>My Picture</h1>\\n<img src="https://picsum.photos/300/180" alt="Random picture">',answer:"img",xp:120},
+{title:["Mission 04 — Build a Card","المهمة 04 — ابنِ بطاقة"],sub:["Semantic structure","هيكل منظم"],intro:["Combine elements into a mini component.","اجمع العناصر في مكوّن صغير."],explain:["div groups content. Use headings, paragraphs and buttons to create a useful card.","div يجمع المحتوى. استخدم العناوين والفقرات والأزرار لإنشاء بطاقة."],sample:"<div>\\n  <h2>Course</h2>\\n  <p>Learn by building.</p>\\n</div>",tip:["Add a button inside your card.","أضف زرًا داخل البطاقة."],challenge:["Create a div containing h2, p and button.","أنشئ div يحتوي على h2 و p و button."],code:'<div>\\n  <h2>Python Quest</h2>\\n  <p>Learn by building.</p>\\n  <button>Start</button>\\n</div>',answer:"div",xp:150},
+{title:["Mission 05 — Your HTML Project","المهمة 05 — مشروع HTML"],sub:["Mini project","مشروع صغير"],intro:["Build your own simple profile page.","ابنِ صفحة شخصية بسيطة."],explain:["Combine headings, paragraphs, links, images and buttons into a page that feels like yours.","اجمع العناوين والفقرات والروابط والصور والأزرار في صفحة خاصة بك."],sample:"<h1>Your Name</h1>\\n<p>About me...</p>\\n<a href=\"#\">Contact</a>",tip:["Make it personal. Add your interests.","اجعلها شخصية وأضف اهتماماتك."],challenge:["Build a page with h1, p, img and a link.","ابنِ صفحة تحتوي على h1 و p و img ورابط."],code:'<h1>My Web Journey</h1>\\n<p>I am learning to build websites!</p>\\n<img src="https://picsum.photos/260/150" alt="My inspiration">\\n<p><a href="https://developer.mozilla.org/">Learn more</a></p>',answer:"h1",xp:250}
+],
+css:[
+{title:["Mission 01 — Give It Style","المهمة 01 — أضف التصميم"],sub:["CSS basics","أساسيات CSS"],intro:["Turn plain HTML into a beautiful page.","حوّل HTML البسيط إلى صفحة جميلة."],explain:["CSS controls colors, spacing, fonts and layout. Add a style tag to your HTML.","CSS يتحكم بالألوان والمسافات والخطوط والتخطيط."],sample:"<style>\\nh1 { color: green; }\\n</style>",tip:["Change the color and see the preview update.","غيّر اللون وشاهد المعاينة."],challenge:["Use CSS to change the h1 color.","استخدم CSS لتغيير لون h1."],code:"<style>\\nh1 { color: #25a879; }\\n</style>\\n<h1>Styled Web!</h1>\\n<p>CSS makes me happy.</p>",answer:"color",xp:100},
+{title:["Mission 02 — Create a Card","المهمة 02 — أنشئ بطاقة"],sub:["Box model","نموذج الصندوق"],intro:["Learn padding, margin and borders.","تعلّم padding و margin و borders."],explain:["Every element is a box. Padding adds space inside; margin adds space outside; border draws an edge.","كل عنصر عبارة عن صندوق. padding مساحة داخلية و margin مساحة خارجية و border إطار."],sample:".card { padding: 20px; margin: 10px; border: 2px solid; }",tip:["Try changing padding from 20px to 40px.","جرّب تغيير padding من 20px إلى 40px."],challenge:["Give .card padding and a border.","أضف padding و border إلى .card."],code:"<style>\\n.card { padding: 24px; margin: 20px; border: 2px solid #25d69a; border-radius: 16px; }\\n</style>\\n<div class=\"card\"><h2>My Card</h2><p>Learning CSS!</p></div>",answer:"padding",xp:120},
+{title:["Mission 03 — Flex Your Layout","المهمة 03 — نسّق باستخدام Flex"],sub:["Flexbox","Flexbox"],intro:["Arrange elements like a pro.","رتّب العناصر مثل المحترفين."],explain:["display:flex turns a container into a flexible layout. justify-content and gap help arrange items.","display:flex ينشئ تخطيطاً مرناً، و justify-content و gap يساعدان في ترتيب العناصر."],sample:".row { display:flex; gap:16px; }",tip:["Try justify-content: space-between.","جرّب justify-content: space-between."],challenge:["Make the .row a flex container.","اجعل .row حاوية flex."],code:"<style>\\n.row { display: flex; gap: 16px; justify-content: center; }\\n.box { padding: 25px; background: #e7fff5; border-radius: 12px; }\\n</style>\\n<div class=\"row\"><div class=\"box\">HTML</div><div class=\"box\">CSS</div><div class=\"box\">JS</div></div>",answer:"display",xp:150},
+{title:["Mission 04 — Responsive Magic","المهمة 04 — سحر الاستجابة"],sub:["Responsive design","تصميم متجاوب"],intro:["Make your page work on phones.","اجعل صفحتك تعمل على الهاتف."],explain:["Media queries let CSS change at different screen sizes.","تسمح media queries لـ CSS بالتغير حسب حجم الشاشة."],sample:"@media (max-width: 600px) {\\n  .card { padding: 10px; }\\n}",tip:["Resize your browser and watch it change.","غيّر حجم المتصفح وشاهد التغيير."],challenge:["Add an @media rule for small screens.","أضف قاعدة @media للشاشات الصغيرة."],code:"<style>\\nbody { font-family: sans-serif; }\\n.card { padding: 30px; background: #e7fff5; }\\n@media (max-width: 600px) { .card { padding: 10px; } }\\n</style>\\n<div class=\"card\"><h2>Responsive Card</h2><p>Try resizing the window.</p></div>",answer:"@media",xp:180},
+{title:["Mission 05 — Your CSS Project","المهمة 05 — مشروع CSS"],sub:["Design project","مشروع تصميم"],intro:["Design a mini landing page.","صمّم صفحة هبوط صغيرة."],explain:["Combine colors, typography, spacing, cards and responsive layout into your own design.","اجمع الألوان والخطوط والمسافات والبطاقات والتخطيط المتجاوب."],sample:".hero { text-align:center; padding:60px; }",tip:["Choose a visual style you love.","اختر أسلوباً بصرياً يعجبك."],challenge:["Style a page with color, padding and a button.","صمّم صفحة فيها لون و padding وزر."],code:"<style>\\nbody{font-family:system-ui;background:#071522;color:white;text-align:center;padding:40px}\\n.hero{max-width:650px;margin:auto;padding:45px;background:linear-gradient(135deg,#17405b,#123b38);border-radius:24px}\\nbutton{padding:12px 22px;border:0;border-radius:10px;background:#25d69a;font-weight:bold}\\n</style>\\n<div class=\"hero\"><h1>My Dream Website</h1><p>Designed with CSS.</p><button>Explore</button></div>",answer:"style",xp:250}
+],
+js:[
+{title:["Mission 01 — Make a Button Work","المهمة 01 — اجعل الزر يعمل"],sub:["JavaScript basics","أساسيات JavaScript"],intro:["Give your webpage behavior.","أضف التفاعل إلى صفحة الويب."],explain:["JavaScript can listen for clicks and change the page. Add an event listener to a button.","JavaScript يستطيع الاستماع للنقر وتغيير الصفحة."],sample:"button.addEventListener('click', () => {\\n  alert('Hello!');\\n});",tip:["Click the button in the preview.","اضغط الزر في المعاينة."],challenge:["Use addEventListener with a click event.","استخدم addEventListener مع حدث click."],code:"<button id=\"btn\">Click me!</button>\\n<p id=\"message\"></p>\\n<script>\\ndocument.getElementById('btn').addEventListener('click', () => {\\n  document.getElementById('message').textContent = 'You clicked it! 🎉';\\n});\\n</script>",answer:"addeventlistener",xp:100},
+{title:["Mission 02 — Variables","المهمة 02 — المتغيرات"],sub:["Data","البيانات"],intro:["Store information in JavaScript.","خزّن المعلومات في JavaScript."],explain:["Variables hold values. const is great for values that do not need reassignment.","المتغيرات تخزن القيم. const مناسبة للقيم التي لا تحتاج إعادة تعيين."],sample:"const name = 'Ghada';\\nconsole.log(name);",tip:["Change the name and run again.","غيّر الاسم وشغّل مرة أخرى."],challenge:["Create a const called name.","أنشئ const باسم name."],code:"<h2 id=\"hello\"></h2>\\n<script>\\nconst name = 'Web Builder';\\ndocument.getElementById('hello').textContent = 'Hello, ' + name + '!';\\n</script>",answer:"const",xp:110},
+{title:["Mission 03 — Make Decisions","المهمة 03 — اتخاذ القرارات"],sub:["if / else","if / else"],intro:["Teach your app to make choices.","علّم تطبيقك اتخاذ القرارات."],explain:["if runs code when a condition is true. else handles the other case.","if تشغّل الكود عندما يكون الشرط صحيحاً، و else للحالة الأخرى."],sample:"const score = 80;\\nif(score >= 50){ console.log('Passed'); }",tip:["Change score to 40 and see what happens.","غيّر score إلى 40 وشاهد النتيجة."],challenge:["Use if to check whether score is at least 50.","استخدم if للتحقق من أن score تساوي 50 أو أكثر."],code:"<p id=\"result\"></p>\\n<script>\\nconst score = 80;\\nif (score >= 50) { document.getElementById('result').textContent = 'Passed!'; } else { document.getElementById('result').textContent = 'Try again!'; }\\n</script>",answer:"if",xp:140},
+{title:["Mission 04 — Build a Counter","المهمة 04 — ابنِ عدّاداً"],sub:["DOM + events","DOM + الأحداث"],intro:["Build your first interactive component.","ابنِ أول مكوّن تفاعلي."],explain:["Change an element's text from JavaScript and respond to user actions.","غيّر نص العنصر من JavaScript واستجب لتفاعل المستخدم."],sample:"let count = 0;\\ncount++;",tip:["Try adding a reset button.","جرّب إضافة زر إعادة ضبط."],challenge:["Make a button increase a visible number.","اجعل الزر يزيد رقماً ظاهراً."],code:"<button id=\"plus\">+1</button> <b id=\"count\">0</b>\\n<script>\\nlet count = 0;\\ndocument.getElementById('plus').addEventListener('click', () => { count++; document.getElementById('count').textContent = count; });\\n</script>",answer:"let",xp:180},
+{title:["Mission 05 — JavaScript Project","المهمة 05 — مشروع JavaScript"],sub:["Mini app","تطبيق صغير"],intro:["Build a tiny app with real interaction.","ابنِ تطبيقاً صغيراً بتفاعل حقيقي."],explain:["Combine variables, conditions, functions and DOM events to create something useful.","اجمع المتغيرات والشروط والدوال وأحداث DOM لبناء شيء مفيد."],sample:"function greet(){\\n  // your code\\n}",tip:["Make it yours: quiz, counter, calculator or habit tracker.","اجعله خاصاً بك: اختبار أو عدّاد أو آلة حاسبة أو متتبع عادة."],challenge:["Create a working interactive mini app.","أنشئ تطبيقاً صغيراً تفاعلياً يعمل."],code:"<h2>Mini Mood Checker</h2>\\n<button id=\"happy\">😊 Happy</button> <button id=\"tired\">😴 Tired</button>\\n<p id=\"message\">How are you?</p>\\n<script>\\nconst message = document.getElementById('message');\\ndocument.getElementById('happy').onclick = () => message.textContent = 'Keep that energy! 🚀';\\ndocument.getElementById('tired').onclick = () => message.textContent = 'Take a small break. 🌱';\\n</script>",answer:"document",xp:300}
+]};
+
+let course="html",idx=0,lang="en",xp=+localStorage.getItem("webquest_xp")||0;
+let done=JSON.parse(localStorage.getItem("webquest_done")||"{}");
+function key(){return course+"_"+idx} function L(){return data[course][idx]} function tr(a){return a[lang==="en"?0:1]}
+function save(){localStorage.setItem("webquest_xp",xp);localStorage.setItem("webquest_done",JSON.stringify(done))}
+function renderCourses(){document.querySelectorAll(".course").forEach(b=>b.classList.toggle("active",b.dataset.course===course))}
+function renderMissions(){
+ const arr=data[course]; const set=done[course]||[];
+ $("missionList").innerHTML=arr.map((m,i)=>`<button class="mission ${i===idx?"active ":""}${set.includes(i)?" done":""}" onclick="selectLesson(${i})"><span class="dot">${set.includes(i)?"✓":i+1}</span><span><strong>${tr(m.title)}</strong><small>${tr(m.sub)}</small></span></button>`).join("");
+ const pct=Math.round(set.length/arr.length*100);$("progressBar").style.width=pct+"%";$("progressText").textContent=`${set.length} / ${arr.length} · ${pct}%`;
+ $("level").textContent=Math.floor(xp/500)+1;$("xp").textContent=xp;$("doneCount").textContent=Object.values(done).flat().length;
+}
+function render(){
+ const m=L(), saveKey="wq_code_"+course+"_"+idx;
+ $("title").textContent=tr(m.title);$("sideTitle").textContent=tr(m.title);$("subtitle").textContent=tr(m.sub);$("sideIntro").textContent=tr(m.intro);
+ $("explain").textContent=tr(m.explain);$("sample").textContent=m.sample;$("tip").textContent=tr(m.tip);$("challengeText").textContent=tr(m.challenge);
+ $("code").value=localStorage.getItem(saveKey)||m.code;$("feedback").textContent="";$("answer").value="";
+ $("fileTab").textContent=course==="html"?"📄 index.html":course==="css"?"🎨 style.html":"⚡ app.html";
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=({tagline:["Build the web. One mission at a time.","ابنِ الويب. مهمة واحدة في كل مرة."],level:["Level","المستوى"],missionsDone:["Missions","المهام"],missions:["Missions","المهام"],progress:["Course progress","تقدم الدورة"],livePreview:["Live preview","المعاينة المباشرة"],status:["Lesson status","حالة الدرس"],challenge:["Challenge","التحدي"],check:["Check","تحقق"],learn:["Learn","تعلم"]}[e.dataset.t]||["",""])[lang==="en"?0:1]);
+ document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";$("enBtn").classList.toggle("active",lang==="en");$("arBtn").classList.toggle("active",lang!=="en");
+ renderCourses();renderMissions();updateLines();runPreview();
+}
+function updateLines(){$("lines").textContent=Array.from({length:$("code").value.split("\n").length},(_,i)=>i+1).join("\n")}
+function runPreview(){
+ const code=$("code").value;
+ const iframe=$("preview");
+ if(course==="html"){iframe.srcdoc=code}
+ else if(course==="css"){iframe.srcdoc=code.includes("<style")?code:"<style>"+code+"</style><h2>CSS Preview</h2><p>Edit the CSS and run it.</p>"}
+ else {iframe.srcdoc=code}
+ $("output").innerHTML='<span class="ok">✓ '+(lang==="en"?"Preview updated!":"تم تحديث المعاينة!")+'</span>';
+}
+function check(){
+ const m=L(),ans=$("answer").value.trim().toLowerCase(),code=$("code").value.toLowerCase(),target=m.answer;
+ let ok=ans===target || code.includes(target) || (course==="html"&&code.includes("<h1")&&code.includes("<p")) || (course==="css"&&code.includes("style")) || (course==="js"&&code.includes("<script")&&code.includes("document"));
+ if(ok){done[course]=done[course]||[];if(!done[course].includes(idx)){done[course].push(idx);xp+=m.xp;save()}$("feedback").innerHTML=`<span class="ok">✓ ${lang==="en"?"Mission complete!":"اكتملت المهمة!"} +${m.xp} XP</span>`;renderMissions()}
+ else $("feedback").innerHTML=`<span class="err">💡 ${lang==="en"?"Not yet — edit the code and try again.":"ليس بعد — عدّل الكود وحاول مرة أخرى."}</span>`;
+}
+function selectLesson(i){idx=i;render()}
+document.querySelectorAll(".course").forEach(b=>b.onclick=()=>{course=b.dataset.course;idx=0;render()});
+$("runBtn").onclick=runPreview;$("checkBtn").onclick=check;
+$("resetBtn").onclick=()=>{$("code").value=L().code;localStorage.removeItem("wq_code_"+course+"_"+idx);updateLines();runPreview()};
+$("saveBtn").onclick=()=>{localStorage.setItem("wq_code_"+course+"_"+idx,$("code").value);$("feedback").innerHTML='<span class="ok">✓ Saved!</span>'};
+$("code").addEventListener("input",updateLines);$("code").addEventListener("keydown",e=>{if(e.key==="Tab"){e.preventDefault();let s=e.target.selectionStart;e.target.value=e.target.value.slice(0,s)+"    "+e.target.value.slice(e.target.selectionEnd);e.target.selectionStart=e.target.selectionEnd=s+4;updateLines()}if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();runPreview()}});
+$("enBtn").onclick=()=>{lang="en";render()};$("arBtn").onclick=()=>{lang="ar";render()};render();
+</script>
+</body>
+</html>
