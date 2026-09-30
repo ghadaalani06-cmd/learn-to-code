@@ -1,1843 +1,2835 @@
+```html
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Web Quest — HTML, CSS & JavaScript</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CodeQuest Academy</title>
 
 <style>
 :root{
-  --bg:#071522;--panel:#0d2232;--panel2:#102b3f;
-  --ink:#f5fbff;--muted:#a9c0cf;--green:#25d69a;
-  --green2:#7cf0c5;--yellow:#ffd65a;--purple:#9b7cff;
-  --blue:#51b9ff;--line:#244457;--danger:#ff6b7a
+  --bg:#07131b;
+  --bg2:#0a1d26;
+  --card:#102832;
+  --card2:#0c222b;
+  --line:#21434d;
+  --text:#effff9;
+  --muted:#8caab2;
+  --green:#55e39b;
+  --green2:#20c978;
+  --blue:#5db7ff;
+  --purple:#a98cff;
+  --yellow:#ffd166;
+  --orange:#ff9d68;
+  --red:#ff7070;
+  --pink:#ff79c6;
+  --shadow:0 20px 60px rgba(0,0,0,.28);
 }
+
 *{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  background:radial-gradient(circle at 50% -10%,#17405b 0,#071522 42%,#050e16 100%);
-  color:var(--ink);
-  font-family:Inter,system-ui,sans-serif
+  color:var(--text);
+  background:
+    radial-gradient(circle at 5% 0%,rgba(85,227,155,.12),transparent 28%),
+    radial-gradient(circle at 95% 10%,rgba(169,140,255,.10),transparent 27%),
+    linear-gradient(135deg,#061118,#0a1d25 55%,#07131b);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;
 }
 
-button{
-  font:inherit;
-  cursor:pointer;
-  border:0
+button,input,textarea{font:inherit}
+
+button{cursor:pointer}
+
+button:active{transform:scale(.97)}
+
+#particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
 }
 
-.top{
-  min-height:82px;
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:10px 22px;
-  border-bottom:1px solid #173447;
-  background:#06131edb;
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:rgba(85,227,155,.35);
+  animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+  from{transform:translateY(110vh);opacity:0}
+  15%{opacity:1}
+  85%{opacity:1}
+  to{transform:translateY(-20vh);opacity:0}
+}
+
+/* HEADER */
+
+header{
   position:sticky;
   top:0;
   z-index:20;
-  backdrop-filter:blur(12px)
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding:13px 22px;
+  background:rgba(6,17,24,.9);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(18px);
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:11px;
-  min-width:245px
+  gap:12px;
 }
 
-.brand h1{font-size:22px;margin:0}
-.brand small{color:var(--green2);font-weight:700}
+.mascot{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:19px;
+  background:linear-gradient(145deg,#123d37,#0b242c);
+  border:1px solid rgba(85,227,155,.28);
+  animation:floatMascot 3s ease-in-out infinite;
+}
 
-.mascot{width:55px;height:55px}
+.mascot svg{width:53px}
 
-.stats{
+.eye{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:blink 5s infinite;
+}
+
+@keyframes blink{
+  0%,91%,100%{transform:scaleY(1)}
+  93%,96%{transform:scaleY(.08)}
+}
+
+@keyframes floatMascot{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-6px) rotate(2deg)}
+}
+
+.talking{
+  animation:talk .28s infinite alternate!important;
+}
+
+@keyframes talk{
+  to{transform:translateY(-5px) rotate(3deg)}
+}
+
+.brand h1{
+  margin:0;
+  font-size:21px;
+}
+
+.brand p{
+  margin:3px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.headerRight{
   display:flex;
-  gap:10px;
-  margin-left:auto
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .stat{
-  background:#0d2434;
   border:1px solid var(--line);
-  padding:7px 13px;
-  border-radius:13px;
-  min-width:82px
+  background:rgba(255,255,255,.025);
+  border-radius:11px;
+  padding:8px 11px;
+  font-size:12px;
 }
 
-.stat b{
-  display:block;
-  color:var(--yellow)
-}
-
-.stat span{
-  font-size:10px;
-  color:var(--muted)
-}
+.stat strong{color:var(--green)}
 
 .lang{
-  background:#18394d;
-  color:#fff;
-  padding:8px 11px;
-  border-radius:10px
-}
-
-.lang.active{
-  background:var(--green);
-  color:#062116
-}
-
-.courses{
   display:flex;
-  gap:8px;
-  padding:12px 20px;
-  background:#081b29;
-  border-bottom:1px solid #173447;
-  overflow:auto
+  gap:4px;
 }
 
-.course{
-  padding:9px 16px;
-  border-radius:10px;
-  background:#102d40;
-  color:#dcebf2;
-  font-weight:800;
-  white-space:nowrap;
-  border:1px solid transparent
+.lang button{
+  padding:7px 9px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--muted);
 }
 
-.course.active{
-  background:#174f47;
-  border-color:var(--green)
+.lang button.active{
+  background:var(--green);
+  color:#052017;
+  font-weight:900;
 }
 
-.layout{
+/* HERO */
+
+.hero{
+  position:relative;
+  z-index:1;
+  max-width:1450px;
+  margin:20px auto;
+  padding:0 20px;
+}
+
+.heroCard{
+  padding:25px;
+  border-radius:22px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(120deg,rgba(85,227,155,.09),rgba(169,140,255,.06)),
+    rgba(13,32,40,.88);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+.heroCard:after{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  right:-100px;
+  top:-130px;
+  background:rgba(85,227,155,.08);
+}
+
+.hero h2{
+  margin:0 0 7px;
+  font-size:31px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:750px;
+  line-height:1.6;
+  margin:0;
+}
+
+.techRoad{
   display:grid;
-  grid-template-columns:235px minmax(450px,1fr) 330px;
-  min-height:calc(100vh - 132px)
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  margin-top:20px;
 }
+
+.tech{
+  padding:12px 7px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:rgba(255,255,255,.025);
+  transition:.25s;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.tech:hover{
+  transform:translateY(-4px);
+  border-color:var(--green);
+}
+
+.tech.active{
+  color:var(--text);
+  border-color:var(--green);
+  background:rgba(85,227,155,.09);
+  box-shadow:0 0 25px rgba(85,227,155,.08);
+}
+
+.tech.done{color:var(--green)}
+
+.techIcon{
+  font-size:23px;
+  display:block;
+  margin-bottom:5px;
+}
+
+/* MAIN */
+
+.app{
+  position:relative;
+  z-index:1;
+  max-width:1450px;
+  margin:0 auto;
+  padding:0 20px 60px;
+  display:grid;
+  grid-template-columns:245px minmax(0,1fr) 285px;
+  gap:17px;
+}
+
+.panel{
+  background:rgba(13,32,40,.9);
+  border:1px solid var(--line);
+  border-radius:19px;
+  box-shadow:var(--shadow);
+}
+
+/* SIDEBAR */
 
 .sidebar{
-  padding:17px;
-  border-right:1px solid #173447;
-  background:#05121bd9
+  padding:14px;
+  height:max-content;
+  position:sticky;
+  top:94px;
 }
 
-.side-title{
-  color:var(--muted);
-  font-size:11px;
+.sideTitle{
+  font-size:10px;
+  font-weight:900;
   text-transform:uppercase;
-  letter-spacing:1px;
-  margin:6px 8px 12px
+  letter-spacing:1.4px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.courseTabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-bottom:13px;
+}
+
+.courseTab{
+  padding:8px 4px;
+  border:1px solid var(--line);
+  background:#0b2028;
+  color:var(--muted);
+  border-radius:9px;
+  font-size:10px;
+}
+
+.courseTab.active{
+  color:#062018;
+  background:var(--green);
+  border-color:var(--green);
+  font-weight:900;
 }
 
 .mission{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:11px;
-  border-radius:12px;
-  color:#d8e8ef;
-  margin-bottom:6px;
-  border:1px solid transparent;
-  text-align:left;
   width:100%;
-  background:transparent
+  text-align:left;
+  color:var(--text);
+  background:rgba(255,255,255,.025);
+  border:1px solid transparent;
+  border-radius:11px;
+  padding:10px;
+  margin-bottom:6px;
+  transition:.22s;
 }
 
-.mission:hover{background:#102d40}
+.mission:hover{
+  transform:translateX(4px);
+  background:rgba(255,255,255,.05);
+}
 
 .mission.active{
-  background:#103a42;
-  border-color:#1dd394
+  border-color:rgba(85,227,155,.5);
+  background:rgba(85,227,155,.08);
 }
 
-.dot{
-  width:28px;
-  height:28px;
-  flex:none;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#18384a;
-  font-size:12px
+.mission.done{opacity:.67}
+
+.missionNum{
+  color:var(--green);
+  font-size:9px;
+  font-weight:900;
 }
 
-.done .dot{
-  background:var(--green);
-  color:#062116
-}
-
-.mission strong{
+.missionTitle{
   display:block;
-  font-size:12px
-}
-
-.mission small{
-  color:#88a5b4;
-  font-size:10px
-}
-
-.progress{
-  margin-top:18px;
-  padding:14px;
-  background:#0b2638;
-  border:1px solid var(--line);
-  border-radius:14px
-}
-
-.bar{
-  height:8px;
-  background:#173b4e;
-  border-radius:99px;
-  overflow:hidden;
-  margin:9px 0
-}
-
-.bar i{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--green),#68efbf);
-  width:0;
-  transition:.4s
-}
-
-.main{
-  padding:18px;
-  min-width:0
-}
-
-.head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px
-}
-
-.head h2{
-  margin:0;
-  font-size:20px
-}
-
-.pill{
-  padding:5px 9px;
-  border-radius:99px;
-  background:#123b38;
-  color:var(--green2);
-  font-size:10px;
-  font-weight:900
-}
-
-.editor-card{
-  border:1px solid #29485a;
-  border-radius:16px;
-  overflow:hidden;
-  background:#06131d;
-  box-shadow:0 16px 45px #0005
-}
-
-.editor-top{
-  display:flex;
-  gap:7px;
-  align-items:center;
-  padding:9px;
-  background:#0b1e2c;
-  border-bottom:1px solid #234052;
-  flex-wrap:wrap
-}
-
-.tab{
-  background:#102c40;
-  padding:8px 12px;
-  border-radius:9px;
-  font-size:12px
-}
-
-.run{
-  margin-left:auto;
-  background:var(--green);
-  color:#062218;
-  padding:9px 15px;
-  border-radius:9px;
-  font-weight:900
-}
-
-.secondary{
-  background:#173244;
-  color:#dcecf3;
-  padding:9px 12px;
-  border-radius:9px
-}
-
-.voice{
-  background:#9b7cff;
-  color:white;
-  padding:9px 13px;
-  border-radius:9px;
-  font-weight:800
-}
-
-.voice.playing{
-  background:#ff6680
-}
-
-.editor{
-  display:grid;
-  grid-template-columns:45px 1fr
-}
-
-.lines{
-  padding:16px 7px;
-  text-align:right;
-  color:#506b7b;
-  background:#06121c;
-  font:13px/1.7 monospace;
-  user-select:none;
-  overflow:hidden
-}
-
-.code{
-  width:100%;
-  height:370px;
-  resize:vertical;
-  background:#06121c;
-  color:#d7f8e9;
-  border:0;
-  outline:0;
-  padding:16px 13px;
-  font:14px/1.7 ui-monospace,monospace;
-  tab-size:4
-}
-
-.preview{
-  margin-top:12px;
-  background:#f8fbfd;
-  border:1px solid #d5e4eb;
-  border-radius:14px;
-  overflow:hidden;
-  color:#183547
-}
-
-.preview-head{
-  padding:8px 12px;
-  background:#eaf2f6;
+  margin-top:3px;
   font-size:11px;
-  font-weight:800
-}
-
-.preview iframe{
-  display:block;
-  width:100%;
-  height:230px;
-  border:0;
-  background:#fff
-}
-
-.bottom{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:12px
-}
-
-.box{
-  background:#0a1c29;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:13px
-}
-
-.box h3{
-  margin:0 0 8px;
-  font-size:13px
-}
-
-.output{
-  min-height:75px;
-  white-space:pre-wrap;
-  color:#c9f8e4;
-  font:12px/1.6 monospace
-}
-
-.challenge input{
-  width:100%;
-  padding:9px;
-  border-radius:8px;
-  border:1px solid #2c4b5c;
-  background:#071522;
-  color:white;
-  margin:7px 0
+  font-weight:700;
 }
 
 .check{
-  background:var(--purple);
-  color:#fff;
-  padding:9px 12px;
+  float:right;
+  color:var(--green);
+  font-size:16px;
+}
+
+.progress{
+  margin-top:15px;
+}
+
+.progressLabel{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:6px;
+}
+
+.progressBar{
+  height:8px;
+  border-radius:99px;
+  overflow:hidden;
+  background:#061217;
+  border:1px solid var(--line);
+}
+
+.progressFill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--green2),#a0f7c9);
+  transition:width .8s cubic-bezier(.2,.8,.2,1);
+}
+
+/* LESSON */
+
+.lesson{
+  padding:22px;
+  animation:lessonEnter .45s ease both;
+}
+
+@keyframes lessonEnter{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:none}
+}
+
+.kicker{
+  color:var(--green);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+.lesson h2{
+  font-size:29px;
+  margin:6px 0;
+}
+
+.desc{
+  color:var(--muted);
+  line-height:1.65;
+  margin:0 0 15px;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:15px;
+}
+
+.badge{
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:6px 9px;
+  font-size:10px;
+  background:#091b22;
+}
+
+.badge.python{color:#ffd166}
+.badge.html{color:#ff795f}
+.badge.css{color:#5db7ff}
+.badge.js{color:#ffd166}
+.badge.react{color:#62d5ff}
+.badge.sql{color:#ff9d68}
+
+/* FLOW */
+
+.flow{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  overflow:auto;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#08191f;
+  margin-bottom:15px;
+}
+
+.flowNode{
+  white-space:nowrap;
+  padding:8px 10px;
   border-radius:8px;
-  font-weight:800
+  background:#102c35;
+  font-size:10px;
+  font-weight:900;
+}
+
+.flowArrow{
+  color:var(--green);
+  font-weight:900;
+}
+
+/* EDITOR */
+
+.editorGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.editor{
+  border:1px solid var(--line);
+  border-radius:15px;
+  overflow:hidden;
+  background:#051116;
+}
+
+.editorHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:9px 12px;
+  background:#0b2028;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:11px;
+}
+
+.dots{
+  display:flex;
+  gap:4px;
+}
+
+.dots span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#36535c;
+}
+
+textarea{
+  width:100%;
+  min-height:280px;
+  resize:vertical;
+  display:block;
+  border:0;
+  outline:0;
+  padding:14px;
+  background:#041015;
+  color:#caffdf;
+  font:12px/1.65 "SFMono-Regular",Consolas,monospace;
+}
+
+textarea:focus{
+  box-shadow:inset 0 0 0 1px rgba(85,227,155,.35);
+}
+
+.preview{
+  min-height:280px;
+  background:white;
+  color:#111;
+  overflow:auto;
+  padding:15px;
+}
+
+.flash{
+  animation:previewFlash .65s;
+}
+
+@keyframes previewFlash{
+  50%{
+    box-shadow:inset 0 0 50px rgba(85,227,155,.5);
+  }
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  padding:10px;
+}
+
+.primary,.secondary{
+  border-radius:10px;
+  padding:9px 13px;
+  font-weight:900;
+  font-size:12px;
+  transition:.2s;
+}
+
+.primary{
+  background:var(--green);
+  color:#052017;
+  border:0;
+}
+
+.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(85,227,155,.25);
+}
+
+.secondary{
+  background:#102b34;
+  color:var(--text);
+  border:1px solid var(--line);
+}
+
+.secondary:hover{
+  border-color:#4b727b;
+}
+
+/* SQL */
+
+.database{
+  margin-top:13px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
+  background:#08191f;
+}
+
+.database h3{
+  margin:0 0 9px;
+  font-size:13px;
+}
+
+.columns{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.column{
+  padding:7px 9px;
+  border-radius:8px;
+  border:1px solid #28525c;
+  background:#0d2831;
+  font:10px monospace;
+}
+
+.column strong{color:var(--green)}
+
+.dbResult{
+  margin-top:10px;
+  overflow:auto;
+}
+
+.dbTable{
+  border-collapse:collapse;
+  width:100%;
+  font:11px monospace;
+}
+
+.dbTable th,.dbTable td{
+  border:1px solid #2a5059;
+  padding:7px;
+  text-align:left;
+}
+
+.dbTable th{
+  color:var(--green);
+  background:#0c242c;
+}
+
+/* CHALLENGE */
+
+.challenge{
+  margin-top:15px;
+  padding:16px;
+  border-radius:15px;
+  border:1px solid rgba(169,140,255,.35);
+  background:rgba(169,140,255,.055);
+}
+
+.challenge h3{
+  margin:0 0 6px;
+  font-size:15px;
+}
+
+.challenge p{
+  color:var(--muted);
+  line-height:1.55;
+  font-size:12px;
+}
+
+.answer{
+  width:100%;
+  padding:11px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  outline:none;
+  color:white;
+  background:#07171d;
+}
+
+.answer:focus{
+  border-color:var(--purple);
 }
 
 .feedback{
-  margin-top:8px;
-  font-size:11px;
-  min-height:17px
+  min-height:20px;
+  margin-top:7px;
+  font-size:12px;
+  font-weight:900;
 }
 
-.ok{color:var(--green2)}
-.err{color:#ff9ca8}
+.ok{color:var(--green)}
+.bad{color:var(--red)}
+
+.shake{animation:shake .45s}
+
+@keyframes shake{
+  20%{transform:translateX(-7px)}
+  40%{transform:translateX(7px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+
+.success{
+  animation:success .8s;
+}
+
+@keyframes success{
+  45%{box-shadow:0 0 38px rgba(85,227,155,.3)}
+}
+
+/* RIGHT */
 
 .right{
   padding:17px;
-  border-left:1px solid #173447;
-  background:#f4f9fb;
-  color:#102b3c
+  height:max-content;
+  position:sticky;
+  top:94px;
 }
 
-.card{
-  border-radius:15px;
-  background:#fff;
-  border:1px solid #d8e6ed;
-  overflow:hidden
+.right h3{
+  margin:0 0 9px;
 }
 
-.banner{
-  padding:16px;
-  background:linear-gradient(135deg,#e8fff5,#eef7ff)
-}
-
-.banner h2{
-  margin:0 0 4px;
-  font-size:17px
-}
-
-.banner p{
-  margin:0;
-  color:#567080;
-  font-size:12px
-}
-
-.info{
-  padding:15px
-}
-
-.info h3{
-  margin:0 0 7px;
-  font-size:14px
-}
-
-.info p{
-  color:#536b78;
+.explanation{
+  color:var(--muted);
+  line-height:1.7;
   font-size:12px;
-  line-height:1.55
-}
-
-.sample{
-  background:#0a1d2a;
-  color:#d9f8ea;
-  border-radius:9px;
-  padding:10px;
-  font:11px/1.55 monospace;
-  white-space:pre-wrap
 }
 
 .tip{
-  margin-top:10px;
-  background:#e8fff6;
-  border:1px solid #a8e7ce;
-  border-radius:10px;
-  padding:10px;
-  font-size:11px;
-  color:#245d4d
-}
-
-.reward{
-  margin-top:10px;
+  margin-top:14px;
   padding:11px;
-  border-radius:10px;
-  background:#fff7d8;
-  border:1px solid #f3dd8d;
-  color:#765c00;
-  font-weight:800;
-  display:flex;
-  justify-content:space-between
+  border-left:3px solid var(--yellow);
+  background:rgba(255,209,102,.05);
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
 }
 
-footer{
-  text-align:center;
-  padding:13px;
-  color:#668293;
-  font-size:10px
+.voice{
+  margin-top:14px;
+  padding:11px;
+  border:1px solid var(--line);
+  border-radius:13px;
 }
 
-.voice-panel{
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  background:#0b2638;
-  border:1px solid #29485a
-}
-
-.voice-panel-title{
-  font-size:12px;
+.voiceTitle{
+  font-size:11px;
   font-weight:900;
-  margin-bottom:8px
+  margin-bottom:8px;
 }
 
-.voice-controls{
+.voiceControls{
   display:flex;
-  gap:7px;
-  flex-wrap:wrap
+  flex-wrap:wrap;
+  gap:5px;
 }
 
-.voice-controls button{
-  padding:8px 11px;
-  border-radius:9px;
-  background:#173244;
-  color:white
+.voiceControls button{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#102a32;
+  color:var(--text);
+  padding:7px 8px;
+  font-size:10px;
 }
 
-.voice-controls button:hover{
-  background:#22506a
+.voiceControls button:hover{
+  border-color:var(--green);
 }
 
 .speed{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:5px;
   color:var(--muted);
-  font-size:11px;
-  margin-top:8px
+  margin-top:8px;
 }
 
-.speed input{
-  width:130px
+.speed input{width:100%}
+
+/* TOAST */
+
+#toast{
+  position:fixed;
+  z-index:100;
+  left:50%;
+  top:86px;
+  transform:translate(-50%,-20px);
+  opacity:0;
+  pointer-events:none;
+  background:#123c34;
+  border:1px solid rgba(85,227,155,.5);
+  border-radius:13px;
+  padding:11px 17px;
+  font-size:12px;
+  font-weight:900;
+  transition:.3s;
 }
 
-@media(max-width:1050px){
-  .layout{
-    grid-template-columns:190px 1fr
-  }
-  .right{display:none}
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
 }
 
-@media(max-width:720px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{display:none}
-  .top{
-    height:auto;
-    flex-wrap:wrap
+/* XP */
+
+.xpFloat{
+  position:fixed;
+  z-index:100;
+  pointer-events:none;
+  color:var(--yellow);
+  font-size:19px;
+  font-weight:1000;
+  animation:xpFloat 1.2s forwards;
+}
+
+@keyframes xpFloat{
+  0%{opacity:0;transform:translate(-50%,0) scale(.7)}
+  20%{opacity:1;transform:translate(-50%,-15px) scale(1.1)}
+  100%{opacity:0;transform:translate(-50%,-90px)}
+}
+
+/* CONFETTI */
+
+.confetti{
+  position:fixed;
+  z-index:90;
+  width:8px;
+  height:12px;
+  pointer-events:none;
+  animation:confetti 1.5s forwards;
+}
+
+@keyframes confetti{
+  to{
+    opacity:0;
+    transform:translate(var(--x),var(--y)) rotate(720deg);
   }
-  .brand{min-width:0}
-  .stats{
-    order:3;
-    width:100%;
-    margin:0
+}
+
+/* LEVEL */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:grid;
+  place-items:center;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(8px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
+
+.overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.levelCard{
+  width:min(400px,90vw);
+  text-align:center;
+  padding:32px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#123c35,#0b252d);
+  border:1px solid rgba(85,227,155,.5);
+  box-shadow:0 0 90px rgba(85,227,155,.22);
+  transform:scale(.6);
+}
+
+.overlay.show .levelCard{
+  animation:levelPop .55s cubic-bezier(.17,.89,.32,1.3) forwards;
+}
+
+@keyframes levelPop{
+  to{transform:scale(1)}
+}
+
+.trophy{
+  font-size:64px;
+  animation:trophy 1s infinite alternate;
+}
+
+@keyframes trophy{
+  to{transform:translateY(-8px) rotate(5deg)}
+}
+
+/* FINISH */
+
+.finish{
+  margin-top:15px;
+  padding:18px;
+  border-radius:15px;
+  border:1px solid rgba(85,227,155,.3);
+  background:rgba(85,227,155,.05);
+  text-align:center;
+}
+
+.finish h3{
+  margin:0 0 5px;
+}
+
+.finish p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+  .app{
+    grid-template-columns:210px minmax(0,1fr);
   }
-  .main{padding:10px}
-  .bottom{grid-template-columns:1fr}
-  .run{margin-left:0}
+  .right{
+    grid-column:1/-1;
+    position:static;
+  }
+}
+
+@media(max-width:800px){
+  header{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .techRoad{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .app{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    position:static;
+  }
+
+  .editorGrid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:520px){
+  .techRoad{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .lesson h2{font-size:23px}
+
+  .hero h2{font-size:25px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header class="top">
+<div id="particles"></div>
+<div id="toast"></div>
 
-<div class="brand">
-<svg class="mascot" viewBox="0 0 80 80">
-<ellipse cx="40" cy="43" rx="26" ry="29" fill="#58c95d"/>
-<circle cx="31" cy="32" r="9" fill="#fff"/>
-<circle cx="49" cy="32" r="9" fill="#fff"/>
-<circle cx="33" cy="33" r="4" fill="#102b3f"/>
-<circle cx="47" cy="33" r="4" fill="#102b3f"/>
-<path d="M30 50 Q40 59 50 50" fill="none" stroke="#14543d" stroke-width="4" stroke-linecap="round"/>
-<path d="M21 52 Q8 61 18 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/>
-<path d="M59 52 Q72 61 62 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/>
-</svg>
+<!-- HEADER -->
 
-<div>
-<h1>Web Quest</h1>
-<small data-t="tagline">Build the web. One mission at a time.</small>
-</div>
-</div>
+<header>
 
-<div class="stats">
-<div class="stat"><b id="level">1</b><span data-t="level">Level</span></div>
-<div class="stat"><b id="xp">0</b><span>XP</span></div>
-<div class="stat"><b id="doneCount">0</b><span data-t="missionsDone">Missions</span></div>
-</div>
+  <div class="brand">
 
-<button class="lang active" id="enBtn">EN</button>
-<button class="lang" id="arBtn">عربي</button>
+    <div class="mascot" id="mascot">
+
+      <svg viewBox="0 0 100 100">
+
+        <path
+          d="M50 8C27 8 15 22 15 45v23c0 15 13 24 35 24s35-9 35-24V45C85 22 73 8 50 8Z"
+          fill="#55e39b"/>
+
+        <path
+          d="M22 39C24 20 36 13 50 13s26 7 28 26"
+          fill="none"
+          stroke="#123b35"
+          stroke-width="6"
+          stroke-linecap="round"/>
+
+        <ellipse
+          class="eye"
+          cx="36"
+          cy="47"
+          rx="5"
+          ry="7"
+          fill="#09201e"/>
+
+        <ellipse
+          class="eye"
+          cx="64"
+          cy="47"
+          rx="5"
+          ry="7"
+          fill="#09201e"/>
+
+        <path
+          d="M36 65Q50 77 64 65"
+          fill="none"
+          stroke="#09201e"
+          stroke-width="4"
+          stroke-linecap="round"/>
+
+        <circle cx="25" cy="59" r="4" fill="#9bf3c5"/>
+        <circle cx="75" cy="59" r="4" fill="#9bf3c5"/>
+
+      </svg>
+
+    </div>
+
+    <div>
+      <h1>CodeQuest Academy</h1>
+      <p>Learn to build — Python → Web → React → SQL</p>
+    </div>
+
+  </div>
+
+  <div class="headerRight">
+
+    <div class="stat">
+      ⭐ XP <strong id="xp">0</strong>
+    </div>
+
+    <div class="stat">
+      🏆 Level <strong id="level">1</strong>
+    </div>
+
+    <div class="stat">
+      🎯 <strong id="missionCount">0/30</strong>
+    </div>
+
+    <div class="lang">
+      <button id="enBtn" class="active">EN</button>
+      <button id="arBtn">العربية</button>
+    </div>
+
+  </div>
 
 </header>
 
-<nav class="courses">
-<button class="course active" data-course="html">🌐 HTML Quest</button>
-<button class="course" data-course="css">🎨 CSS Quest</button>
-<button class="course" data-course="js">⚡ JavaScript Quest</button>
-</nav>
+<!-- HERO -->
 
-<div class="layout">
+<section class="hero">
 
-<aside class="sidebar">
+  <div class="heroCard">
 
-<div class="side-title" data-t="missions">Missions</div>
+    <h2>🚀 Build Your Developer Journey</h2>
 
-<div id="missionList"></div>
+    <p>
+      Don't just memorize syntax. Build a project while learning
+      Python, HTML, CSS, JavaScript, React and SQL.
+    </p>
 
-<div class="progress">
-<b data-t="progress">Course progress</b>
-<div class="bar"><i id="progressBar"></i></div>
-<small id="progressText"></small>
+    <div class="techRoad">
+
+      <div class="tech active" id="tech-python">
+        <span class="techIcon">🐍</span>
+        Python
+      </div>
+
+      <div class="tech" id="tech-html">
+        <span class="techIcon">🌐</span>
+        HTML
+      </div>
+
+      <div class="tech" id="tech-css">
+        <span class="techIcon">🎨</span>
+        CSS
+      </div>
+
+      <div class="tech" id="tech-js">
+        <span class="techIcon">⚡</span>
+        JavaScript
+      </div>
+
+      <div class="tech" id="tech-react">
+        <span class="techIcon">⚛️</span>
+        React
+      </div>
+
+      <div class="tech" id="tech-sql">
+        <span class="techIcon">🗄️</span>
+        SQL
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- APP -->
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+
+  <aside class="panel sidebar">
+
+    <div class="sideTitle">
+      Course
+    </div>
+
+    <div class="courseTabs">
+
+      <button class="courseTab active" data-course="all">
+        All
+      </button>
+
+      <button class="courseTab" data-course="python">
+        🐍 Python
+      </button>
+
+      <button class="courseTab" data-course="web">
+        🌐 Web
+      </button>
+
+      <button class="courseTab" data-course="fullstack">
+        🚀 Full Stack
+      </button>
+
+    </div>
+
+    <div class="sideTitle">
+      Missions
+    </div>
+
+    <div id="missionList"></div>
+
+    <div class="progress">
+
+      <div class="progressLabel">
+        <span>Journey Progress</span>
+        <span id="progressPercent">0%</span>
+      </div>
+
+      <div class="progressBar">
+        <div class="progressFill" id="progressFill"></div>
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main>
+
+    <section class="panel lesson" id="lesson">
+
+      <div class="kicker" id="kicker">
+        MISSION 1
+      </div>
+
+      <h2 id="title"></h2>
+
+      <p class="desc" id="description"></p>
+
+      <div class="badges">
+
+        <span class="badge python">🐍 Python</span>
+        <span class="badge html">🌐 HTML</span>
+        <span class="badge css">🎨 CSS</span>
+        <span class="badge js">⚡ JavaScript</span>
+        <span class="badge react">⚛️ React</span>
+        <span class="badge sql">🗄️ SQL</span>
+
+      </div>
+
+      <div class="flow">
+
+        <div class="flowNode">🐍 Logic</div>
+        <div class="flowArrow">→</div>
+        <div class="flowNode">🌐 UI</div>
+        <div class="flowArrow">→</div>
+        <div class="flowNode">⚡ JavaScript</div>
+        <div class="flowArrow">→</div>
+        <div class="flowNode">⚛️ React</div>
+        <div class="flowArrow">→</div>
+        <div class="flowNode">🗄️ SQL</div>
+
+      </div>
+
+      <div class="editorGrid">
+
+        <div class="editor">
+
+          <div class="editorHead">
+
+            <span id="editorLabel">
+              💻 Code Editor
+            </span>
+
+            <div class="dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+          </div>
+
+          <textarea
+            id="codeEditor"
+            spellcheck="false"></textarea>
+
+          <div class="actions">
+
+            <button
+              class="primary"
+              id="runBtn">
+              ▶ Run
+            </button>
+
+            <button
+              class="secondary"
+              id="resetBtn">
+              ↻ Reset
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="editor">
+
+          <div class="editorHead">
+            <span>🌎 Live Project Preview</span>
+          </div>
+
+          <div
+            class="preview"
+            id="preview">
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="database">
+
+        <h3>🗄️ Project Database</h3>
+
+        <div class="columns">
+
+          <div class="column">
+            <strong>id</strong><br>INTEGER
+          </div>
+
+          <div class="column">
+            <strong>title</strong><br>TEXT
+          </div>
+
+          <div class="column">
+            <strong>completed</strong><br>BOOLEAN
+          </div>
+
+          <div class="column">
+            <strong>user_id</strong><br>INTEGER
+          </div>
+
+        </div>
+
+        <div class="dbResult" id="dbResult"></div>
+
+      </div>
+
+      <div
+        class="challenge"
+        id="challengeBox">
+
+        <h3>🎯 Mission Challenge</h3>
+
+        <p id="challenge"></p>
+
+        <input
+          id="answer"
+          class="answer"
+          placeholder="Type your answer..."
+          autocomplete="off">
+
+        <div class="actions">
+
+          <button
+            class="primary"
+            id="checkBtn">
+            ✓ Complete Mission
+          </button>
+
+        </div>
+
+        <div
+          id="feedback"
+          class="feedback">
+        </div>
+
+      </div>
+
+      <div
+        class="finish"
+        id="finish"
+        style="display:none">
+
+        <h3>🏆 You Built It!</h3>
+
+        <p>
+          You completed the CodeQuest journey.
+          You now understand the path from programming logic
+          to a full-stack application.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- RIGHT -->
+
+  <aside class="panel right">
+
+    <h3>📚 Lesson</h3>
+
+    <div
+      class="explanation"
+      id="explanation">
+    </div>
+
+    <div class="tip">
+
+      💡 <strong>Pro Tip</strong>
+
+      <div id="tip"></div>
+
+    </div>
+
+    <div class="voice">
+
+      <div class="voiceTitle">
+        🔊 Lesson Voice
+      </div>
+
+      <div class="voiceControls">
+
+        <button id="listenBtn">
+          ▶ Listen
+        </button>
+
+        <button id="pauseBtn">
+          Ⅱ Pause
+        </button>
+
+        <button id="stopBtn">
+          ■ Stop
+        </button>
+
+      </div>
+
+      <div class="speed">
+
+        🐢
+
+        <input
+          id="speed"
+          type="range"
+          min=".6"
+          max="1.6"
+          step=".1"
+          value="1">
+
+        🚀
+
+      </div>
+
+    </div>
+
+  </aside>
+
 </div>
 
-</aside>
+<!-- LEVEL UP -->
 
-<main class="main">
+<div
+  class="overlay"
+  id="levelOverlay">
 
-<div class="head">
+  <div class="levelCard">
 
-<div>
-<h2 id="title"></h2>
-<small id="subtitle" style="color:var(--muted)"></small>
-</div>
+    <div class="trophy">🏆</div>
 
-<span class="pill" id="difficulty">BEGINNER</span>
+    <h2>LEVEL UP!</h2>
 
-</div>
+    <p id="levelText"></p>
 
-<div class="editor-card">
+    <button
+      class="primary"
+      id="continueBtn">
+      Continue
+    </button>
 
-<div class="editor-top">
-
-<div class="tab" id="fileTab">📄 index.html</div>
-
-<button class="secondary" id="resetBtn">↺ Reset</button>
-
-<button class="secondary" id="saveBtn">💾 Save</button>
-
-<button class="voice" id="speakBtn">🔊 Listen</button>
-
-<button class="run" id="runBtn">▶ Run</button>
+  </div>
 
 </div>
-
-<div class="editor">
-
-<div class="lines" id="lines">1</div>
-
-<textarea
-id="code"
-class="code"
-spellcheck="false"
-autocomplete="off"
-autocorrect="off"
-autocapitalize="off"></textarea>
-
-</div>
-
-</div>
-
-<div class="voice-panel">
-
-<div class="voice-panel-title">
-🎙️ <span data-t="voiceTitle">Lesson Voice</span>
-</div>
-
-<div class="voice-controls">
-
-<button id="playVoice">▶ <span data-t="play">Play lesson</span></button>
-
-<button id="pauseVoice">⏸ <span data-t="pause">Pause</span></button>
-
-<button id="stopVoice">⏹ <span data-t="stop">Stop</span></button>
-
-</div>
-
-<div class="speed">
-<span data-t="speed">Speed</span>
-<input id="voiceSpeed" type="range" min="0.6" max="1.5" step="0.1" value="1">
-<span id="speedValue">1x</span>
-</div>
-
-</div>
-
-<div class="preview">
-
-<div class="preview-head">
-👀 <span data-t="livePreview">Live preview</span>
-</div>
-
-<iframe
-id="preview"
-sandbox="allow-scripts">
-</iframe>
-
-</div>
-
-<div class="bottom">
-
-<div class="box">
-
-<h3>
-✓ <span data-t="status">Lesson status</span>
-</h3>
-
-<div class="output" id="output"></div>
-
-</div>
-
-<div class="box challenge">
-
-<h3>
-🎯 <span data-t="challenge">Challenge</span>
-</h3>
-
-<div id="challengeText"></div>
-
-<input
-id="answer"
-placeholder="Type your answer…">
-
-<button class="check" id="checkBtn" data-t="check">
-Check
-</button>
-
-<div class="feedback" id="feedback"></div>
-
-</div>
-
-</div>
-
-</main>
-
-<aside class="right">
-
-<div class="card">
-
-<div class="banner">
-<h2 id="sideTitle"></h2>
-<p id="sideIntro"></p>
-</div>
-
-<div class="info">
-
-<h3>
-💡 <span data-t="learn">Learn</span>
-</h3>
-
-<p id="explain"></p>
-
-<div class="sample" id="sample"></div>
-
-<div class="tip">
-🌱 <b>Tip:</b>
-<span id="tip"></span>
-</div>
-
-<div class="reward">
-⭐ +100 XP
-<span>🎁</span>
-</div>
-
-</div>
-</div>
-
-</aside>
-
-</div>
-
-<footer>
-Web Quest · HTML · CSS · JavaScript · Learn · Build · Grow
-</footer>
-
 
 <script>
 
 /* =========================================================
-   FIXED DOM HELPER
-   Your original code used $() without defining it.
+   CODEQUEST ACADEMY
 ========================================================= */
 
 const $ = id => document.getElementById(id);
 
-
 /* =========================================================
-   COURSE DATA
+   LESSONS
 ========================================================= */
 
-const data={
+const lessons = [
 
-html:[
+/* ================= PYTHON ================= */
 
 {
-title:["Mission 01 — Build Your First Page","المهمة 01 — ابنِ أول صفحة"],
-sub:["HTML basics","أساسيات HTML"],
-intro:["Create the structure of a webpage.","أنشئ هيكل صفحة ويب."],
-explain:["HTML gives a webpage its structure: headings, paragraphs, buttons and more.","HTML يعطي صفحة الويب هيكلها: العناوين والفقرات والأزرار وغيرها."],
-sample:"<h1>Hello!</h1>\n<p>My first webpage.</p>",
-tip:["Change the heading and paragraph text.","غيّر نص العنوان والفقرة."],
-challenge:["Make the page contain an h1 and a p element.","اجعل الصفحة تحتوي على h1 و p."],
-code:"<h1>Hello, Web!</h1>\n<p>My first webpage.</p>",
-answer:"h1",
-xp:100
+ tech:"python",
+ group:"python",
+ title:"Hello, Python!",
+ description:"Start your programming journey by making Python talk.",
+ explanation:"Python is a general-purpose programming language. It is popular for automation, data, AI, backend development and many other areas.",
+ tip:"Don't worry about memorizing everything. Learn by writing tiny programs.",
+ code:`name = "CodeQuest"
+
+print("Hello", name)
+`,
+ preview:`
+<div style="font-family:Arial;padding:25px;background:#101820;color:#fff;min-height:220px">
+<h2 style="color:#55e39b">🐍 Python Console</h2>
+<div style="background:#050b0e;padding:15px;border-radius:10px;font-family:monospace">
+&gt; Hello CodeQuest
+</div>
+</div>
+`,
+ challenge:"What function prints text in Python?",
+ answer:"print"
 },
 
 {
-title:["Mission 02 — Add a Link","المهمة 02 — أضف رابطاً"],
-sub:["Links","الروابط"],
-intro:["Connect your page to the world.","اربط صفحتك بالعالم."],
-explain:["The anchor tag creates links. The href attribute tells the browser where to go.","وسم a ينشئ الروابط، و href يحدد الوجهة."],
-sample:'<a href="https://example.com">Visit</a>',
-tip:["Try changing the link text.","جرّب تغيير نص الرابط."],
-challenge:["Add an <a> element with an href attribute.","أضف عنصر a يحتوي على href."],
-code:'<h1>My Links</h1>\n<a href="https://example.com">Visit my favorite site</a>',
-answer:"href",
-xp:100
+ tech:"python",
+ group:"python",
+ title:"Variables",
+ description:"Teach your program to remember information.",
+ explanation:"Variables give names to values. Your programs can store names, numbers, settings and other information in variables.",
+ tip:"Choose variable names that explain what the value represents.",
+ code:`name = "Ghada"
+age = 35
+
+print(name)
+print(age)
+`,
+ preview:`
+<div style="font-family:Arial;padding:25px;background:#f8fff9;min-height:220px">
+<h2>👋 Hello!</h2>
+<p>Name: <strong>Ghada</strong></p>
+<p>Age: <strong>35</strong></p>
+</div>
+`,
+ challenge:"What stores a value under a name in Python?",
+ answer:"variable"
 },
 
 {
-title:["Mission 03 — Add an Image","المهمة 03 — أضف صورة"],
-sub:["Images","الصور"],
-intro:["Make your page visual.","اجعل صفحتك مرئية وجميلة."],
-explain:["The img tag displays an image. src gives its address and alt describes it.","وسم img يعرض صورة، و src يحدد المصدر و alt يصفها."],
-sample:'<img src="..." alt="A cute cat">',
-tip:["You can use an online image URL.","يمكنك استخدام رابط صورة على الإنترنت."],
-challenge:["Add an img element with src and alt.","أضف عنصر img مع src و alt."],
-code:'<h1>My Picture</h1>\n<img src="https://picsum.photos/300/180" alt="Random picture">',
-answer:"img",
-xp:120
+ tech:"python",
+ group:"python",
+ title:"Functions",
+ description:"Turn repeated logic into reusable building blocks.",
+ explanation:"A function groups instructions together so you can run them whenever you need.",
+ tip:"Functions become especially powerful as projects become larger.",
+ code:`def greet(name):
+    return "Hello " + name
+
+message = greet("Developer")
+
+print(message)
+`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>🧩 Function Result</h2>
+<p style="padding:15px;border-radius:12px;background:#eafff3">
+Hello Developer
+</p>
+</div>
+`,
+ challenge:"What keyword creates a function in Python?",
+ answer:"def"
 },
 
 {
-title:["Mission 04 — Build a Card","المهمة 04 — ابنِ بطاقة"],
-sub:["Semantic structure","هيكل منظم"],
-intro:["Combine elements into a mini component.","اجمع العناصر في مكوّن صغير."],
-explain:["div groups content. Use headings, paragraphs and buttons to create a useful card.","div يجمع المحتوى. استخدم العناوين والفقرات والأزرار لإنشاء بطاقة."],
-sample:"<div>\n  <h2>Course</h2>\n  <p>Learn by building.</p>\n</div>",
-tip:["Add a button inside your card.","أضف زرًا داخل البطاقة."],
-challenge:["Create a div containing h2, p and button.","أنشئ div يحتوي على h2 و p و button."],
-code:'<div>\n  <h2>Web Quest</h2>\n  <p>Learn by building.</p>\n  <button>Start</button>\n</div>',
-answer:"div",
-xp:150
+ tech:"python",
+ group:"python",
+ title:"Conditions",
+ description:"Teach your program to make decisions.",
+ explanation:"if statements let your program execute different code depending on whether a condition is true.",
+ tip:"Conditions are the beginning of program logic.",
+ code:`score = 85
+
+if score >= 80:
+    print("Great job!")
+else:
+    print("Keep practicing!")
+`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>🎯 Score Checker</h2>
+<p style="color:green;font-weight:bold">
+Great job! 🎉
+</p>
+</div>
+`,
+ challenge:"Which keyword starts a condition in Python?",
+ answer:"if"
 },
 
 {
-title:["Mission 05 — Your HTML Project","المهمة 05 — مشروع HTML"],
-sub:["Mini project","مشروع صغير"],
-intro:["Build your own simple profile page.","ابنِ صفحة شخصية بسيطة."],
-explain:["Combine headings, paragraphs, links, images and buttons into a page that feels like yours.","اجمع العناوين والفقرات والروابط والصور والأزرار في صفحة خاصة بك."],
-sample:"<h1>Your Name</h1>\n<p>About me...</p>\n<a href=\"#\">Contact</a>",
-tip:["Make it personal. Add your interests.","اجعلها شخصية وأضف اهتماماتك."],
-challenge:["Build a page with h1, p, img and a link.","ابنِ صفحة تحتوي على h1 و p و img ورابط."],
-code:'<h1>My Web Journey</h1>\n<p>I am learning to build websites!</p>\n<img src="https://picsum.photos/260/150" alt="My inspiration">\n<p><a href="https://developer.mozilla.org/">Learn more</a></p>',
-answer:"h1",
-xp:250
+ tech:"python",
+ group:"python",
+ title:"Your First Mini Program",
+ description:"Combine variables, functions and conditions into a mini program.",
+ explanation:"Real applications are built by combining simple concepts. This is your first step toward thinking like a developer.",
+ tip:"Break complicated problems into small functions.",
+ code:`def check_score(score):
+
+    if score >= 80:
+        return "Excellent!"
+    else:
+        return "Keep going!"
+
+score = 90
+
+print(check_score(score))
+`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>🏆 Python Achievement</h2>
+<div style="padding:18px;background:#eafff3;border-radius:15px">
+<strong>Excellent!</strong>
+</div>
+</div>
+`,
+ challenge:"What keyword sends a value back from a function?",
+ answer:"return"
+},
+
+/* ================= HTML ================= */
+
+{
+ tech:"html",
+ group:"web",
+ title:"Build a Web Page",
+ description:"Create the structure of your first website.",
+ explanation:"HTML describes the structure and content of web pages.",
+ tip:"Think of HTML as the skeleton of a website.",
+ code:`<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My Project</h1>
+<p>Welcome to my application!</p>
+
+</body>
+</html>`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h1>My Project 🚀</h1>
+<p>Welcome to my application!</p>
+</div>
+`,
+ challenge:"Which HTML tag creates the largest heading?",
+ answer:"h1"
+},
+
+{
+ tech:"html",
+ group:"web",
+ title:"Links & Images",
+ description:"Add navigation and visual content.",
+ explanation:"HTML elements can connect pages and display images.",
+ tip:"Semantic HTML makes your websites easier to understand and maintain.",
+ code:`<h1>My Portfolio</h1>
+
+<a href="#">View my projects</a>
+
+<img
+  src="https://via.placeholder.com/180"
+  alt="Project image"
+>`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h1>My Portfolio</h1>
+<a href="#">View my projects →</a>
+<div style="margin-top:15px;width:180px;height:100px;background:#dff5ea;display:grid;place-items:center;border-radius:12px">
+🖼️ Image
+</div>
+</div>
+`,
+ challenge:"Which HTML tag creates a hyperlink?",
+ answer:"a"
+},
+
+{
+ tech:"html",
+ group:"web",
+ title:"Forms",
+ description:"Create a way for users to send information.",
+ explanation:"Forms collect information from users such as names, emails and search queries.",
+ tip:"Forms are everywhere in real applications.",
+ code:`<form>
+  <label>Task</label>
+  <input placeholder="Enter a task">
+
+  <button>Add Task</button>
+</form>`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>Add Task</h2>
+<label>Task</label><br>
+<input placeholder="Enter a task" style="padding:10px;margin:7px 0;border:1px solid #ccc;border-radius:8px">
+<button style="padding:10px;background:#55e39b;border:0;border-radius:8px">
+Add Task
+</button>
+</div>
+`,
+ challenge:"Which HTML element collects user input?",
+ answer:"input"
+},
+
+{
+ tech:"html",
+ group:"web",
+ title:"Semantic HTML",
+ description:"Make your website structure meaningful.",
+ explanation:"Semantic elements communicate what different parts of a page represent.",
+ tip:"Use header, nav, main, section and footer where appropriate.",
+ code:`<header>
+  <h1>Task Manager</h1>
+</header>
+
+<main>
+  <section>
+    <h2>My Tasks</h2>
+  </section>
+</main>
+
+<footer>
+  CodeQuest
+</footer>`,
+ preview:`
+<div style="font-family:Arial;min-height:220px">
+<header style="padding:15px;background:#102832;color:white">
+<h2>Task Manager</h2>
+</header>
+<main style="padding:20px">
+<h3>My Tasks</h3>
+</main>
+<footer style="padding:12px;background:#eee">
+CodeQuest
+</footer>
+</div>
+`,
+ challenge:"Which semantic HTML element represents the main content?",
+ answer:"main"
+},
+
+{
+ tech:"html",
+ group:"web",
+ title:"HTML Project Page",
+ description:"Create the first screen of our final application.",
+ explanation:"You now have enough HTML knowledge to structure the Task Manager project.",
+ tip:"Build clean structure before worrying about visual styling.",
+ code:`<header>
+  <h1>My Tasks</h1>
+</header>
+
+<main>
+
+  <form>
+    <input placeholder="New task">
+    <button>Add</button>
+  </form>
+
+  <section>
+    <h2>Tasks</h2>
+  </section>
+
+</main>`,
+ preview:`
+<div style="font-family:Arial;padding:20px">
+<h1>My Tasks 📋</h1>
+<div style="display:flex;gap:7px">
+<input placeholder="New task" style="padding:10px;flex:1">
+<button style="padding:10px;background:#55e39b;border:0;border-radius:8px">Add</button>
+</div>
+<hr>
+<h2>Tasks</h2>
+</div>
+`,
+ challenge:"Which element should contain the main page content?",
+ answer:"main"
+},
+
+/* ================= CSS ================= */
+
+{
+ tech:"css",
+ group:"web",
+ title:"Your First CSS",
+ description:"Turn plain HTML into a designed interface.",
+ explanation:"CSS controls colors, spacing, typography, layout and visual appearance.",
+ tip:"CSS is where your application starts to feel like a real product.",
+ code:`body {
+  font-family: Arial;
 }
 
-],
-
-css:[
-
-{
-title:["Mission 01 — Give It Style","المهمة 01 — أضف التصميم"],
-sub:["CSS basics","أساسيات CSS"],
-intro:["Turn plain HTML into a beautiful page.","حوّل HTML البسيط إلى صفحة جميلة."],
-explain:["CSS controls colors, spacing, fonts and layout. Add a style tag to your HTML.","CSS يتحكم بالألوان والمسافات والخطوط والتخطيط."],
-sample:"<style>\nh1 { color: green; }\n</style>",
-tip:["Change the color and see the preview update.","غيّر اللون وشاهد المعاينة."],
-challenge:["Use CSS to change the h1 color.","استخدم CSS لتغيير لون h1."],
-code:"<style>\nh1 { color: #25a879; }\n</style>\n<h1>Styled Web!</h1>\n<p>CSS makes me happy.</p>",
-answer:"color",
-xp:100
+h1 {
+  color: #20a86b;
+}`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h1 style="color:#20a86b">My Beautiful App</h1>
+<p>CSS changed my page.</p>
+</div>
+`,
+ challenge:"Which CSS property changes text color?",
+ answer:"color"
 },
 
 {
-title:["Mission 02 — Create a Card","المهمة 02 — أنشئ بطاقة"],
-sub:["Box model","نموذج الصندوق"],
-intro:["Learn padding, margin and borders.","تعلّم padding و margin و borders."],
-explain:["Every element is a box. Padding adds space inside; margin adds space outside; border draws an edge.","كل عنصر عبارة عن صندوق. padding مساحة داخلية و margin مساحة خارجية و border إطار."],
-sample:".card { padding: 20px; margin: 10px; border: 2px solid; }",
-tip:["Try changing padding from 20px to 40px.","جرّب تغيير padding من 20px إلى 40px."],
-challenge:["Give .card padding and a border.","أضف padding و border إلى .card."],
-code:"<style>\n.card { padding: 24px; margin: 20px; border: 2px solid #25d69a; border-radius: 16px; }\n</style>\n<div class=\"card\"><h2>My Card</h2><p>Learning CSS!</p></div>",
-answer:"padding",
-xp:120
+ tech:"css",
+ group:"web",
+ title:"Cards",
+ description:"Create beautiful reusable UI cards.",
+ explanation:"Cards are a common design pattern for grouping related information.",
+ tip:"Use consistent spacing and border radius to create a cohesive interface.",
+ code:`.card {
+  padding: 20px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 30px #ddd;
+}`,
+ preview:`
+<div style="font-family:Arial;padding:25px;background:#f3f7f6;min-height:220px">
+<div style="padding:20px;border-radius:16px;background:white;box-shadow:0 10px 30px #ddd">
+<h2>📋 Task</h2>
+<p>Learn CSS cards</p>
+</div>
+</div>
+`,
+ challenge:"Which CSS property controls rounded corners?",
+ answer:"border-radius"
 },
 
 {
-title:["Mission 03 — Flex Your Layout","المهمة 03 — نسّق باستخدام Flex"],
-sub:["Flexbox","Flexbox"],
-intro:["Arrange elements like a pro.","رتّب العناصر مثل المحترفين."],
-explain:["display:flex turns a container into a flexible layout. justify-content and gap help arrange items.","display:flex ينشئ تخطيطاً مرناً، و justify-content و gap يساعدان في ترتيب العناصر."],
-sample:".row { display:flex; gap:16px; }",
-tip:["Try justify-content: space-between.","جرّب justify-content: space-between."],
-challenge:["Make the .row a flex container.","اجعل .row حاوية flex."],
-code:"<style>\n.row { display: flex; gap: 16px; justify-content: center; }\n.box { padding: 25px; background: #e7fff5; border-radius: 12px; }\n</style>\n<div class=\"row\"><div class=\"box\">HTML</div><div class=\"box\">CSS</div><div class=\"box\">JS</div></div>",
-answer:"display",
-xp:150
-},
-
-{
-title:["Mission 04 — Responsive Magic","المهمة 04 — سحر الاستجابة"],
-sub:["Responsive design","تصميم متجاوب"],
-intro:["Make your page work on phones.","اجعل صفحتك تعمل على الهاتف."],
-explain:["Media queries let CSS change at different screen sizes.","تسمح media queries لـ CSS بالتغير حسب حجم الشاشة."],
-sample:"@media (max-width: 600px) {\n  .card { padding: 10px; }\n}",
-tip:["Resize your browser and watch it change.","غيّر حجم المتصفح وشاهد التغيير."],
-challenge:["Add an @media rule for small screens.","أضف قاعدة @media للشاشات الصغيرة."],
-code:"<style>\nbody { font-family: sans-serif; }\n.card { padding: 30px; background: #e7fff5; }\n@media (max-width: 600px) { .card { padding: 10px; } }\n</style>\n<div class=\"card\"><h2>Responsive Card</h2><p>Try resizing the window.</p></div>",
-answer:"@media",
-xp:180
-},
-
-{
-title:["Mission 05 — Your CSS Project","المهمة 05 — مشروع CSS"],
-sub:["Design project","مشروع تصميم"],
-intro:["Design a mini landing page.","صمّم صفحة هبوط صغيرة."],
-explain:["Combine colors, typography, spacing, cards and responsive layout into your own design.","اجمع الألوان والخطوط والمسافات والبطاقات والتخطيط المتجاوب."],
-sample:".hero { text-align:center; padding:60px; }",
-tip:["Choose a visual style you love.","اختر أسلوباً بصرياً يعجبك."],
-challenge:["Style a page with color, padding and a button.","صمّم صفحة فيها لون و padding وزر."],
-code:"<style>\nbody{font-family:system-ui;background:#071522;color:white;text-align:center;padding:40px}\n.hero{max-width:650px;margin:auto;padding:45px;background:linear-gradient(135deg,#17405b,#123b38);border-radius:24px}\nbutton{padding:12px 22px;border:0;border-radius:10px;background:#25d69a;font-weight:bold}\n</style>\n<div class=\"hero\"><h1>My Dream Website</h1><p>Designed with CSS.</p><button>Explore</button></div>",
-answer:"style",
-xp:250
+ tech:"css",
+ group:"web",
+ title:"Flexbox",
+ description:"Arrange your interface using modern CSS layout.",
+ explanation:"Flexbox makes it easier to arrange elements in rows or columns.",
+ tip:"Flexbox is one of the most useful CSS tools for application layouts.",
+ code:`.stats {
+  display: flex;
+  gap: 15px;
 }
 
-],
-
-js:[
-
-{
-title:["Mission 01 — Make a Button Work","المهمة 01 — اجعل الزر يعمل"],
-sub:["JavaScript basics","أساسيات JavaScript"],
-intro:["Give your webpage behavior.","أضف التفاعل إلى صفحة الويب."],
-explain:["JavaScript can listen for clicks and change the page. Add an event listener to a button.","JavaScript يستطيع الاستماع للنقر وتغيير الصفحة."],
-sample:"button.addEventListener('click', () => {\n  alert('Hello!');\n});",
-tip:["Click the button in the preview.","اضغط الزر في المعاينة."],
-challenge:["Use addEventListener with a click event.","استخدم addEventListener مع حدث click."],
-code:"<button id=\"btn\">Click me!</button>\n<p id=\"message\"></p>\n<script>\ndocument.getElementById('btn').addEventListener('click', () => {\n  document.getElementById('message').textContent = 'You clicked it! 🎉';\n});\n<\/script>",
-answer:"addeventlistener",
-xp:100
+.card {
+  flex: 1;
+}`,
+ preview:`
+<div style="font-family:Arial;padding:20px">
+<h2>Dashboard</h2>
+<div style="display:flex;gap:12px">
+<div style="flex:1;padding:20px;background:#eafff3;border-radius:14px">12 Tasks</div>
+<div style="flex:1;padding:20px;background:#eef5ff;border-radius:14px">7 Done</div>
+<div style="flex:1;padding:20px;background:#fff5e8;border-radius:14px">5 Left</div>
+</div>
+</div>
+`,
+ challenge:"Which CSS value activates Flexbox?",
+ answer:"flex"
 },
 
 {
-title:["Mission 02 — Variables","المهمة 02 — المتغيرات"],
-sub:["Data","البيانات"],
-intro:["Store information in JavaScript.","خزّن المعلومات في JavaScript."],
-explain:["Variables hold values. const is great for values that do not need reassignment.","المتغيرات تخزن القيم. const مناسبة للقيم التي لا تحتاج إعادة تعيين."],
-sample:"const name = 'Ghada';\nconsole.log(name);",
-tip:["Change the name and run again.","غيّر الاسم وشغّل مرة أخرى."],
-challenge:["Create a const called name.","أنشئ const باسم name."],
-code:"<h2 id=\"hello\"></h2>\n<script>\nconst name = 'Web Builder';\ndocument.getElementById('hello').textContent = 'Hello, ' + name + '!';\n<\/script>",
-answer:"const",
-xp:110
+ tech:"css",
+ group:"web",
+ title:"Responsive Design",
+ description:"Make your application work on phones and desktops.",
+ explanation:"Responsive design allows a website to adapt to different screen sizes.",
+ tip:"Always test your interface at mobile widths.",
+ code:`@media (max-width: 700px) {
+  .dashboard {
+    display: block;
+  }
+}`,
+ preview:`
+<div style="font-family:Arial;padding:20px">
+<h2>📱 Responsive</h2>
+<p>Resize the browser and the layout can adapt.</p>
+<div style="padding:18px;background:#eafff3;border-radius:15px">
+Desktop → Tablet → Mobile
+</div>
+</div>
+`,
+ challenge:"Which CSS feature is commonly used for responsive breakpoints?",
+ answer:"media"
 },
 
 {
-title:["Mission 03 — Make Decisions","المهمة 03 — اتخاذ القرارات"],
-sub:["if / else","if / else"],
-intro:["Teach your app to make choices.","علّم تطبيقك اتخاذ القرارات."],
-explain:["if runs code when a condition is true. else handles the other case.","if تشغّل الكود عندما يكون الشرط صحيحاً، و else للحالة الأخرى."],
-sample:"const score = 80;\nif(score >= 50){ console.log('Passed'); }",
-tip:["Change score to 40 and see what happens.","غيّر score إلى 40 وشاهد النتيجة."],
-challenge:["Use if to check whether score is at least 50.","استخدم if للتحقق من أن score تساوي 50 أو أكثر."],
-code:"<p id=\"result\"></p>\n<script>\nconst score = 80;\nif (score >= 50) { document.getElementById('result').textContent = 'Passed!'; } else { document.getElementById('result').textContent = 'Try again!'; }\n<\/script>",
-answer:"if",
-xp:140
-},
-
-{
-title:["Mission 04 — Build a Counter","المهمة 04 — ابنِ عدّاداً"],
-sub:["DOM + events","DOM + الأحداث"],
-intro:["Build your first interactive component.","ابنِ أول مكوّن تفاعلي."],
-explain:["Change an element's text from JavaScript and respond to user actions.","غيّر نص العنصر من JavaScript واستجب لتفاعل المستخدم."],
-sample:"let count = 0;\ncount++;",
-tip:["Try adding a reset button.","جرّب إضافة زر إعادة ضبط."],
-challenge:["Make a button increase a visible number.","اجعل الزر يزيد رقماً ظاهراً."],
-code:"<button id=\"plus\">+1</button> <b id=\"count\">0</b>\n<script>\nlet count = 0;\ndocument.getElementById('plus').addEventListener('click', () => { count++; document.getElementById('count').textContent = count; });\n<\/script>",
-answer:"let",
-xp:180
-},
-
-{
-title:["Mission 05 — JavaScript Project","المهمة 05 — مشروع JavaScript"],
-sub:["Mini app","تطبيق صغير"],
-intro:["Build a tiny app with real interaction.","ابنِ تطبيقاً صغيراً بتفاعل حقيقي."],
-explain:["Combine variables, conditions, functions and DOM events to create something useful.","اجمع المتغيرات والشروط والدوال وأحداث DOM لبناء شيء مفيد."],
-sample:"function greet(){\n  // your code\n}",
-tip:["Make it yours: quiz, counter, calculator or habit tracker.","اجعله خاصاً بك: اختبار أو عدّاد أو آلة حاسبة أو متتبع عادة."],
-challenge:["Create a working interactive mini app.","أنشئ تطبيقاً صغيراً تفاعلياً يعمل."],
-code:"<h2>Mini Mood Checker</h2>\n<button id=\"happy\">😊 Happy</button> <button id=\"tired\">😴 Tired</button>\n<p id=\"message\">How are you?</p>\n<script>\nconst message = document.getElementById('message');\ndocument.getElementById('happy').onclick = () => message.textContent = 'Keep that energy! 🚀';\ndocument.getElementById('tired').onclick = () => message.textContent = 'Take a small break. 🌱';\n<\/script>",
-answer:"document",
-xp:300
+ tech:"css",
+ group:"web",
+ title:"Style the Task Manager",
+ description:"Give our final project a professional visual identity.",
+ explanation:"Good UI design combines hierarchy, spacing, contrast, consistency and responsiveness.",
+ tip:"Don't add decoration everywhere. Use visual hierarchy to guide the user.",
+ code:`.app {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px;
 }
 
-]
+.task {
+  padding: 16px;
+  margin: 10px 0;
+  border-radius: 14px;
+  background: #effff7;
+}`,
+ preview:`
+<div style="font-family:Arial;max-width:650px;margin:auto;padding:25px">
+<h1>My Tasks</h1>
+<div style="padding:17px;margin:10px 0;border-radius:14px;background:#effff7">
+☐ Learn JavaScript
+</div>
+<div style="padding:17px;margin:10px 0;border-radius:14px;background:#effff7">
+☑ Learn HTML
+</div>
+</div>
+`,
+ challenge:"Which CSS property controls the maximum width of an element?",
+ answer:"max-width"
+},
 
-};
+/* ================= JAVASCRIPT ================= */
 
+{
+ tech:"javascript",
+ group:"web",
+ title:"JavaScript Variables",
+ description:"Make your website think.",
+ explanation:"JavaScript adds behavior and logic to web pages.",
+ tip:"HTML gives structure, CSS gives style, JavaScript gives behavior.",
+ code:`const task = "Learn JavaScript";
+
+console.log(task);`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>⚡ JavaScript</h2>
+<p style="padding:15px;background:#fff8dd;border-radius:12px">
+Task: Learn JavaScript
+</p>
+</div>
+`,
+ challenge:"Which keyword creates a constant variable in JavaScript?",
+ answer:"const"
+},
+
+{
+ tech:"javascript",
+ group:"web",
+ title:"Events",
+ description:"Respond when users click buttons.",
+ explanation:"Events allow JavaScript to react to user actions.",
+ tip:"Buttons, forms and inputs can all trigger events.",
+ code:`const button =
+  document.querySelector("button");
+
+button.addEventListener(
+  "click",
+  () => {
+    alert("Task added!");
+  }
+);`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<button onclick="this.textContent='✓ Added!'"
+style="padding:12px 18px;background:#55e39b;border:0;border-radius:10px">
+Add Task
+</button>
+</div>
+`,
+ challenge:"Which event is commonly used when a button is pressed?",
+ answer:"click"
+},
+
+{
+ tech:"javascript",
+ group:"web",
+ title:"Arrays",
+ description:"Store multiple tasks together.",
+ explanation:"Arrays hold collections of values.",
+ tip:"Most real applications work with collections of data.",
+ code:`const tasks = [
+  "Learn HTML",
+  "Learn CSS",
+  "Learn JavaScript"
+];
+
+console.log(tasks);`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>📋 Tasks</h2>
+<ul>
+<li>Learn HTML</li>
+<li>Learn CSS</li>
+<li>Learn JavaScript</li>
+</ul>
+</div>
+`,
+ challenge:"Which JavaScript structure stores multiple values in order?",
+ answer:"array"
+},
+
+{
+ tech:"javascript",
+ group:"web",
+ title:"map()",
+ description:"Turn data into UI.",
+ explanation:"map() is frequently used to transform every item in an array.",
+ tip:"You'll use map constantly when working with React.",
+ code:`const tasks = [
+  "Learn React",
+  "Learn SQL",
+  "Build App"
+];
+
+const items = tasks.map(
+  task => "<li>" + task + "</li>"
+);`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>🔄 Data → UI</h2>
+<p>Every task became a UI element.</p>
+</div>
+`,
+ challenge:"Which JavaScript method transforms every item in an array?",
+ answer:"map"
+},
+
+{
+ tech:"javascript",
+ group:"web",
+ title:"Async & Fetch",
+ description:"Prepare to communicate with a backend.",
+ explanation:"fetch() lets browser JavaScript communicate with web APIs. This becomes important when our React app connects to a server.",
+ tip:"Frontend applications often spend a lot of time communicating with APIs.",
+ code:`async function loadTasks() {
+
+  const response =
+    await fetch("/api/tasks");
+
+  const tasks =
+    await response.json();
+
+  return tasks;
+}`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>🔌 API Connection</h2>
+<p style="color:green">✓ Tasks loaded from server</p>
+</div>
+`,
+ challenge:"Which JavaScript keyword pauses until an async operation completes?",
+ answer:"await"
+},
+
+/* ================= REACT ================= */
+
+{
+ tech:"react",
+ group:"fullstack",
+ title:"React Components",
+ description:"Build interfaces from reusable pieces.",
+ explanation:"React lets you create reusable components and compose them into applications.",
+ tip:"A component should have a clear responsibility.",
+ code:`function TaskCard() {
+  return (
+    <div>
+      <h3>Learn React</h3>
+      <p>Build reusable UI.</p>
+    </div>
+  );
+}`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<div style="padding:18px;background:#eafaff;border-radius:15px;border:1px solid #bcecff">
+<h2>⚛️ TaskCard</h2>
+<p>Reusable React component</p>
+</div>
+</div>
+`,
+ challenge:"What is the reusable building block of a React UI?",
+ answer:"component"
+},
+
+{
+ tech:"react",
+ group:"fullstack",
+ title:"React Props",
+ description:"Pass task information into components.",
+ explanation:"Props allow parent components to pass data to child components.",
+ tip:"Props flow into components.",
+ code:`function TaskCard({ title }) {
+  return (
+    <div>
+      <h3>{title}</h3>
+    </div>
+  );
+}
+
+<TaskCard title="Learn React" />`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>⚛️ Learn React</h2>
+<p>This title came through props.</p>
+</div>
+`,
+ challenge:"What does React call data passed into a component?",
+ answer:"props"
+},
+
+{
+ tech:"react",
+ group:"fullstack",
+ title:"React State",
+ description:"Give your application memory.",
+ explanation:"State stores values that can change while the user interacts with the application.",
+ tip:"When state changes, React can update the UI.",
+ code:`const [done, setDone] =
+  useState(false);
+
+setDone(true);`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<button style="padding:12px;background:#55e39b;border:0;border-radius:10px">
+✓ Completed
+</button>
+<p>State remembers the change.</p>
+</div>
+`,
+ challenge:"Which React Hook is commonly used for state?",
+ answer:"usestate"
+},
+
+{
+ tech:"react",
+ group:"fullstack",
+ title:"React Forms",
+ description:"Let users create tasks.",
+ explanation:"Controlled inputs allow React to keep form values in state.",
+ tip:"Forms are one of the first places where state becomes practical.",
+ code:`function TaskForm() {
+
+  const [title, setTitle] =
+    useState("");
+
+  return (
+    <input
+      value={title}
+      onChange={e =>
+        setTitle(e.target.value)
+      }
+    />
+  );
+}`,
+ preview:`
+<div style="font-family:Arial;padding:25px">
+<h2>Create Task</h2>
+<input
+placeholder="Type your task..."
+style="padding:12px;border:1px solid #ccc;border-radius:10px;width:100%"
+>
+</div>
+`,
+ challenge:"Which React concept stores the current input value?",
+ answer:"state"
+},
+
+{
+ tech:"react",
+ group:"fullstack",
+ title:"React Project Architecture",
+ description:"Organize the Task Manager like a real application.",
+ explanation:"Real React projects are divided into components, pages, services and other modules.",
+ tip:"Good architecture makes projects easier to grow.",
+ code:`src/
+├── App.jsx
+├── components/
+│   ├── TaskCard.jsx
+│   └── TaskForm.jsx
+├── pages/
+│   └── Dashboard.jsx
+└── api/
+    └── tasks.js`,
+ preview:`
+<div style="font-family:monospace;padding:25px">
+<h2>📁 React Project</h2>
+<p>src/</p>
+<p>├── App.jsx</p>
+<p>├── components/</p>
+<p>│ ├── TaskCard.jsx</p>
+<p>│ └── TaskForm.jsx</p>
+<p>└── pages/</p>
+<p>　 └── Dashboard.jsx</p>
+</div>
+`,
+ challenge:"What file commonly acts as the main React application component?",
+ answer:"app.jsx"
+},
+
+/* ================= SQL ================= */
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"Create the Database",
+ description:"Give your application permanent memory.",
+ explanation:"SQL databases store structured data in tables.",
+ tip:"The database is the long-term memory of many applications.",
+ code:`CREATE TABLE tasks (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  completed BOOLEAN DEFAULT FALSE
+);`,
+ preview:null,
+ challenge:"Which SQL command creates a table?",
+ answer:"create table"
+},
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"INSERT Tasks",
+ description:"Save a task in your database.",
+ explanation:"INSERT adds a new row.",
+ tip:"Specify the columns you're inserting into.",
+ code:`INSERT INTO tasks
+(title, completed)
+VALUES
+('Learn React', FALSE);`,
+ preview:null,
+ challenge:"Which SQL command adds new rows?",
+ answer:"insert"
+},
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"SELECT Tasks",
+ description:"Read tasks from your database.",
+ explanation:"SELECT retrieves data.",
+ tip:"You can select every column with * or specify exactly what you need.",
+ code:`SELECT *
+FROM tasks;`,
+ preview:null,
+ challenge:"Which SQL command retrieves data?",
+ answer:"select"
+},
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"UPDATE Tasks",
+ description:"Mark a task complete.",
+ explanation:"UPDATE changes existing rows.",
+ tip:"Use WHERE carefully so you only change the intended row.",
+ code:`UPDATE tasks
+SET completed = TRUE
+WHERE id = 1;`,
+ preview:null,
+ challenge:"Which SQL command changes existing rows?",
+ answer:"update"
+},
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"DELETE Tasks",
+ description:"Remove unwanted data.",
+ explanation:"DELETE removes rows from a table.",
+ tip:"A missing WHERE clause can delete every row.",
+ code:`DELETE FROM tasks
+WHERE id = 1;`,
+ preview:null,
+ challenge:"Which SQL command removes rows?",
+ answer:"delete"
+},
+
+{
+ tech:"sql",
+ group:"fullstack",
+ title:"Database Relationships",
+ description:"Connect users to their tasks.",
+ explanation:"Relational databases become powerful when tables are connected.",
+ tip:"Foreign keys create relationships between tables.",
+ code:`CREATE TABLE tasks (
+  id INTEGER PRIMARY KEY,
+  user_id INTEGER,
+  title TEXT,
+  FOREIGN KEY(user_id)
+    REFERENCES users(id)
+);`,
+ preview:null,
+ challenge:"What type of key connects a row to another table?",
+ answer:"foreign key"
+},
+
+/* ================= FINAL ================= */
+
+{
+ tech:"final",
+ group:"fullstack",
+ title:"🚀 Final Project — Build Your App",
+ description:"Combine everything you learned into a full-stack Task Manager.",
+ explanation:"Your final architecture has Python for programming/backend possibilities, HTML and CSS for web foundations, JavaScript for browser logic, React for the modern frontend, and SQL for persistent data.",
+ tip:"Build the smallest working version first. Then improve it.",
+ code:`Frontend
+  React
+    ↓
+API / Backend
+    ↓
+SQL Database
+
+Features:
+✓ Create tasks
+✓ Read tasks
+✓ Complete tasks
+✓ Delete tasks
+✓ User accounts`,
+ preview:`
+<div style="font-family:Arial;padding:22px;background:#f8fffb;min-height:250px">
+<h1>🚀 My Task Manager</h1>
+
+<div style="display:flex;gap:7px">
+<input
+placeholder="What do you need to do?"
+style="padding:11px;flex:1;border:1px solid #ccc;border-radius:9px">
+
+<button
+style="padding:11px 15px;background:#55e39b;border:0;border-radius:9px">
+Add
+</button>
+</div>
+
+<div style="margin-top:20px">
+
+<div style="padding:13px;margin:7px 0;background:white;border-radius:10px">
+☐ Learn React
+</div>
+
+<div style="padding:13px;margin:7px 0;background:white;border-radius:10px">
+☑ Learn SQL
+</div>
+
+<div style="padding:13px;margin:7px 0;background:white;border-radius:10px">
+☐ Build my app
+</div>
+
+</div>
+</div>
+`,
+ challenge:"What four operations make up CRUD?",
+ answer:"create read update delete"
+}
+
+];
 
 /* =========================================================
-   APP STATE
+   STATE
 ========================================================= */
 
-let course="html";
-let idx=0;
-let lang="en";
+let current =
+  Number(localStorage.getItem("cq_current") || 0);
 
-let xp=Number(localStorage.getItem("webquest_xp"))||0;
+let xp =
+  Number(localStorage.getItem("cq_xp") || 0);
 
-let done=JSON.parse(
-  localStorage.getItem("webquest_done")||"{}"
-);
+let completed =
+  JSON.parse(
+    localStorage.getItem("cq_completed") || "{}"
+  );
 
-let speechRate=1;
+let language =
+  localStorage.getItem("cq_language") || "en";
 
+let currentFilter="all";
+let speaking=false;
 
 /* =========================================================
-   HELPERS
+   SAVE
 ========================================================= */
-
-function key(){
-  return course+"_"+idx;
-}
-
-function L(){
-  return data[course][idx];
-}
-
-function tr(a){
-  return a[lang==="en"?0:1];
-}
 
 function save(){
 
-  localStorage.setItem("webquest_xp",xp);
-
   localStorage.setItem(
-    "webquest_done",
-    JSON.stringify(done)
+    "cq_current",
+    current
   );
 
-}
+  localStorage.setItem(
+    "cq_xp",
+    xp
+  );
 
+  localStorage.setItem(
+    "cq_completed",
+    JSON.stringify(completed)
+  );
+
+  localStorage.setItem(
+    "cq_language",
+    language
+  );
+}
 
 /* =========================================================
-   VOCAL SYSTEM
+   MISSION LIST
 ========================================================= */
 
-function stopVoice(){
+function filteredLessons(){
 
-  if("speechSynthesis" in window){
+  if(currentFilter==="all")
+    return lessons;
 
-    window.speechSynthesis.cancel();
-
-  }
-
-  $("speakBtn").textContent =
-    lang==="en" ? "🔊 Listen" : "🔊 استمع";
-
-  $("speakBtn").classList.remove("playing");
-
-}
-
-
-function getVoiceText(){
-
-  const m=L();
-
-  return [
-
-    tr(m.title),
-
-    tr(m.intro),
-
-    tr(m.explain),
-
-    tr(m.tip),
-
-    lang==="en"
-      ? "Your challenge is: "+tr(m.challenge)
-      : "التحدي الخاص بك هو: "+tr(m.challenge)
-
-  ].join(". ");
-
-}
-
-
-function chooseVoice(){
-
-  if(!("speechSynthesis" in window)) return null;
-
-  const voices=window.speechSynthesis.getVoices();
-
-  if(!voices.length) return null;
-
-  const wanted=lang==="ar"
-    ? ["ar-AE","ar-SA","ar"]
-    : ["en-US","en-GB","en"];
-
-  for(const wantedLang of wanted){
-
-    const found=voices.find(v =>
-      v.lang.toLowerCase().startsWith(
-        wantedLang.toLowerCase()
-      )
+  if(currentFilter==="python")
+    return lessons.filter(
+      x=>x.tech==="python"
     );
 
-    if(found) return found;
+  if(currentFilter==="web")
+    return lessons.filter(
+      x=>["html","css","javascript"].includes(x.tech)
+    );
 
-  }
+  if(currentFilter==="fullstack")
+    return lessons.filter(
+      x=>["react","sql","final"].includes(x.tech)
+    );
 
-  return voices[0];
-
+  return lessons;
 }
-
-
-function speakLesson(){
-
-  if(!("speechSynthesis" in window)){
-
-    $("output").innerHTML =
-      '<span class="err">⚠️ Speech is not supported by this browser.</span>';
-
-    return;
-
-  }
-
-  stopVoice();
-
-  const utterance=
-    new SpeechSynthesisUtterance(getVoiceText());
-
-  utterance.lang=lang==="ar"?"ar-AE":"en-US";
-
-  utterance.rate=speechRate;
-
-  utterance.pitch=1.05;
-
-  const voice=chooseVoice();
-
-  if(voice) utterance.voice=voice;
-
-  utterance.onstart=()=>{
-
-    $("speakBtn").textContent=
-      lang==="en" ? "⏹ Stop voice" : "⏹ إيقاف الصوت";
-
-    $("speakBtn").classList.add("playing");
-
-  };
-
-  utterance.onend=()=>{
-
-    $("speakBtn").textContent=
-      lang==="en" ? "🔊 Listen" : "🔊 استمع";
-
-    $("speakBtn").classList.remove("playing");
-
-  };
-
-  utterance.onerror=()=>{
-
-    $("speakBtn").textContent=
-      lang==="en" ? "🔊 Listen" : "🔊 استمع";
-
-    $("speakBtn").classList.remove("playing");
-
-  };
-
-  window.speechSynthesis.speak(utterance);
-
-}
-
-
-/* =========================================================
-   TRANSLATIONS
-========================================================= */
-
-const translations={
-
-tagline:[
-  "Build the web. One mission at a time.",
-  "ابنِ الويب. مهمة واحدة في كل مرة."
-],
-
-level:["Level","المستوى"],
-
-missionsDone:["Missions","المهام"],
-
-missions:["Missions","المهام"],
-
-progress:["Course progress","تقدم الدورة"],
-
-livePreview:["Live preview","المعاينة المباشرة"],
-
-status:["Lesson status","حالة الدرس"],
-
-challenge:["Challenge","التحدي"],
-
-check:["Check","تحقق"],
-
-learn:["Learn","تعلم"],
-
-voiceTitle:["Lesson Voice","صوت الدرس"],
-
-play:["Play lesson","تشغيل الدرس"],
-
-pause:["Pause","إيقاف مؤقت"],
-
-stop:["Stop","إيقاف"],
-
-speed:["Speed","السرعة"]
-
-};
-
-
-/* =========================================================
-   COURSE RENDER
-========================================================= */
-
-function renderCourses(){
-
-  document
-    .querySelectorAll(".course")
-    .forEach(b=>{
-
-      b.classList.toggle(
-        "active",
-        b.dataset.course===course
-      );
-
-    });
-
-}
-
 
 function renderMissions(){
 
-  const arr=data[course];
+  const list=$("missionList");
 
-  const set=done[course]||[];
+  list.innerHTML="";
 
-  $("missionList").innerHTML=
+  const visible=filteredLessons();
 
-    arr.map((m,i)=>`
+  visible.forEach(lesson=>{
 
-      <button
-        class="mission ${i===idx?"active ":""}${set.includes(i)?" done":""}"
-        data-index="${i}">
+    const index=
+      lessons.indexOf(lesson);
 
-        <span class="dot">
-          ${set.includes(i)?"✓":i+1}
-        </span>
+    const button=
+      document.createElement("button");
 
-        <span>
-          <strong>${tr(m.title)}</strong>
-          <small>${tr(m.sub)}</small>
-        </span>
+    button.className=
+      "mission "+
+      (index===current ? "active ":"")+
+      (completed[index] ? "done":"");
 
-      </button>
+    button.innerHTML=`
 
-    `).join("");
+      <span class="check">
+        ${completed[index]?"✓":""}
+      </span>
 
+      <span class="missionNum">
+        MISSION ${index+1}
+      </span>
 
-  document
-    .querySelectorAll(".mission")
-    .forEach(btn=>{
+      <span class="missionTitle">
+        ${lesson.title}
+      </span>
 
-      btn.addEventListener(
-        "click",
-        ()=>selectLesson(
-          Number(btn.dataset.index)
-        )
-      );
+    `;
 
-    });
-
-
-  const pct=
-    Math.round(
-      set.length/arr.length*100
+    button.addEventListener(
+      "click",
+      ()=>{
+        current=index;
+        save();
+        render();
+      }
     );
 
-  $("progressBar").style.width=
-    pct+"%";
+    list.appendChild(button);
 
-  $("progressText").textContent=
-    `${set.length} / ${arr.length} · ${pct}%`;
+  });
 
-  $("level").textContent=
-    Math.floor(xp/500)+1;
+  updateProgress();
+}
 
-  $("xp").textContent=xp;
+/* =========================================================
+   TECH ROAD
+========================================================= */
 
-  $("doneCount").textContent=
-    Object.values(done)
-      .flat()
-      .length;
+function updateRoad(){
+
+  const order=[
+    "python",
+    "html",
+    "css",
+    "javascript",
+    "react",
+    "sql"
+  ];
+
+  const currentTech=
+    lessons[current].tech;
+
+  order.forEach((tech,i)=>{
+
+    const el=
+      $("tech-"+tech);
+
+    const currentIndex=
+      order.indexOf(currentTech);
+
+    el.classList.toggle(
+      "active",
+      tech===currentTech
+    );
+
+    el.classList.toggle(
+      "done",
+      i<currentIndex
+    );
+
+  });
 
 }
 
-
 /* =========================================================
-   MAIN RENDER
+   RENDER LESSON
 ========================================================= */
 
 function render(){
 
   stopVoice();
 
-  const m=L();
+  const lesson=
+    lessons[current];
 
-  const saveKey=
-    "wq_code_"+course+"_"+idx;
+  const names={
+    python:"PYTHON",
+    html:"HTML",
+    css:"CSS",
+    javascript:"JAVASCRIPT",
+    react:"REACT",
+    sql:"SQL",
+    final:"FINAL PROJECT"
+  };
+
+  $("kicker").textContent=
+    `MISSION ${current+1} • ${names[lesson.tech]}`;
 
   $("title").textContent=
-    tr(m.title);
+    lesson.title;
 
-  $("sideTitle").textContent=
-    tr(m.title);
+  $("description").textContent=
+    lesson.description;
 
-  $("subtitle").textContent=
-    tr(m.sub);
-
-  $("sideIntro").textContent=
-    tr(m.intro);
-
-  $("explain").textContent=
-    tr(m.explain);
-
-  $("sample").textContent=
-    m.sample;
+  $("explanation").textContent=
+    lesson.explanation;
 
   $("tip").textContent=
-    tr(m.tip);
+    lesson.tip;
 
-  $("challengeText").textContent=
-    tr(m.challenge);
+  $("challenge").textContent=
+    lesson.challenge;
 
-  $("code").value=
-    localStorage.getItem(saveKey)||m.code;
-
-  $("feedback").textContent="";
+  $("codeEditor").value=
+    lesson.code;
 
   $("answer").value="";
 
-  $("fileTab").textContent=
-    course==="html"
-      ?"📄 index.html"
-      :course==="css"
-      ?"🎨 style.html"
-      :"⚡ app.html";
+  $("feedback").textContent="";
 
+  $("feedback").className=
+    "feedback";
 
-  document
-    .querySelectorAll("[data-t]")
-    .forEach(e=>{
+  $("finish").style.display=
+    current===lessons.length-1
+      ?"block"
+      :"none";
 
-      const value=
-        translations[e.dataset.t];
+  renderPreview();
 
-      if(value){
+  renderDatabase();
 
-        e.textContent=
-          value[lang==="en"?0:1];
-
-      }
-
-    });
-
-
-  $("answer").placeholder=
-    lang==="en"
-      ?"Type your answer…"
-      :"اكتب إجابتك…";
-
-
-  document.documentElement.lang=lang;
-
-  document.documentElement.dir=
-    lang==="ar"?"rtl":"ltr";
-
-
-  $("enBtn").classList.toggle(
-    "active",
-    lang==="en"
-  );
-
-  $("arBtn").classList.toggle(
-    "active",
-    lang==="ar"
-  );
-
-
-  renderCourses();
+  updateRoad();
 
   renderMissions();
 
-  updateLines();
+  updateStats();
 
-  runPreview();
+  const lessonPanel=
+    $("lesson");
+
+  lessonPanel.classList.remove("lesson");
+
+  void lessonPanel.offsetWidth;
+
+  lessonPanel.classList.add("lesson");
 
 }
-
 
 /* =========================================================
-   CODE EDITOR
+   PREVIEW
 ========================================================= */
 
-function updateLines(){
+function renderPreview(){
 
-  const count=
-    $("code").value.split("\n").length;
+  const lesson=
+    lessons[current];
 
-  $("lines").textContent=
-    Array.from(
-      {length:count},
-      (_,i)=>i+1
-    ).join("\n");
+  const preview=
+    $("preview");
 
-}
+  if(lesson.preview){
 
+    preview.innerHTML=
+      lesson.preview;
 
-function runPreview(){
+  }else{
 
-  const code=$("code").value;
+    preview.innerHTML=`
 
-  const iframe=$("preview");
+      <div style="
+        font-family:Arial;
+        padding:22px;
+        min-height:220px;
+        background:#f7fafb;
+      ">
 
-  try{
+        <h2>🗄️ SQL Database</h2>
 
-    if(course==="html"){
+        <p>
+          Your query is working with the
+          <strong>tasks</strong> table.
+        </p>
 
-      iframe.srcdoc=code;
+        <table style="
+          border-collapse:collapse;
+          width:100%;
+        ">
 
-    }
+          <tr>
+            <th style="border:1px solid #bbb;padding:7px">
+              id
+            </th>
+            <th style="border:1px solid #bbb;padding:7px">
+              title
+            </th>
+            <th style="border:1px solid #bbb;padding:7px">
+              completed
+            </th>
+          </tr>
 
-    else if(course==="css"){
+        </table>
 
-      iframe.srcdoc=
-        code.includes("<style")
-          ?code
-          :`
-            <style>${code}</style>
-            <div style="padding:30px">
-              <h2>CSS Preview 🎨</h2>
-              <p>Edit the CSS and press Run.</p>
-            </div>
-          `;
-
-    }
-
-    else{
-
-      iframe.srcdoc=code;
-
-    }
-
-    $("output").innerHTML=
-      `<span class="ok">✓ ${
-        lang==="en"
-          ?"Preview updated!"
-          :"تم تحديث المعاينة!"
-      }</span>`;
-
-  }catch(error){
-
-    $("output").innerHTML=
-      `<span class="err">⚠️ ${error.message}</span>`;
+      </div>
+    `;
 
   }
 
 }
 
-
 /* =========================================================
-   CHALLENGE CHECKING
+   RUN CODE
 ========================================================= */
 
-function check(){
-
-  const m=L();
-
-  const ans=
-    $("answer")
-      .value
-      .trim()
-      .toLowerCase();
+function runCode(){
 
   const code=
-    $("code")
-      .value
+    $("codeEditor").value
       .toLowerCase();
 
-  const target=
-    m.answer.toLowerCase();
-
-  let ok=
-    ans===target ||
-    code.includes(target);
-
+  const preview=
+    $("preview");
 
   if(
-    course==="html" &&
-    code.includes("<h1") &&
-    code.includes("<p")
+    code.includes("print(")
   ){
-    ok=true;
+
+    preview.innerHTML=`
+
+      <div style="
+        font-family:monospace;
+        background:#101820;
+        color:#fff;
+        min-height:220px;
+        padding:20px;
+      ">
+
+        <h3 style="color:#55e39b">
+          🐍 Python Console
+        </h3>
+
+        <div style="
+          background:#030708;
+          padding:14px;
+          border-radius:9px;
+        ">
+
+          &gt; Program executed successfully
+
+        </div>
+
+      </div>
+    `;
+
+  }else if(
+    code.includes("create table")
+  ){
+
+    showSQLResult("Table created");
+
+  }else if(
+    code.includes("insert into")
+  ){
+
+    showSQLResult("1 row inserted");
+
+  }else if(
+    code.includes("select")
+  ){
+
+    showSQLResult("3 rows returned");
+
+  }else if(
+    code.includes("update")
+  ){
+
+    showSQLResult("1 row updated");
+
+  }else if(
+    code.includes("delete")
+  ){
+
+    showSQLResult("1 row deleted");
+
+  }else if(
+    code.includes("fetch")
+  ){
+
+    preview.innerHTML=`
+
+      <div style="
+        font-family:Arial;
+        padding:22px;
+      ">
+
+        <h2>🔌 API</h2>
+
+        <p style="color:green">
+          ✓ Request sent
+        </p>
+
+        <p>
+          ✓ Response received
+        </p>
+
+      </div>
+    `;
+
+  }else{
+
+    preview.innerHTML=`
+
+      <div style="
+        font-family:Arial;
+        padding:22px;
+      ">
+
+        <h2>⚡ Code Executed</h2>
+
+        <div style="
+          padding:15px;
+          margin-top:12px;
+          background:#eafff3;
+          border-radius:13px;
+        ">
+
+          ✓ Your code was sent to the project preview.
+
+        </div>
+
+      </div>
+    `;
+
   }
 
+  preview.classList.remove("flash");
+
+  void preview.offsetWidth;
+
+  preview.classList.add("flash");
+
+  showToast(
+    language==="ar"
+      ?"▶ تم تشغيل الكود"
+      :"▶ Code executed"
+  );
+
+}
+
+/* =========================================================
+   SQL SIMULATOR
+========================================================= */
+
+function showSQLResult(message){
+
+  $("preview").innerHTML=`
+
+    <div style="
+      font-family:Arial;
+      padding:22px;
+      background:#f7fafb;
+      min-height:220px;
+    ">
+
+      <h2>🗄️ SQL Console</h2>
+
+      <p style="color:green">
+        ✓ ${message}
+      </p>
+
+      <div style="
+        padding:12px;
+        border-radius:10px;
+        background:#e9fff3;
+      ">
+        Database operation simulated successfully.
+      </div>
+
+    </div>
+  `;
+
+  $("dbResult").innerHTML=`
+
+    <table class="dbTable">
+
+      <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>completed</th>
+      </tr>
+
+      <tr>
+        <td>1</td>
+        <td>Learn React</td>
+        <td>false</td>
+      </tr>
+
+      <tr>
+        <td>2</td>
+        <td>Learn SQL</td>
+        <td>true</td>
+      </tr>
+
+      <tr>
+        <td>3</td>
+        <td>Build App</td>
+        <td>false</td>
+      </tr>
+
+    </table>
+  `;
+
+}
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+function renderDatabase(){
+
+  const tech=
+    lessons[current].tech;
+
+  $("dbResult").innerHTML="";
 
   if(
-    course==="css" &&
-    code.includes("<style")
+    tech==="sql" ||
+    tech==="final"
   ){
-    ok=true;
-  }
 
-
-  if(
-    course==="js" &&
-    code.includes("<script") &&
-    code.includes("document")
-  ){
-    ok=true;
-  }
-
-
-  if(ok){
-
-    done[course]=done[course]||[];
-
-    if(!done[course].includes(idx)){
-
-      done[course].push(idx);
-
-      xp+=m.xp;
-
-      save();
-
-    }
-
-    $("feedback").innerHTML=
-      `<span class="ok">
-        ✓ ${
-          lang==="en"
-            ?"Mission complete!"
-            :"اكتملت المهمة!"
-        }
-        +${m.xp} XP
-      </span>`;
-
-    renderMissions();
-
-  }
-
-  else{
-
-    $("feedback").innerHTML=
-      `<span class="err">
-        💡 ${
-          lang==="en"
-            ?"Not yet — edit the code and try again."
-            :"ليس بعد — عدّل الكود وحاول مرة أخرى."
-        }
-      </span>`;
+    showSQLResult("Ready");
 
   }
 
 }
 
-
 /* =========================================================
-   LESSON NAVIGATION
+   RESET
 ========================================================= */
 
-function selectLesson(i){
+function resetCode(){
 
-  idx=i;
+  $("codeEditor").value=
+    lessons[current].code;
 
-  render();
+  renderPreview();
+
+  showToast(
+    language==="ar"
+      ?"↻ تمت إعادة الكود"
+      :"↻ Code reset"
+  );
 
 }
 
-
 /* =========================================================
-   COURSE BUTTONS
+   CHECK ANSWER
 ========================================================= */
 
-document
-  .querySelectorAll(".course")
-  .forEach(b=>{
-
-    b.addEventListener("click",()=>{
-
-      course=b.dataset.course;
-
-      idx=0;
-
-      render();
-
-    });
-
-  });
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-$("runBtn").addEventListener(
-  "click",
-  runPreview
-);
-
-
-$("checkBtn").addEventListener(
-  "click",
-  check
-);
-
-
-$("resetBtn").addEventListener(
-  "click",
-  ()=>{
-
-    $("code").value=L().code;
-
-    localStorage.removeItem(
-      "wq_code_"+course+"_"+idx
-    );
-
-    updateLines();
-
-    runPreview();
-
-  }
-);
-
-
-$("saveBtn").addEventListener(
-  "click",
-  ()=>{
-
-    localStorage.setItem(
-      "wq_code_"+course+"_"+idx,
-      $("code").value
-    );
-
-    $("feedback").innerHTML=
-      `<span class="ok">
-        ✓ ${
-          lang==="en"
-            ?"Saved!"
-            :"تم الحفظ!"
-        }
-      </span>`;
-
-  }
-);
-
-
-/* =========================================================
-   VOICE BUTTONS
-========================================================= */
-
-$("speakBtn").addEventListener(
-  "click",
-  ()=>{
-
-    if(
-      "speechSynthesis" in window &&
-      window.speechSynthesis.speaking
-    ){
-
-      stopVoice();
-
-    }else{
-
-      speakLesson();
-
-    }
-
-  }
-);
-
-
-$("playVoice").addEventListener(
-  "click",
-  speakLesson
-);
-
-
-$("pauseVoice").addEventListener(
-  "click",
-  ()=>{
-
-    if(
-      "speechSynthesis" in window &&
-      window.speechSynthesis.speaking
-    ){
-
-      window.speechSynthesis.pause();
-
-    }
-
-  }
-);
-
-
-$("stopVoice").addEventListener(
-  "click",
-  stopVoice
-);
-
-
-$("voiceSpeed").addEventListener(
-  "input",
-  e=>{
-
-    speechRate=Number(e.target.value);
-
-    $("speedValue").textContent=
-      speechRate.toFixed(1)+"x";
-
-  }
-);
-
-
-/* =========================================================
-   CODE EDITOR EVENTS
-========================================================= */
-
-$("code").addEventListener(
-  "input",
-  updateLines
-);
-
-
-$("code").addEventListener(
-  "keydown",
-  e=>{
-
-    /* TAB inserts spaces */
-
-    if(e.key==="Tab"){
-
-      e.preventDefault();
-
-      const target=e.target;
-
-      const start=target.selectionStart;
-
-      const end=target.selectionEnd;
-
-      target.value=
-        target.value.slice(0,start)+
-        "    "+
-        target.value.slice(end);
-
-      target.selectionStart=
-        target.selectionEnd=
-        start+4;
-
-      updateLines();
-
-    }
-
-
-    /* Ctrl/Cmd + Enter = Run */
-
-    if(
-      (e.ctrlKey||e.metaKey) &&
-      e.key==="Enter"
-    ){
-
-      e.preventDefault();
-
-      runPreview();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   ENTER IN ANSWER = CHECK
-========================================================= */
-
-$("answer").addEventListener(
-  "keydown",
-  e=>{
-
-    if(e.key==="Enter"){
-
-      e.preventDefault();
-
-      check();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   LANGUAGE BUTTONS
-========================================================= */
-
-$("enBtn").addEventListener(
-  "click",
-  ()=>{
-
-    lang="en";
-
-    render();
-
-  }
-);
-
-
-$("arBtn").addEventListener(
-  "click",
-  ()=>{
-
-    lang="ar";
-
-    render();
-
-  }
-);
-
-
-/* =========================================================
-   SPEECH VOICES MAY LOAD AFTER PAGE LOAD
-========================================================= */
-
-if("speechSynthesis" in window){
-
-  window.speechSynthesis.onvoiceschanged=()=>{
-    /* Browser voices are now available */
-  };
-
-}
-
-
-/* =========================================================
-   START APP
-========================================================= */
-
-render();
-
-</script>
-
-</body>
-</html>
-
+function checkAnswer(){
+
+  const lesson=
+    less
+```
