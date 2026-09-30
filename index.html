@@ -2830,5 +2830,707 @@ function resetCode(){
 function checkAnswer(){
 
   const lesson=
-    less
- 
+    lessons[current];
+
+  const answer=
+    $("answer")
+      .value
+      .trim()
+      .toLowerCase()
+      .replace(/[.,!?]/g,"");
+
+  const expected=
+    lesson.answer
+      .toLowerCase()
+      .replace(/[.,!?]/g,"");
+
+  const challenge=
+    $("challengeBox");
+
+  if(answer===expected){
+
+    if(!completed[current]){
+
+      completed[current]=true;
+
+      const oldLevel=
+        getLevel();
+
+      xp+=25;
+
+      save();
+
+      updateStats();
+
+      celebrate();
+
+      if(getLevel()>oldLevel){
+
+        setTimeout(
+          showLevelUp,
+          500
+        );
+
+      }
+
+    }
+
+    $("feedback").textContent=
+      language==="ar"
+        ?"🎉 ممتاز! +25 XP"
+        :"🎉 Excellent! +25 XP";
+
+    $("feedback").className=
+      "feedback ok";
+
+    challenge.classList.remove("success");
+
+    void challenge.offsetWidth;
+
+    challenge.classList.add("success");
+
+    mascotReact();
+
+  }else{
+
+    $("feedback").textContent=
+      language==="ar"
+        ?"💪 حاول مرة أخرى!"
+        :"💪 Try again!";
+
+    $("feedback").className=
+      "feedback bad";
+
+    challenge.classList.remove("shake");
+
+    void challenge.offsetWidth;
+
+    challenge.classList.add("shake");
+
+  }
+
+}
+
+/* =========================================================
+   XP
+========================================================= */
+
+function getLevel(){
+
+  return Math.floor(xp/100)+1;
+
+}
+
+function updateStats(){
+
+  const done=
+    Object.keys(completed)
+      .filter(k=>completed[k])
+      .length;
+
+  $("xp").textContent=
+    xp;
+
+  $("level").textContent=
+    getLevel();
+
+  $("missionCount").textContent=
+    `${done}/${lessons.length}`;
+
+  updateProgress();
+
+}
+
+function updateProgress(){
+
+  const done=
+    lessons.filter(
+      (_,i)=>completed[i]
+    ).length;
+
+  const percent=
+    Math.round(
+      done/lessons.length*100
+    );
+
+  $("progressPercent").textContent=
+    percent+"%";
+
+  requestAnimationFrame(()=>{
+
+    $("progressFill").style.width=
+      percent+"%";
+
+  });
+
+}
+
+/* =========================================================
+   CELEBRATION
+========================================================= */
+
+function celebrate(){
+
+  const btn=
+    $("checkBtn");
+
+  const rect=
+    btn.getBoundingClientRect();
+
+  const xpEl=
+    document.createElement("div");
+
+  xpEl.className="xpFloat";
+
+  xpEl.textContent="+25 XP ⭐";
+
+  xpEl.style.left=
+    rect.left+rect.width/2+"px";
+
+  xpEl.style.top=
+    rect.top+"px";
+
+  document.body.appendChild(xpEl);
+
+  setTimeout(
+    ()=>xpEl.remove(),
+    1300
+  );
+
+  const symbols=[
+    "✨","⭐","🚀","🐍","⚛️","🎉"
+  ];
+
+  for(let i=0;i<35;i++){
+
+    const c=
+      document.createElement("span");
+
+    c.className="confetti";
+
+    c.textContent=
+      Math.random()>.75
+        ?symbols[
+          Math.floor(
+            Math.random()*symbols.length
+          )
+        ]
+        :"";
+
+    c.style.left=
+      rect.left+rect.width/2+"px";
+
+    c.style.top=
+      rect.top+"px";
+
+    c.style.background=[
+      "#55e39b",
+      "#a98cff",
+      "#ffd166",
+      "#5db7ff",
+      "#ff7070",
+      "#ff79c6"
+    ][Math.floor(Math.random()*6)];
+
+    c.style.setProperty(
+      "--x",
+      ((Math.random()-.5)*500)+"px"
+    );
+
+    c.style.setProperty(
+      "--y",
+      ((Math.random()-.75)*500)+"px"
+    );
+
+    document.body.appendChild(c);
+
+    setTimeout(
+      ()=>c.remove(),
+      1600
+    );
+
+  }
+
+  showToast(
+    language==="ar"
+      ?"🎉 المهمة مكتملة!"
+      :"🎉 Mission complete!"
+  );
+
+}
+
+/* =========================================================
+   MASCOT
+========================================================= */
+
+function mascotReact(){
+
+  $("mascot").animate(
+    [
+      {transform:"translateY(0)"},
+      {transform:"translateY(-12px) rotate(-5deg)"},
+      {transform:"translateY(-4px) rotate(5deg)"},
+      {transform:"translateY(0)"}
+    ],
+    {
+      duration:650,
+      easing:"ease-out"
+    }
+  );
+
+}
+
+/* =========================================================
+   LEVEL UP
+========================================================= */
+
+function showLevelUp(){
+
+  $("levelText").textContent=
+    language==="ar"
+      ?`وصلت إلى المستوى ${getLevel()}!`
+      :`You reached Level ${getLevel()}!`;
+
+  $("levelOverlay")
+    .classList
+    .add("show");
+
+}
+
+function closeLevel(){
+
+  $("levelOverlay")
+    .classList
+    .remove("show");
+
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  const toast=
+    $("toast");
+
+  toast.textContent=
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer=
+    setTimeout(
+      ()=>toast.classList.remove("show"),
+      2200
+    );
+
+}
+
+/* =========================================================
+   VOICE
+========================================================= */
+
+function chooseVoice(lang){
+
+  if(!("speechSynthesis" in window))
+    return null;
+
+  const voices=
+    speechSynthesis.getVoices();
+
+  if(!voices.length)
+    return null;
+
+  if(lang==="ar"){
+
+    return voices.find(v=>
+      v.lang.toLowerCase()
+        .startsWith("ar-ae")
+    )
+    ||
+    voices.find(v=>
+      v.lang.toLowerCase()
+        .startsWith("ar")
+    );
+
+  }
+
+  return voices.find(v=>
+    v.lang.toLowerCase()
+      .startsWith("en-us")
+  )
+  ||
+  voices.find(v=>
+    v.lang.toLowerCase()
+      .startsWith("en")
+  );
+
+}
+
+function speakLesson(){
+
+  if(!("speechSynthesis" in window)){
+
+    showToast("Voice is not supported.");
+
+    return;
+
+  }
+
+  stopVoice(false);
+
+  const lesson=
+    lessons[current];
+
+  let text;
+
+  if(language==="ar"){
+
+    text=
+      `المهمة ${current+1}.
+      ${lesson.title}.
+      ${lesson.description}.
+      ${lesson.explanation}.
+      نصيحة:
+      ${lesson.tip}.
+      التحدي:
+      ${lesson.challenge}.`;
+
+  }else{
+
+    text=
+      `Mission ${current+1}.
+      ${lesson.title}.
+      ${lesson.description}.
+      ${lesson.explanation}.
+      Pro tip:
+      ${lesson.tip}.
+      Challenge:
+      ${lesson.challenge}.`;
+
+  }
+
+  const utterance=
+    new SpeechSynthesisUtterance(text);
+
+  utterance.lang=
+    language==="ar"
+      ?"ar-AE"
+      :"en-US";
+
+  utterance.rate=
+    Number($("speed").value);
+
+  utterance.pitch=1.05;
+
+  const voice=
+    chooseVoice(language);
+
+  if(voice)
+    utterance.voice=voice;
+
+  utterance.onstart=()=>{
+
+    speaking=true;
+
+    $("mascot")
+      .classList
+      .add("talking");
+
+    $("listenBtn").textContent=
+      "🔊 Speaking...";
+
+  };
+
+  utterance.onend=()=>{
+
+    speaking=false;
+
+    $("mascot")
+      .classList
+      .remove("talking");
+
+    $("listenBtn").textContent=
+      "▶ Listen";
+
+  };
+
+  speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+function pauseVoice(){
+
+  if(!("speechSynthesis" in window))
+    return;
+
+  if(speechSynthesis.speaking){
+
+    speechSynthesis.pause();
+
+    $("pauseBtn").textContent=
+      "▶ Resume";
+
+  }else if(
+    speechSynthesis.paused
+  ){
+
+    speechSynthesis.resume();
+
+    $("pauseBtn").textContent=
+      "Ⅱ Pause";
+
+  }
+
+}
+
+function stopVoice(reset=true){
+
+  if("speechSynthesis" in window)
+    speechSynthesis.cancel();
+
+  speaking=false;
+
+  $("mascot")
+    .classList
+    .remove("talking");
+
+  if(reset)
+    $("listenBtn").textContent=
+      "▶ Listen";
+
+}
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+function setLanguage(lang){
+
+  language=lang;
+
+  save();
+
+  $("enBtn")
+    .classList
+    .toggle(
+      "active",
+      lang==="en"
+    );
+
+  $("arBtn")
+    .classList
+    .toggle(
+      "active",
+      lang==="ar"
+    );
+
+  document.documentElement.lang=
+    lang;
+
+  document.body.dir=
+    lang==="ar"
+      ?"rtl"
+      :"ltr";
+
+  render();
+
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+document.querySelectorAll(
+  ".courseTab"
+).forEach(button=>{
+
+  button.addEventListener(
+    "click",
+    ()=>{
+
+      currentFilter=
+        button.dataset.course;
+
+      document
+        .querySelectorAll(".courseTab")
+        .forEach(x=>
+          x.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      renderMissions();
+
+    }
+  );
+
+});
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+$("answer").addEventListener(
+  "keydown",
+  e=>{
+    if(e.key==="Enter")
+      checkAnswer();
+  }
+);
+
+$("codeEditor").addEventListener(
+  "keydown",
+  e=>{
+
+    if(e.key==="Tab"){
+
+      e.preventDefault();
+
+      const start=
+        e.target.selectionStart;
+
+      const end=
+        e.target.selectionEnd;
+
+      e.target.value=
+        e.target.value.substring(0,start)
+        +"  "
+        +e.target.value.substring(end);
+
+      e.target.selectionStart=
+      e.target.selectionEnd=
+        start+2;
+
+    }
+
+    if(
+      (e.ctrlKey||e.metaKey)
+      &&
+      e.key==="Enter"
+    ){
+
+      runCode();
+
+    }
+
+  }
+);
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+$("runBtn").addEventListener(
+  "click",
+  runCode
+);
+
+$("resetBtn").addEventListener(
+  "click",
+  resetCode
+);
+
+$("checkBtn").addEventListener(
+  "click",
+  checkAnswer
+);
+
+$("listenBtn").addEventListener(
+  "click",
+  speakLesson
+);
+
+$("pauseBtn").addEventListener(
+  "click",
+  pauseVoice
+);
+
+$("stopBtn").addEventListener(
+  "click",
+  ()=>stopVoice()
+);
+
+$("continueBtn").addEventListener(
+  "click",
+  closeLevel
+);
+
+$("enBtn").addEventListener(
+  "click",
+  ()=>setLanguage("en")
+);
+
+$("arBtn").addEventListener(
+  "click",
+  ()=>setLanguage("ar")
+);
+
+$("speed").addEventListener(
+  "input",
+  ()=>{
+    if(speaking)
+      speakLesson();
+  }
+);
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+function createParticles(){
+
+  const container=
+    $("particles");
+
+  for(let i=0;i<35;i++){
+
+    const p=
+      document.createElement("span");
+
+    p.className="particle";
+
+    p.style.left=
+      Math.random()*100+"%";
+
+    p.style.animationDuration=
+      7+Math.random()*12+"s";
+
+    p.style.animationDelay=
+      -Math.random()*15+"s";
+
+    const size=
+      2+Math.random()*5;
+
+    p.style.width=
+      size+"px";
+
+    p.style.height=
+      size+"px";
+
+    container.appendChild(p);
+
+  }
+
+}
+
+/* =========================================================
+   START
+========================================================= */
+
+createParticles();
+
+setLanguage(language);
+
+</script>
+
+</body>
+</html>
+
