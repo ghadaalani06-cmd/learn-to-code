@@ -1,2212 +1,1840 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Web Quest — HTML, CSS & JavaScript</title>
 
 <style>
 :root{
-  --bg:#071b1d;
-  --panel:#0d292b;
-  --panel2:#123638;
-  --border:#225154;
-  --green:#54e39a;
-  --green2:#2bcf7d;
-  --purple:#a78bfa;
-  --yellow:#ffd166;
-  --red:#ff6b6b;
-  --text:#effff8;
-  --muted:#9bbab5;
-  --shadow:0 15px 45px rgba(0,0,0,.28);
+  --bg:#071522;--panel:#0d2232;--panel2:#102b3f;
+  --ink:#f5fbff;--muted:#a9c0cf;--green:#25d69a;
+  --green2:#7cf0c5;--yellow:#ffd65a;--purple:#9b7cff;
+  --blue:#51b9ff;--line:#244457;--danger:#ff6b7a
 }
-
 *{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
 
 body{
   margin:0;
-  min-height:100vh;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 10% 10%,rgba(84,227,154,.09),transparent 25%),
-    radial-gradient(circle at 90% 20%,rgba(167,139,250,.09),transparent 25%),
-    linear-gradient(135deg,#061719,#0a2426 55%,#071b1d);
-  overflow-x:hidden;
+  background:radial-gradient(circle at 50% -10%,#17405b 0,#071522 42%,#050e16 100%);
+  color:var(--ink);
+  font-family:Inter,system-ui,sans-serif
 }
 
-/* ---------- BACKGROUND ---------- */
-
-#particles{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
+button{
+  font:inherit;
+  cursor:pointer;
+  border:0
 }
 
-.particle{
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:rgba(84,227,154,.28);
-  animation:particleFloat linear infinite;
-}
-
-@keyframes particleFloat{
-  0%{transform:translateY(110vh) scale(.5);opacity:0}
-  15%{opacity:1}
-  85%{opacity:1}
-  100%{transform:translateY(-20vh) scale(1.4);opacity:0}
-}
-
-/* ---------- HEADER ---------- */
-
-header{
-  position:relative;
-  z-index:2;
-  padding:18px 24px;
+.top{
+  min-height:82px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  background:rgba(7,27,29,.82);
-  backdrop-filter:blur(18px);
+  gap:16px;
+  padding:10px 22px;
+  border-bottom:1px solid #173447;
+  background:#06131edb;
   position:sticky;
   top:0;
+  z-index:20;
+  backdrop-filter:blur(12px)
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:11px;
+  min-width:245px
 }
 
-.logo{
-  width:65px;
-  height:65px;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(145deg,#164b43,#0b292b);
-  border:1px solid rgba(84,227,154,.25);
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  animation:logoFloat 3s ease-in-out infinite;
-}
+.brand h1{font-size:22px;margin:0}
+.brand small{color:var(--green2);font-weight:700}
 
-@keyframes logoFloat{
-  0%,100%{transform:translateY(0) rotate(-2deg)}
-  50%{transform:translateY(-7px) rotate(2deg)}
-}
+.mascot{width:55px;height:55px}
 
-.logo svg{
-  width:52px;
-  height:52px;
-}
-
-.mascot-eye{
-  transform-box:fill-box;
-  transform-origin:center;
-  animation:blink 5s infinite;
-}
-
-@keyframes blink{
-  0%,92%,100%{transform:scaleY(1)}
-  94%,96%{transform:scaleY(.08)}
-}
-
-.mascot-body{
-  animation:mascotBob 2s ease-in-out infinite;
-  transform-origin:center;
-}
-
-@keyframes mascotBob{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-3px)}
-}
-
-.talking .mascot-body{
-  animation:talkBob .28s ease-in-out infinite alternate;
-}
-
-@keyframes talkBob{
-  from{transform:translateY(0)}
-  to{transform:translateY(-4px)}
-}
-
-.brand h1{
-  margin:0;
-  font-size:22px;
-}
-
-.brand p{
-  margin:3px 0 0;
-  color:var(--muted);
-  font-size:12px;
-}
-
-.header-right{
+.stats{
   display:flex;
-  align-items:center;
   gap:10px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
+  margin-left:auto
 }
 
 .stat{
-  padding:9px 13px;
-  border:1px solid var(--border);
+  background:#0d2434;
+  border:1px solid var(--line);
+  padding:7px 13px;
   border-radius:13px;
-  background:rgba(255,255,255,.025);
-  font-size:13px;
+  min-width:82px
 }
 
-.stat strong{color:var(--green)}
+.stat b{
+  display:block;
+  color:var(--yellow)
+}
 
-.lang button,
-.course-btn,
-button{
-  font:inherit;
+.stat span{
+  font-size:10px;
+  color:var(--muted)
 }
 
 .lang{
-  display:flex;
-  gap:5px;
+  background:#18394d;
+  color:#fff;
+  padding:8px 11px;
+  border-radius:10px
 }
 
-.lang button{
-  cursor:pointer;
-  border:1px solid var(--border);
-  color:var(--muted);
-  background:#0c2729;
-  border-radius:9px;
-  padding:7px 10px;
-}
-
-.lang button.active{
-  color:#061b18;
+.lang.active{
   background:var(--green);
-  border-color:var(--green);
+  color:#062116
 }
 
-/* ---------- COURSE NAV ---------- */
-
-.course-nav{
-  position:relative;
-  z-index:1;
-  max-width:1500px;
-  margin:22px auto 0;
-  padding:0 22px;
+.courses{
   display:flex;
-  gap:12px;
+  gap:8px;
+  padding:12px 20px;
+  background:#081b29;
+  border-bottom:1px solid #173447;
+  overflow:auto
 }
 
-.course-btn{
-  cursor:pointer;
-  flex:1;
-  min-height:58px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  color:var(--text);
-  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
-  transition:.25s;
+.course{
+  padding:9px 16px;
+  border-radius:10px;
+  background:#102d40;
+  color:#dcebf2;
   font-weight:800;
-  position:relative;
-  overflow:hidden;
+  white-space:nowrap;
+  border:1px solid transparent
 }
 
-.course-btn:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
-  transform:translateX(-120%);
-  transition:.5s;
+.course.active{
+  background:#174f47;
+  border-color:var(--green)
 }
 
-.course-btn:hover:before{
-  transform:translateX(120%);
-}
-
-.course-btn:hover{
-  transform:translateY(-4px);
-  border-color:rgba(84,227,154,.5);
-  box-shadow:0 12px 30px rgba(0,0,0,.2);
-}
-
-.course-btn.active{
-  border-color:var(--green);
-  background:linear-gradient(145deg,rgba(84,227,154,.15),rgba(84,227,154,.04));
-  box-shadow:0 0 30px rgba(84,227,154,.08);
-}
-
-/* ---------- LAYOUT ---------- */
-
-.app{
-  position:relative;
-  z-index:1;
-  max-width:1500px;
-  margin:20px auto;
-  padding:0 22px 40px;
+.layout{
   display:grid;
-  grid-template-columns:245px minmax(0,1fr) 300px;
-  gap:18px;
-}
-
-.panel{
-  background:rgba(13,41,43,.84);
-  border:1px solid var(--border);
-  border-radius:20px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(15px);
+  grid-template-columns:235px minmax(450px,1fr) 330px;
+  min-height:calc(100vh - 132px)
 }
 
 .sidebar{
-  padding:16px;
-  height:max-content;
-  position:sticky;
-  top:105px;
+  padding:17px;
+  border-right:1px solid #173447;
+  background:#05121bd9
 }
 
-.sidebar-title{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:1.2px;
+.side-title{
   color:var(--muted);
-  margin-bottom:12px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin:6px 8px 12px
 }
 
 .mission{
-  width:100%;
-  text-align:left;
-  padding:13px;
-  margin-bottom:8px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:11px;
+  border-radius:12px;
+  color:#d8e8ef;
+  margin-bottom:6px;
   border:1px solid transparent;
-  border-radius:13px;
-  color:var(--text);
-  background:rgba(255,255,255,.025);
-  cursor:pointer;
-  transition:.2s;
+  text-align:left;
+  width:100%;
+  background:transparent
 }
 
-.mission:hover{
-  transform:translateX(4px);
-  background:rgba(255,255,255,.055);
-}
+.mission:hover{background:#102d40}
 
 .mission.active{
-  border-color:rgba(84,227,154,.5);
-  background:rgba(84,227,154,.08);
+  background:#103a42;
+  border-color:#1dd394
 }
 
-.mission.done{
-  opacity:.72;
+.dot{
+  width:28px;
+  height:28px;
+  flex:none;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#18384a;
+  font-size:12px
 }
 
-.mission-number{
-  font-size:11px;
-  color:var(--green);
-  font-weight:800;
+.done .dot{
+  background:var(--green);
+  color:#062116
 }
 
-.mission-title{
+.mission strong{
   display:block;
-  margin-top:4px;
-  font-weight:700;
-  font-size:13px;
+  font-size:12px
 }
 
-.mission-check{
-  float:right;
-  color:var(--green);
-  font-size:17px;
+.mission small{
+  color:#88a5b4;
+  font-size:10px
+}
+
+.progress{
+  margin-top:18px;
+  padding:14px;
+  background:#0b2638;
+  border:1px solid var(--line);
+  border-radius:14px
+}
+
+.bar{
+  height:8px;
+  background:#173b4e;
+  border-radius:99px;
+  overflow:hidden;
+  margin:9px 0
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--green),#68efbf);
+  width:0;
+  transition:.4s
 }
 
 .main{
-  min-width:0;
+  padding:18px;
+  min-width:0
 }
 
-.content-card{
-  padding:22px;
-  animation:lessonEnter .45s ease both;
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px
 }
 
-@keyframes lessonEnter{
-  from{
-    opacity:0;
-    transform:translateY(15px) scale(.985);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
+.head h2{
+  margin:0;
+  font-size:20px
 }
 
-.lesson-kicker{
-  color:var(--green);
-  text-transform:uppercase;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:1.4px;
+.pill{
+  padding:5px 9px;
+  border-radius:99px;
+  background:#123b38;
+  color:var(--green2);
+  font-size:10px;
+  font-weight:900
 }
 
-.lesson-title{
-  font-size:30px;
-  margin:7px 0;
-}
-
-.lesson-description{
-  color:var(--muted);
-  line-height:1.7;
-}
-
-.code-preview{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-  margin-top:18px;
-}
-
-.editor-box,
-.preview-box{
-  border:1px solid var(--border);
+.editor-card{
+  border:1px solid #29485a;
   border-radius:16px;
   overflow:hidden;
-  background:#071719;
+  background:#06131d;
+  box-shadow:0 16px 45px #0005
 }
 
-.box-header{
+.editor-top{
   display:flex;
+  gap:7px;
   align-items:center;
-  justify-content:space-between;
-  padding:10px 13px;
-  border-bottom:1px solid var(--border);
-  background:#0c2224;
-  color:var(--muted);
-  font-size:12px;
+  padding:9px;
+  background:#0b1e2c;
+  border-bottom:1px solid #234052;
+  flex-wrap:wrap
 }
 
-.dots{
-  display:flex;
-  gap:5px;
+.tab{
+  background:#102c40;
+  padding:8px 12px;
+  border-radius:9px;
+  font-size:12px
 }
 
-.dots span{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#375b5b;
+.run{
+  margin-left:auto;
+  background:var(--green);
+  color:#062218;
+  padding:9px 15px;
+  border-radius:9px;
+  font-weight:900
 }
 
-textarea{
+.secondary{
+  background:#173244;
+  color:#dcecf3;
+  padding:9px 12px;
+  border-radius:9px
+}
+
+.voice{
+  background:#9b7cff;
+  color:white;
+  padding:9px 13px;
+  border-radius:9px;
+  font-weight:800
+}
+
+.voice.playing{
+  background:#ff6680
+}
+
+.editor{
+  display:grid;
+  grid-template-columns:45px 1fr
+}
+
+.lines{
+  padding:16px 7px;
+  text-align:right;
+  color:#506b7b;
+  background:#06121c;
+  font:13px/1.7 monospace;
+  user-select:none;
+  overflow:hidden
+}
+
+.code{
   width:100%;
-  min-height:270px;
+  height:370px;
   resize:vertical;
-  display:block;
+  background:#06121c;
+  color:#d7f8e9;
   border:0;
   outline:0;
-  padding:16px;
-  color:#c9ffe3;
-  background:#061416;
-  font:13px/1.7 "SFMono-Regular",Consolas,monospace;
-}
-
-textarea:focus{
-  box-shadow:inset 0 0 0 1px rgba(84,227,154,.3);
+  padding:16px 13px;
+  font:14px/1.7 ui-monospace,monospace;
+  tab-size:4
 }
 
 .preview{
-  min-height:270px;
-  padding:16px;
-  background:#fff;
-  color:#111;
-  overflow:auto;
-  transition:.3s;
+  margin-top:12px;
+  background:#f8fbfd;
+  border:1px solid #d5e4eb;
+  border-radius:14px;
+  overflow:hidden;
+  color:#183547
 }
 
-.preview.updated{
-  animation:previewFlash .5s ease;
+.preview-head{
+  padding:8px 12px;
+  background:#eaf2f6;
+  font-size:11px;
+  font-weight:800
 }
 
-@keyframes previewFlash{
-  0%{box-shadow:inset 0 0 0 0 rgba(84,227,154,0)}
-  50%{box-shadow:inset 0 0 35px rgba(84,227,154,.45)}
-  100%{box-shadow:inset 0 0 0 0 rgba(84,227,154,0)}
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:13px;
-  flex-wrap:wrap;
-}
-
-.primary,
-.secondary{
+.preview iframe{
+  display:block;
+  width:100%;
+  height:230px;
   border:0;
-  border-radius:12px;
-  padding:11px 17px;
-  cursor:pointer;
-  font-weight:800;
-  transition:.2s;
+  background:#fff
 }
 
-.primary{
-  color:#052019;
-  background:var(--green);
+.bottom{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px
 }
 
-.primary:hover{
-  transform:translateY(-2px) scale(1.02);
-  box-shadow:0 8px 22px rgba(84,227,154,.22);
+.box{
+  background:#0a1c29;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px
 }
 
-.secondary{
-  color:var(--text);
-  border:1px solid var(--border);
-  background:#102d2f;
-}
-
-.secondary:hover{
-  transform:translateY(-2px);
-  border-color:#397071;
-}
-
-.primary.pulse{
-  animation:buttonPulse 1.4s infinite;
-}
-
-@keyframes buttonPulse{
-  0%,100%{box-shadow:0 0 0 rgba(84,227,154,0)}
-  50%{box-shadow:0 0 25px rgba(84,227,154,.25)}
-}
-
-/* ---------- CHALLENGE ---------- */
-
-.challenge{
-  margin-top:18px;
-  padding:18px;
-  border:1px solid rgba(167,139,250,.3);
-  border-radius:17px;
-  background:rgba(167,139,250,.055);
-}
-
-.challenge h3{
+.box h3{
   margin:0 0 8px;
+  font-size:13px
 }
 
-.challenge p{
-  color:var(--muted);
-  line-height:1.6;
+.output{
+  min-height:75px;
+  white-space:pre-wrap;
+  color:#c9f8e4;
+  font:12px/1.6 monospace
 }
 
 .challenge input{
   width:100%;
-  padding:12px;
-  border-radius:11px;
-  border:1px solid var(--border);
-  outline:none;
-  background:#071719;
+  padding:9px;
+  border-radius:8px;
+  border:1px solid #2c4b5c;
+  background:#071522;
   color:white;
+  margin:7px 0
 }
 
-.challenge input:focus{
-  border-color:var(--purple);
-}
-
-.challenge.shake{
-  animation:shake .45s;
-}
-
-.challenge.success{
-  animation:successGlow .9s;
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-6px)}
-  80%{transform:translateX(6px)}
-}
-
-@keyframes successGlow{
-  0%{box-shadow:0 0 0 rgba(84,227,154,0)}
-  45%{box-shadow:0 0 40px rgba(84,227,154,.4)}
-  100%{box-shadow:0 0 0 rgba(84,227,154,0)}
+.check{
+  background:var(--purple);
+  color:#fff;
+  padding:9px 12px;
+  border-radius:8px;
+  font-weight:800
 }
 
 .feedback{
-  min-height:24px;
-  margin-top:10px;
-  font-weight:800;
+  margin-top:8px;
+  font-size:11px;
+  min-height:17px
 }
 
-.feedback.ok{color:var(--green)}
-.feedback.bad{color:var(--red)}
+.ok{color:var(--green2)}
+.err{color:#ff9ca8}
 
-/* ---------- RIGHT PANEL ---------- */
-
-.lesson-panel{
-  padding:18px;
-  height:max-content;
-  position:sticky;
-  top:105px;
+.right{
+  padding:17px;
+  border-left:1px solid #173447;
+  background:#f4f9fb;
+  color:#102b3c
 }
 
-.lesson-panel h3{
-  margin-top:0;
+.card{
+  border-radius:15px;
+  background:#fff;
+  border:1px solid #d8e6ed;
+  overflow:hidden
 }
 
-.explain{
-  color:var(--muted);
-  line-height:1.7;
-  font-size:14px;
+.banner{
+  padding:16px;
+  background:linear-gradient(135deg,#e8fff5,#eef7ff)
+}
+
+.banner h2{
+  margin:0 0 4px;
+  font-size:17px
+}
+
+.banner p{
+  margin:0;
+  color:#567080;
+  font-size:12px
+}
+
+.info{
+  padding:15px
+}
+
+.info h3{
+  margin:0 0 7px;
+  font-size:14px
+}
+
+.info p{
+  color:#536b78;
+  font-size:12px;
+  line-height:1.55
+}
+
+.sample{
+  background:#0a1d2a;
+  color:#d9f8ea;
+  border-radius:9px;
+  padding:10px;
+  font:11px/1.55 monospace;
+  white-space:pre-wrap
 }
 
 .tip{
-  margin-top:15px;
-  padding:13px;
-  border-left:3px solid var(--yellow);
-  background:rgba(255,209,102,.06);
-  border-radius:8px;
-  font-size:13px;
-  line-height:1.6;
+  margin-top:10px;
+  background:#e8fff6;
+  border:1px solid #a8e7ce;
+  border-radius:10px;
+  padding:10px;
+  font-size:11px;
+  color:#245d4d
 }
 
-.voice{
-  margin-top:17px;
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  background:rgba(255,255,255,.025);
-}
-
-.voice-title{
-  font-size:12px;
+.reward{
+  margin-top:10px;
+  padding:11px;
+  border-radius:10px;
+  background:#fff7d8;
+  border:1px solid #f3dd8d;
+  color:#765c00;
   font-weight:800;
-  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between
+}
+
+footer{
+  text-align:center;
+  padding:13px;
+  color:#668293;
+  font-size:10px
+}
+
+.voice-panel{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  background:#0b2638;
+  border:1px solid #29485a
+}
+
+.voice-panel-title{
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:8px
 }
 
 .voice-controls{
   display:flex;
-  gap:6px;
-  flex-wrap:wrap;
+  gap:7px;
+  flex-wrap:wrap
 }
 
 .voice-controls button{
-  cursor:pointer;
-  padding:8px 10px;
+  padding:8px 11px;
   border-radius:9px;
-  border:1px solid var(--border);
-  color:var(--text);
-  background:#102d2f;
+  background:#173244;
+  color:white
 }
 
 .voice-controls button:hover{
-  border-color:var(--green);
+  background:#22506a
 }
 
 .speed{
-  margin-top:10px;
   display:flex;
   align-items:center;
   gap:8px;
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
+  margin-top:8px
 }
 
 .speed input{
-  width:100%;
+  width:130px
 }
 
-/* ---------- XP ---------- */
-
-.progress-wrap{
-  margin-top:18px;
-}
-
-.progress-label{
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-  font-size:11px;
-  margin-bottom:7px;
-}
-
-.progress{
-  height:9px;
-  border-radius:99px;
-  background:#071719;
-  overflow:hidden;
-  border:1px solid var(--border);
-}
-
-.progress-fill{
-  height:100%;
-  width:0;
-  border-radius:inherit;
-  background:linear-gradient(90deg,var(--green2),#8df6bd);
-  transition:width .8s cubic-bezier(.2,.8,.2,1);
-  position:relative;
-}
-
-.progress-fill:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
-  animation:progressShine 1.8s infinite;
-}
-
-@keyframes progressShine{
-  from{transform:translateX(-100%)}
-  to{transform:translateX(100%)}
-}
-
-/* ---------- TOAST ---------- */
-
-#toast{
-  position:fixed;
-  left:50%;
-  top:90px;
-  transform:translateX(-50%) translateY(-20px);
-  z-index:20;
-  padding:12px 18px;
-  border-radius:14px;
-  background:#123b32;
-  border:1px solid rgba(84,227,154,.5);
-  box-shadow:0 15px 40px rgba(0,0,0,.3);
-  opacity:0;
-  pointer-events:none;
-  transition:.35s;
-  font-weight:800;
-}
-
-#toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-/* ---------- XP FLOAT ---------- */
-
-.xp-float{
-  position:fixed;
-  z-index:30;
-  pointer-events:none;
-  color:var(--yellow);
-  font-size:20px;
-  font-weight:1000;
-  animation:xpFloat 1.3s ease forwards;
-}
-
-@keyframes xpFloat{
-  0%{
-    opacity:0;
-    transform:translate(-50%,0) scale(.7);
+@media(max-width:1050px){
+  .layout{
+    grid-template-columns:190px 1fr
   }
-  20%{
-    opacity:1;
-    transform:translate(-50%,-15px) scale(1.15);
+  .right{display:none}
+}
+
+@media(max-width:720px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .top{
+    height:auto;
+    flex-wrap:wrap
   }
-  100%{
-    opacity:0;
-    transform:translate(-50%,-100px) scale(1);
-  }
-}
-
-/* ---------- CONFETTI ---------- */
-
-.confetti{
-  position:fixed;
-  z-index:25;
-  width:8px;
-  height:13px;
-  pointer-events:none;
-  animation:confettiFall 1.5s ease-out forwards;
-}
-
-@keyframes confettiFall{
-  0%{
-    opacity:1;
-    transform:translate(0,0) rotate(0);
-  }
-  100%{
-    opacity:0;
-    transform:translate(var(--x),var(--y)) rotate(720deg);
-  }
-}
-
-/* ---------- LEVEL UP ---------- */
-
-.levelup{
-  position:fixed;
-  inset:0;
-  z-index:40;
-  display:grid;
-  place-items:center;
-  background:rgba(0,0,0,.65);
-  backdrop-filter:blur(8px);
-  opacity:0;
-  pointer-events:none;
-  transition:.3s;
-}
-
-.levelup.show{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.level-card{
-  text-align:center;
-  padding:35px;
-  border-radius:25px;
-  border:1px solid rgba(84,227,154,.5);
-  background:linear-gradient(145deg,#123c35,#0b2729);
-  box-shadow:0 0 80px rgba(84,227,154,.25);
-  transform:scale(.6) rotate(-5deg);
-}
-
-.levelup.show .level-card{
-  animation:levelPop .65s cubic-bezier(.17,.89,.32,1.49) forwards;
-}
-
-@keyframes levelPop{
-  to{transform:scale(1) rotate(0)}
-}
-
-.level-icon{
-  font-size:65px;
-  animation:trophyBounce 1s infinite alternate;
-}
-
-@keyframes trophyBounce{
-  to{transform:translateY(-10px) rotate(4deg)}
-}
-
-.level-card h2{
-  margin:8px 0;
-}
-
-.level-card button{
-  margin-top:15px;
-  cursor:pointer;
-  padding:10px 18px;
-  border:0;
-  border-radius:11px;
-  background:var(--green);
-  font-weight:900;
-}
-
-/* ---------- TYPING ---------- */
-
-.typing-cursor{
-  border-right:2px solid var(--green);
-  animation:cursorBlink .7s infinite;
-}
-
-@keyframes cursorBlink{
-  50%{border-color:transparent}
-}
-
-/* ---------- RESPONSIVE ---------- */
-
-@media(max-width:1100px){
-  .app{
-    grid-template-columns:210px minmax(0,1fr);
-  }
-
-  .lesson-panel{
-    grid-column:1/-1;
-    position:static;
-  }
-}
-
-@media(max-width:800px){
-  header{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .header-right{
+  .brand{min-width:0}
+  .stats{
+    order:3;
     width:100%;
-    justify-content:flex-start;
+    margin:0
   }
-
-  .course-nav{
-    overflow-x:auto;
-  }
-
-  .course-btn{
-    min-width:180px;
-  }
-
-  .app{
-    grid-template-columns:1fr;
-  }
-
-  .sidebar{
-    position:static;
-  }
-
-  .code-preview{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  *,
-  *:before,
-  *:after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
+  .main{padding:10px}
+  .bottom{grid-template-columns:1fr}
+  .run{margin-left:0}
 }
 </style>
 </head>
 
 <body>
 
-<div id="particles"></div>
-<div id="toast"></div>
+<header class="top">
 
-<header>
-  <div class="brand">
-    <div class="logo" id="mascot">
-      <svg viewBox="0 0 100 100" aria-label="Web Quest mascot">
-        <g class="mascot-body">
-          <path d="M50 8 C27 8 15 22 15 45 V68 C15 83 28 92 50 92 C72 92 85 83 85 68 V45 C85 22 73 8 50 8Z"
-                fill="#54e39a"/>
-          <path d="M22 40 C22 21 34 13 50 13 C66 13 78 21 78 40"
-                fill="none" stroke="#163d36" stroke-width="6" stroke-linecap="round"/>
-          <ellipse class="mascot-eye" cx="36" cy="47" rx="5" ry="7" fill="#09201e"/>
-          <ellipse class="mascot-eye" cx="64" cy="47" rx="5" ry="7" fill="#09201e"/>
-          <path d="M37 66 Q50 76 63 66"
-                fill="none" stroke="#09201e" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="25" cy="59" r="4" fill="#8cf0b9" opacity=".7"/>
-          <circle cx="75" cy="59" r="4" fill="#8cf0b9" opacity=".7"/>
-        </g>
-      </svg>
-    </div>
+<div class="brand">
+<svg class="mascot" viewBox="0 0 80 80">
+<ellipse cx="40" cy="43" rx="26" ry="29" fill="#58c95d"/>
+<circle cx="31" cy="32" r="9" fill="#fff"/>
+<circle cx="49" cy="32" r="9" fill="#fff"/>
+<circle cx="33" cy="33" r="4" fill="#102b3f"/>
+<circle cx="47" cy="33" r="4" fill="#102b3f"/>
+<path d="M30 50 Q40 59 50 50" fill="none" stroke="#14543d" stroke-width="4" stroke-linecap="round"/>
+<path d="M21 52 Q8 61 18 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/>
+<path d="M59 52 Q72 61 62 70" fill="none" stroke="#58c95d" stroke-width="9" stroke-linecap="round"/>
+</svg>
 
-    <div>
-      <h1>Web Quest</h1>
-      <p id="subtitle">Learn HTML, CSS & JavaScript by completing missions.</p>
-    </div>
-  </div>
+<div>
+<h1>Web Quest</h1>
+<small data-t="tagline">Build the web. One mission at a time.</small>
+</div>
+</div>
 
-  <div class="header-right">
-    <div class="stat">⭐ XP <strong id="xp">0</strong></div>
-    <div class="stat">🏆 Level <strong id="level">1</strong></div>
-    <div class="stat">🎯 Missions <strong id="missions">0/15</strong></div>
+<div class="stats">
+<div class="stat"><b id="level">1</b><span data-t="level">Level</span></div>
+<div class="stat"><b id="xp">0</b><span>XP</span></div>
+<div class="stat"><b id="doneCount">0</b><span data-t="missionsDone">Missions</span></div>
+</div>
 
-    <div class="lang">
-      <button id="enBtn" class="active">EN</button>
-      <button id="arBtn">العربية</button>
-    </div>
-  </div>
+<button class="lang active" id="enBtn">EN</button>
+<button class="lang" id="arBtn">عربي</button>
+
 </header>
 
-<nav class="course-nav">
-  <button class="course-btn active" data-course="html">🌐 HTML Quest</button>
-  <button class="course-btn" data-course="css">🎨 CSS Quest</button>
-  <button class="course-btn" data-course="js">⚡ JavaScript Quest</button>
+<nav class="courses">
+<button class="course active" data-course="html">🌐 HTML Quest</button>
+<button class="course" data-course="css">🎨 CSS Quest</button>
+<button class="course" data-course="js">⚡ JavaScript Quest</button>
 </nav>
 
-<div class="app">
+<div class="layout">
 
-  <aside class="panel sidebar">
-    <div class="sidebar-title" id="missionsTitle">Your Missions</div>
-    <div id="missionList"></div>
+<aside class="sidebar">
 
-    <div class="progress-wrap">
-      <div class="progress-label">
-        <span id="progressText">Course Progress</span>
-        <span id="progressPercent">0%</span>
-      </div>
-      <div class="progress">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-  </aside>
+<div class="side-title" data-t="missions">Missions</div>
 
-  <main class="main">
+<div id="missionList"></div>
 
-    <section class="panel content-card" id="lessonCard">
+<div class="progress">
+<b data-t="progress">Course progress</b>
+<div class="bar"><i id="progressBar"></i></div>
+<small id="progressText"></small>
+</div>
 
-      <div class="lesson-kicker" id="lessonKicker">MISSION 1</div>
-      <h2 class="lesson-title" id="lessonTitle">Your First HTML Page</h2>
-      <p class="lesson-description" id="lessonDescription"></p>
+</aside>
 
-      <div class="code-preview">
+<main class="main">
 
-        <div class="editor-box">
-          <div class="box-header">
-            <span>💻 code.html</span>
-            <div class="dots">
-              <span></span><span></span><span></span>
-            </div>
-          </div>
+<div class="head">
 
-          <textarea id="editor" spellcheck="false"></textarea>
+<div>
+<h2 id="title"></h2>
+<small id="subtitle" style="color:var(--muted)"></small>
+</div>
 
-          <div class="actions">
-            <button class="primary pulse" id="runBtn">▶ Run Code</button>
-            <button class="secondary" id="resetBtn">↻ Reset</button>
-          </div>
-        </div>
-
-        <div class="preview-box">
-          <div class="box-header">
-            <span>🌎 Browser Preview</span>
-          </div>
-          <iframe
-            id="preview"
-            class="preview"
-            title="Code preview"
-            sandbox="allow-scripts">
-          </iframe>
-        </div>
-
-      </div>
-
-      <div class="challenge" id="challengeBox">
-        <h3>🎯 <span id="challengeTitle">Mission Challenge</span></h3>
-        <p id="challengeText"></p>
-
-        <input
-          id="answer"
-          autocomplete="off"
-          placeholder="Type your answer here..."
-        >
-
-        <div class="actions">
-          <button class="primary" id="checkBtn">✓ Check Mission</button>
-        </div>
-
-        <div class="feedback" id="feedback"></div>
-      </div>
-
-    </section>
-
-  </main>
-
-  <aside class="panel lesson-panel">
-
-    <h3 id="learnTitle">📚 What You'll Learn</h3>
-
-    <div class="explain" id="explanation"></div>
-
-    <div class="tip">
-      💡 <strong id="tipLabel">Pro Tip</strong>
-      <div id="tipText"></div>
-    </div>
-
-    <div class="voice">
-
-      <div class="voice-title">🔊 <span id="voiceTitle">Lesson Voice</span></div>
-
-      <div class="voice-controls">
-        <button id="listenBtn">▶ Listen</button>
-        <button id="pauseBtn">Ⅱ Pause</button>
-        <button id="stopBtn">■ Stop</button>
-      </div>
-
-      <div class="speed">
-        <span>🐢</span>
-        <input id="speed" type="range" min=".6" max="1.6" value="1" step=".1">
-        <span>🚀</span>
-      </div>
-
-    </div>
-
-  </aside>
+<span class="pill" id="difficulty">BEGINNER</span>
 
 </div>
 
-<div class="levelup" id="levelup">
-  <div class="level-card">
-    <div class="level-icon">🏆</div>
-    <h2 id="levelupTitle">LEVEL UP!</h2>
-    <p id="levelupText">You reached a new level.</p>
-    <button id="closeLevel">Continue Quest</button>
-  </div>
+<div class="editor-card">
+
+<div class="editor-top">
+
+<div class="tab" id="fileTab">📄 index.html</div>
+
+<button class="secondary" id="resetBtn">↺ Reset</button>
+
+<button class="secondary" id="saveBtn">💾 Save</button>
+
+<button class="voice" id="speakBtn">🔊 Listen</button>
+
+<button class="run" id="runBtn">▶ Run</button>
+
 </div>
+
+<div class="editor">
+
+<div class="lines" id="lines">1</div>
+
+<textarea
+id="code"
+class="code"
+spellcheck="false"
+autocomplete="off"
+autocorrect="off"
+autocapitalize="off"></textarea>
+
+</div>
+
+</div>
+
+<div class="voice-panel">
+
+<div class="voice-panel-title">
+🎙️ <span data-t="voiceTitle">Lesson Voice</span>
+</div>
+
+<div class="voice-controls">
+
+<button id="playVoice">▶ <span data-t="play">Play lesson</span></button>
+
+<button id="pauseVoice">⏸ <span data-t="pause">Pause</span></button>
+
+<button id="stopVoice">⏹ <span data-t="stop">Stop</span></button>
+
+</div>
+
+<div class="speed">
+<span data-t="speed">Speed</span>
+<input id="voiceSpeed" type="range" min="0.6" max="1.5" step="0.1" value="1">
+<span id="speedValue">1x</span>
+</div>
+
+</div>
+
+<div class="preview">
+
+<div class="preview-head">
+👀 <span data-t="livePreview">Live preview</span>
+</div>
+
+<iframe
+id="preview"
+sandbox="allow-scripts">
+</iframe>
+
+</div>
+
+<div class="bottom">
+
+<div class="box">
+
+<h3>
+✓ <span data-t="status">Lesson status</span>
+</h3>
+
+<div class="output" id="output"></div>
+
+</div>
+
+<div class="box challenge">
+
+<h3>
+🎯 <span data-t="challenge">Challenge</span>
+</h3>
+
+<div id="challengeText"></div>
+
+<input
+id="answer"
+placeholder="Type your answer…">
+
+<button class="check" id="checkBtn" data-t="check">
+Check
+</button>
+
+<div class="feedback" id="feedback"></div>
+
+</div>
+
+</div>
+
+</main>
+
+<aside class="right">
+
+<div class="card">
+
+<div class="banner">
+<h2 id="sideTitle"></h2>
+<p id="sideIntro"></p>
+</div>
+
+<div class="info">
+
+<h3>
+💡 <span data-t="learn">Learn</span>
+</h3>
+
+<p id="explain"></p>
+
+<div class="sample" id="sample"></div>
+
+<div class="tip">
+🌱 <b>Tip:</b>
+<span id="tip"></span>
+</div>
+
+<div class="reward">
+⭐ +100 XP
+<span>🎁</span>
+</div>
+
+</div>
+</div>
+
+</aside>
+
+</div>
+
+<footer>
+Web Quest · HTML · CSS · JavaScript · Learn · Build · Grow
+</footer>
+
 
 <script>
+
 /* =========================================================
-   WEB QUEST
-   Animated HTML / CSS / JavaScript Learning Game
-   ========================================================= */
+   FIXED DOM HELPER
+   Your original code used $() without defining it.
+========================================================= */
 
 const $ = id => document.getElementById(id);
 
-const courses = {
 
-  html:{
-    name:"HTML Quest",
-    lessons:[
-      {
-        title:"Your First HTML Page",
-        description:"HTML gives your webpage its structure. Think of it as the skeleton of your website.",
-        explanation:"HTML stands for HyperText Markup Language. You use elements such as headings, paragraphs and buttons to tell the browser what each part of a page means.",
-        tip:"Most HTML elements have an opening tag and a closing tag.",
-        code:`<!DOCTYPE html>
-<html>
-<head>
-  <title>My Page</title>
-</head>
-<body>
-  <h1>Hello Web Quest!</h1>
-  <p>I am learning HTML.</p>
-</body>
-</html>`,
-        challenge:"What HTML tag creates the biggest heading?",
-        answer:"h1"
-      },
-      {
-        title:"Headings & Paragraphs",
-        description:"Learn how to organize text using headings and paragraphs.",
-        explanation:"Headings create a hierarchy. h1 is the main heading, while h2, h3 and the others create smaller sections.",
-        tip:"Use headings to organize content rather than simply making text bigger.",
-        code:`<h1>My Website</h1>
-<h2>About Me</h2>
-<p>I am learning to build websites.</p>`,
-        challenge:"Which tag creates a paragraph?",
-        answer:"p"
-      },
-      {
-        title:"Links",
-        description:"Make your webpage interactive by adding links.",
-        explanation:"The anchor element uses the href attribute to tell the browser where a link should go.",
-        tip:"href means Hypertext REFerence.",
-        code:`<h1>My Links</h1>
-<a href="https://example.com">Visit Example</a>`,
-        challenge:"Which HTML attribute tells a link where to go?",
-        answer:"href"
-      },
-      {
-        title:"Images",
-        description:"Add images to your webpages.",
-        explanation:"The img element displays an image. Its src attribute contains the image location and alt describes the image.",
-        tip:"Always add useful alt text to images.",
-        code:`<h1>My Picture</h1>
-<img
-  src="https://picsum.photos/300/180"
-  alt="Random landscape"
->`,
-        challenge:"Which attribute contains an image URL?",
-        answer:"src"
-      },
-      {
-        title:"Build a Mini Page",
-        description:"Combine everything you've learned into a mini webpage.",
-        explanation:"Real webpages combine headings, paragraphs, links and images into a meaningful structure.",
-        tip:"Start with structure first. Styling comes later with CSS.",
-        code:`<!DOCTYPE html>
-<html>
-<body>
-  <h1>My Adventure</h1>
-  <p>Welcome to my website!</p>
-  <img src="https://picsum.photos/250/140" alt="Adventure">
-  <br>
-  <a href="https://example.com">Explore</a>
-</body>
-</html>`,
-        challenge:"What tag creates a clickable link?",
-        answer:"a"
-      }
-    ]
-  },
+/* =========================================================
+   COURSE DATA
+========================================================= */
 
-  css:{
-    name:"CSS Quest",
-    lessons:[
-      {
-        title:"Meet CSS",
-        description:"CSS controls how your webpage looks.",
-        explanation:"CSS means Cascading Style Sheets. It controls colors, spacing, fonts, sizes, layouts and much more.",
-        tip:"HTML creates the structure. CSS creates the appearance.",
-        code:`<h1>Hello CSS!</h1>
-<p>CSS makes websites beautiful.</p>
+const data={
 
-<style>
-h1 {
-  color: green;
-}
-</style>`,
-        challenge:"Which CSS property changes text color?",
-        answer:"color"
-      },
-      {
-        title:"Colors",
-        description:"Learn how to change the colors of elements.",
-        explanation:"The color property changes text color, while background-color changes an element's background.",
-        tip:"CSS accepts names, HEX, RGB and other color formats.",
-        code:`<div class="card">
-  <h2>Color Quest</h2>
-  <p>Green is my favorite!</p>
-</div>
+html:[
 
-<style>
-.card {
-  background-color:#d9ffe9;
-  color:#123;
-  padding:20px;
-}
-</style>`,
-        challenge:"What CSS property changes the background color?",
-        answer:"background-color"
-      },
-      {
-        title:"Spacing",
-        description:"Control the space inside and outside elements.",
-        explanation:"Padding creates space inside an element. Margin creates space outside an element.",
-        tip:"Remember: padding = inside, margin = outside.",
-        code:`<div class="box">
-  Spacing Quest
-</div>
+{
+title:["Mission 01 — Build Your First Page","المهمة 01 — ابنِ أول صفحة"],
+sub:["HTML basics","أساسيات HTML"],
+intro:["Create the structure of a webpage.","أنشئ هيكل صفحة ويب."],
+explain:["HTML gives a webpage its structure: headings, paragraphs, buttons and more.","HTML يعطي صفحة الويب هيكلها: العناوين والفقرات والأزرار وغيرها."],
+sample:"<h1>Hello!</h1>\n<p>My first webpage.</p>",
+tip:["Change the heading and paragraph text.","غيّر نص العنوان والفقرة."],
+challenge:["Make the page contain an h1 and a p element.","اجعل الصفحة تحتوي على h1 و p."],
+code:"<h1>Hello, Web!</h1>\n<p>My first webpage.</p>",
+answer:"h1",
+xp:100
+},
 
-<style>
-.box {
-  padding:30px;
-  margin:20px;
-  background:#54e39a;
-}
-</style>`,
-        challenge:"Which property creates space inside an element?",
-        answer:"padding"
-      },
-      {
-        title:"Flexbox",
-        description:"Create modern layouts using Flexbox.",
-        explanation:"Flexbox makes it easy to align and distribute items in rows or columns.",
-        tip:"display:flex is often the first step when using Flexbox.",
-        code:`<div class="row">
-  <div>⭐</div>
-  <div>🚀</div>
-  <div>🐍</div>
-</div>
+{
+title:["Mission 02 — Add a Link","المهمة 02 — أضف رابطاً"],
+sub:["Links","الروابط"],
+intro:["Connect your page to the world.","اربط صفحتك بالعالم."],
+explain:["The anchor tag creates links. The href attribute tells the browser where to go.","وسم a ينشئ الروابط، و href يحدد الوجهة."],
+sample:'<a href="https://example.com">Visit</a>',
+tip:["Try changing the link text.","جرّب تغيير نص الرابط."],
+challenge:["Add an <a> element with an href attribute.","أضف عنصر a يحتوي على href."],
+code:'<h1>My Links</h1>\n<a href="https://example.com">Visit my favorite site</a>',
+answer:"href",
+xp:100
+},
 
-<style>
-.row {
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  padding:40px;
-}
-</style>`,
-        challenge:"Which CSS property activates Flexbox?",
-        answer:"display:flex"
-      },
-      {
-        title:"Build a Card",
-        description:"Use CSS skills to create a beautiful card.",
-        explanation:"Cards are common UI components. Combining borders, radius, spacing, colors and shadows creates polished interfaces.",
-        tip:"Small spacing improvements can make a huge visual difference.",
-        code:`<div class="card">
-  <h2>Web Quest 🚀</h2>
-  <p>Keep learning every day.</p>
-  <button>Start</button>
-</div>
+{
+title:["Mission 03 — Add an Image","المهمة 03 — أضف صورة"],
+sub:["Images","الصور"],
+intro:["Make your page visual.","اجعل صفحتك مرئية وجميلة."],
+explain:["The img tag displays an image. src gives its address and alt describes it.","وسم img يعرض صورة، و src يحدد المصدر و alt يصفها."],
+sample:'<img src="..." alt="A cute cat">',
+tip:["You can use an online image URL.","يمكنك استخدام رابط صورة على الإنترنت."],
+challenge:["Add an img element with src and alt.","أضف عنصر img مع src و alt."],
+code:'<h1>My Picture</h1>\n<img src="https://picsum.photos/300/180" alt="Random picture">',
+answer:"img",
+xp:120
+},
 
-<style>
-.card {
-  padding:25px;
-  border-radius:20px;
-  background:#eafff3;
-  box-shadow:0 10px 30px #aaa;
-  text-align:center;
+{
+title:["Mission 04 — Build a Card","المهمة 04 — ابنِ بطاقة"],
+sub:["Semantic structure","هيكل منظم"],
+intro:["Combine elements into a mini component.","اجمع العناصر في مكوّن صغير."],
+explain:["div groups content. Use headings, paragraphs and buttons to create a useful card.","div يجمع المحتوى. استخدم العناوين والفقرات والأزرار لإنشاء بطاقة."],
+sample:"<div>\n  <h2>Course</h2>\n  <p>Learn by building.</p>\n</div>",
+tip:["Add a button inside your card.","أضف زرًا داخل البطاقة."],
+challenge:["Create a div containing h2, p and button.","أنشئ div يحتوي على h2 و p و button."],
+code:'<div>\n  <h2>Web Quest</h2>\n  <p>Learn by building.</p>\n  <button>Start</button>\n</div>',
+answer:"div",
+xp:150
+},
+
+{
+title:["Mission 05 — Your HTML Project","المهمة 05 — مشروع HTML"],
+sub:["Mini project","مشروع صغير"],
+intro:["Build your own simple profile page.","ابنِ صفحة شخصية بسيطة."],
+explain:["Combine headings, paragraphs, links, images and buttons into a page that feels like yours.","اجمع العناوين والفقرات والروابط والصور والأزرار في صفحة خاصة بك."],
+sample:"<h1>Your Name</h1>\n<p>About me...</p>\n<a href=\"#\">Contact</a>",
+tip:["Make it personal. Add your interests.","اجعلها شخصية وأضف اهتماماتك."],
+challenge:["Build a page with h1, p, img and a link.","ابنِ صفحة تحتوي على h1 و p و img ورابط."],
+code:'<h1>My Web Journey</h1>\n<p>I am learning to build websites!</p>\n<img src="https://picsum.photos/260/150" alt="My inspiration">\n<p><a href="https://developer.mozilla.org/">Learn more</a></p>',
+answer:"h1",
+xp:250
 }
 
-button {
-  padding:10px 20px;
-  border:0;
-  border-radius:10px;
-  background:#54e39a;
+],
+
+css:[
+
+{
+title:["Mission 01 — Give It Style","المهمة 01 — أضف التصميم"],
+sub:["CSS basics","أساسيات CSS"],
+intro:["Turn plain HTML into a beautiful page.","حوّل HTML البسيط إلى صفحة جميلة."],
+explain:["CSS controls colors, spacing, fonts and layout. Add a style tag to your HTML.","CSS يتحكم بالألوان والمسافات والخطوط والتخطيط."],
+sample:"<style>\nh1 { color: green; }\n</style>",
+tip:["Change the color and see the preview update.","غيّر اللون وشاهد المعاينة."],
+challenge:["Use CSS to change the h1 color.","استخدم CSS لتغيير لون h1."],
+code:"<style>\nh1 { color: #25a879; }\n</style>\n<h1>Styled Web!</h1>\n<p>CSS makes me happy.</p>",
+answer:"color",
+xp:100
+},
+
+{
+title:["Mission 02 — Create a Card","المهمة 02 — أنشئ بطاقة"],
+sub:["Box model","نموذج الصندوق"],
+intro:["Learn padding, margin and borders.","تعلّم padding و margin و borders."],
+explain:["Every element is a box. Padding adds space inside; margin adds space outside; border draws an edge.","كل عنصر عبارة عن صندوق. padding مساحة داخلية و margin مساحة خارجية و border إطار."],
+sample:".card { padding: 20px; margin: 10px; border: 2px solid; }",
+tip:["Try changing padding from 20px to 40px.","جرّب تغيير padding من 20px إلى 40px."],
+challenge:["Give .card padding and a border.","أضف padding و border إلى .card."],
+code:"<style>\n.card { padding: 24px; margin: 20px; border: 2px solid #25d69a; border-radius: 16px; }\n</style>\n<div class=\"card\"><h2>My Card</h2><p>Learning CSS!</p></div>",
+answer:"padding",
+xp:120
+},
+
+{
+title:["Mission 03 — Flex Your Layout","المهمة 03 — نسّق باستخدام Flex"],
+sub:["Flexbox","Flexbox"],
+intro:["Arrange elements like a pro.","رتّب العناصر مثل المحترفين."],
+explain:["display:flex turns a container into a flexible layout. justify-content and gap help arrange items.","display:flex ينشئ تخطيطاً مرناً، و justify-content و gap يساعدان في ترتيب العناصر."],
+sample:".row { display:flex; gap:16px; }",
+tip:["Try justify-content: space-between.","جرّب justify-content: space-between."],
+challenge:["Make the .row a flex container.","اجعل .row حاوية flex."],
+code:"<style>\n.row { display: flex; gap: 16px; justify-content: center; }\n.box { padding: 25px; background: #e7fff5; border-radius: 12px; }\n</style>\n<div class=\"row\"><div class=\"box\">HTML</div><div class=\"box\">CSS</div><div class=\"box\">JS</div></div>",
+answer:"display",
+xp:150
+},
+
+{
+title:["Mission 04 — Responsive Magic","المهمة 04 — سحر الاستجابة"],
+sub:["Responsive design","تصميم متجاوب"],
+intro:["Make your page work on phones.","اجعل صفحتك تعمل على الهاتف."],
+explain:["Media queries let CSS change at different screen sizes.","تسمح media queries لـ CSS بالتغير حسب حجم الشاشة."],
+sample:"@media (max-width: 600px) {\n  .card { padding: 10px; }\n}",
+tip:["Resize your browser and watch it change.","غيّر حجم المتصفح وشاهد التغيير."],
+challenge:["Add an @media rule for small screens.","أضف قاعدة @media للشاشات الصغيرة."],
+code:"<style>\nbody { font-family: sans-serif; }\n.card { padding: 30px; background: #e7fff5; }\n@media (max-width: 600px) { .card { padding: 10px; } }\n</style>\n<div class=\"card\"><h2>Responsive Card</h2><p>Try resizing the window.</p></div>",
+answer:"@media",
+xp:180
+},
+
+{
+title:["Mission 05 — Your CSS Project","المهمة 05 — مشروع CSS"],
+sub:["Design project","مشروع تصميم"],
+intro:["Design a mini landing page.","صمّم صفحة هبوط صغيرة."],
+explain:["Combine colors, typography, spacing, cards and responsive layout into your own design.","اجمع الألوان والخطوط والمسافات والبطاقات والتخطيط المتجاوب."],
+sample:".hero { text-align:center; padding:60px; }",
+tip:["Choose a visual style you love.","اختر أسلوباً بصرياً يعجبك."],
+challenge:["Style a page with color, padding and a button.","صمّم صفحة فيها لون و padding وزر."],
+code:"<style>\nbody{font-family:system-ui;background:#071522;color:white;text-align:center;padding:40px}\n.hero{max-width:650px;margin:auto;padding:45px;background:linear-gradient(135deg,#17405b,#123b38);border-radius:24px}\nbutton{padding:12px 22px;border:0;border-radius:10px;background:#25d69a;font-weight:bold}\n</style>\n<div class=\"hero\"><h1>My Dream Website</h1><p>Designed with CSS.</p><button>Explore</button></div>",
+answer:"style",
+xp:250
 }
-</style>`,
-        challenge:"Which CSS property rounds the corners?",
-        answer:"border-radius"
-      }
-    ]
-  },
 
-  js:{
-    name:"JavaScript Quest",
-    lessons:[
-      {
-        title:"Meet JavaScript",
-        description:"JavaScript gives webpages behavior and interactivity.",
-        explanation:"HTML creates structure, CSS creates appearance, and JavaScript can respond to user actions and change the page.",
-        tip:"JavaScript can read and modify HTML elements.",
-        code:`<button id="hello">Click Me!</button>
+],
 
-<script>
-document.getElementById("hello")
-  .onclick = function(){
-    alert("Hello!");
-  };
-</script>`,
-        challenge:"Which language adds behavior to webpages?",
-        answer:"javascript"
-      },
-      {
-        title:"Variables",
-        description:"Store information using variables.",
-        explanation:"Variables let programs remember information. Modern JavaScript commonly uses const and let.",
-        tip:"Use const when you don't need to reassign a value.",
-        code:`<script>
-const name = "Web Quest";
-let xp = 10;
+js:[
 
-document.write(
-  name + " XP: " + xp
-);
-</script>`,
-        challenge:"Which keyword creates a variable that can be reassigned?",
-        answer:"let"
-      },
-      {
-        title:"Functions",
-        description:"Create reusable blocks of code.",
-        explanation:"Functions group instructions together so you can run them whenever you need them.",
-        tip:"Good functions usually have one clear job.",
-        code:`<button onclick="greet()">Say Hello</button>
+{
+title:["Mission 01 — Make a Button Work","المهمة 01 — اجعل الزر يعمل"],
+sub:["JavaScript basics","أساسيات JavaScript"],
+intro:["Give your webpage behavior.","أضف التفاعل إلى صفحة الويب."],
+explain:["JavaScript can listen for clicks and change the page. Add an event listener to a button.","JavaScript يستطيع الاستماع للنقر وتغيير الصفحة."],
+sample:"button.addEventListener('click', () => {\n  alert('Hello!');\n});",
+tip:["Click the button in the preview.","اضغط الزر في المعاينة."],
+challenge:["Use addEventListener with a click event.","استخدم addEventListener مع حدث click."],
+code:"<button id=\"btn\">Click me!</button>\n<p id=\"message\"></p>\n<script>\ndocument.getElementById('btn').addEventListener('click', () => {\n  document.getElementById('message').textContent = 'You clicked it! 🎉';\n});\n<\/script>",
+answer:"addeventlistener",
+xp:100
+},
 
-<script>
-function greet(){
-  alert("Hello, coder!");
+{
+title:["Mission 02 — Variables","المهمة 02 — المتغيرات"],
+sub:["Data","البيانات"],
+intro:["Store information in JavaScript.","خزّن المعلومات في JavaScript."],
+explain:["Variables hold values. const is great for values that do not need reassignment.","المتغيرات تخزن القيم. const مناسبة للقيم التي لا تحتاج إعادة تعيين."],
+sample:"const name = 'Ghada';\nconsole.log(name);",
+tip:["Change the name and run again.","غيّر الاسم وشغّل مرة أخرى."],
+challenge:["Create a const called name.","أنشئ const باسم name."],
+code:"<h2 id=\"hello\"></h2>\n<script>\nconst name = 'Web Builder';\ndocument.getElementById('hello').textContent = 'Hello, ' + name + '!';\n<\/script>",
+answer:"const",
+xp:110
+},
+
+{
+title:["Mission 03 — Make Decisions","المهمة 03 — اتخاذ القرارات"],
+sub:["if / else","if / else"],
+intro:["Teach your app to make choices.","علّم تطبيقك اتخاذ القرارات."],
+explain:["if runs code when a condition is true. else handles the other case.","if تشغّل الكود عندما يكون الشرط صحيحاً، و else للحالة الأخرى."],
+sample:"const score = 80;\nif(score >= 50){ console.log('Passed'); }",
+tip:["Change score to 40 and see what happens.","غيّر score إلى 40 وشاهد النتيجة."],
+challenge:["Use if to check whether score is at least 50.","استخدم if للتحقق من أن score تساوي 50 أو أكثر."],
+code:"<p id=\"result\"></p>\n<script>\nconst score = 80;\nif (score >= 50) { document.getElementById('result').textContent = 'Passed!'; } else { document.getElementById('result').textContent = 'Try again!'; }\n<\/script>",
+answer:"if",
+xp:140
+},
+
+{
+title:["Mission 04 — Build a Counter","المهمة 04 — ابنِ عدّاداً"],
+sub:["DOM + events","DOM + الأحداث"],
+intro:["Build your first interactive component.","ابنِ أول مكوّن تفاعلي."],
+explain:["Change an element's text from JavaScript and respond to user actions.","غيّر نص العنصر من JavaScript واستجب لتفاعل المستخدم."],
+sample:"let count = 0;\ncount++;",
+tip:["Try adding a reset button.","جرّب إضافة زر إعادة ضبط."],
+challenge:["Make a button increase a visible number.","اجعل الزر يزيد رقماً ظاهراً."],
+code:"<button id=\"plus\">+1</button> <b id=\"count\">0</b>\n<script>\nlet count = 0;\ndocument.getElementById('plus').addEventListener('click', () => { count++; document.getElementById('count').textContent = count; });\n<\/script>",
+answer:"let",
+xp:180
+},
+
+{
+title:["Mission 05 — JavaScript Project","المهمة 05 — مشروع JavaScript"],
+sub:["Mini app","تطبيق صغير"],
+intro:["Build a tiny app with real interaction.","ابنِ تطبيقاً صغيراً بتفاعل حقيقي."],
+explain:["Combine variables, conditions, functions and DOM events to create something useful.","اجمع المتغيرات والشروط والدوال وأحداث DOM لبناء شيء مفيد."],
+sample:"function greet(){\n  // your code\n}",
+tip:["Make it yours: quiz, counter, calculator or habit tracker.","اجعله خاصاً بك: اختبار أو عدّاد أو آلة حاسبة أو متتبع عادة."],
+challenge:["Create a working interactive mini app.","أنشئ تطبيقاً صغيراً تفاعلياً يعمل."],
+code:"<h2>Mini Mood Checker</h2>\n<button id=\"happy\">😊 Happy</button> <button id=\"tired\">😴 Tired</button>\n<p id=\"message\">How are you?</p>\n<script>\nconst message = document.getElementById('message');\ndocument.getElementById('happy').onclick = () => message.textContent = 'Keep that energy! 🚀';\ndocument.getElementById('tired').onclick = () => message.textContent = 'Take a small break. 🌱';\n<\/script>",
+answer:"document",
+xp:300
 }
-</script>`,
-        challenge:"What keyword creates a JavaScript function?",
-        answer:"function"
-      },
-      {
-        title:"Events",
-        description:"Make your webpage react to users.",
-        explanation:"Events happen when users interact with a page. Examples include click, mouseover, input and keydown.",
-        tip:"The click event is one of the most useful events to learn first.",
-        code:`<button id="btn">Click me</button>
-<p id="message"></p>
 
-<script>
-document.getElementById("btn")
-  .addEventListener("click",function(){
-    document.getElementById("message")
-      .textContent = "You clicked it! 🎉";
-  });
-</script>`,
-        challenge:"Which event happens when a user presses a button?",
-        answer:"click"
-      },
-      {
-        title:"Build an Interactive App",
-        description:"Combine JavaScript skills into a mini app.",
-        explanation:"Interactive applications combine variables, functions, events and DOM manipulation.",
-        tip:"Break large problems into tiny functions.",
-        code:`<button id="add">Add XP ⭐</button>
-<h2 id="score">0 XP</h2>
-
-<script>
-let xp = 0;
-
-document.getElementById("add")
-.addEventListener("click",function(){
-  xp += 10;
-  document.getElementById("score")
-    .textContent = xp + " XP";
-});
-</script>`,
-        challenge:"Which method listens for events?",
-        answer:"addeventlistener"
-      }
-    ]
-  }
+]
 
 };
 
-let currentCourse = localStorage.getItem("wq_course") || "html";
-let currentLesson = Number(localStorage.getItem("wq_lesson") || 0);
-let xp = Number(localStorage.getItem("wq_xp") || 0);
 
-let completed = JSON.parse(
-  localStorage.getItem("wq_completed") || "{}"
+/* =========================================================
+   APP STATE
+========================================================= */
+
+let course="html";
+let idx=0;
+let lang="en";
+
+let xp=Number(localStorage.getItem("webquest_xp"))||0;
+
+let done=JSON.parse(
+  localStorage.getItem("webquest_done")||"{}"
 );
 
-let language = localStorage.getItem("wq_language") || "en";
+let speechRate=1;
 
-let speaking = false;
 
-/* ---------- PARTICLES ---------- */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-function createParticles(){
-  const container = $("particles");
-
-  for(let i=0;i<28;i++){
-    const p = document.createElement("span");
-    p.className = "particle";
-
-    p.style.left = Math.random()*100 + "%";
-    p.style.animationDuration = (7 + Math.random()*10) + "s";
-    p.style.animationDelay = (-Math.random()*15) + "s";
-    p.style.opacity = .2 + Math.random()*.5;
-
-    const size = 2 + Math.random()*5;
-    p.style.width = size + "px";
-    p.style.height = size + "px";
-
-    container.appendChild(p);
-  }
+function key(){
+  return course+"_"+idx;
 }
 
-/* ---------- STORAGE ---------- */
+function L(){
+  return data[course][idx];
+}
+
+function tr(a){
+  return a[lang==="en"?0:1];
+}
 
 function save(){
-  localStorage.setItem("wq_course",currentCourse);
-  localStorage.setItem("wq_lesson",currentLesson);
-  localStorage.setItem("wq_xp",xp);
-  localStorage.setItem("wq_completed",JSON.stringify(completed));
-  localStorage.setItem("wq_language",language);
-}
 
-/* ---------- COURSE ---------- */
+  localStorage.setItem("webquest_xp",xp);
 
-function courseKey(){
-  return currentCourse + "-" + currentLesson;
-}
-
-function getLesson(){
-  return courses[currentCourse].lessons[currentLesson];
-}
-
-function renderMissions(){
-
-  const list = $("missionList");
-  list.innerHTML = "";
-
-  courses[currentCourse].lessons.forEach((lesson,index)=>{
-
-    const key = currentCourse + "-" + index;
-
-    const button = document.createElement("button");
-
-    button.className =
-      "mission " +
-      (index === currentLesson ? "active " : "") +
-      (completed[key] ? "done" : "");
-
-    button.innerHTML = `
-      <span class="mission-check">
-        ${completed[key] ? "✓" : ""}
-      </span>
-
-      <span class="mission-number">
-        MISSION ${index+1}
-      </span>
-
-      <span class="mission-title">
-        ${lesson.title}
-      </span>
-    `;
-
-    button.addEventListener("click",()=>selectLesson(index));
-
-    list.appendChild(button);
-  });
-
-  updateProgress();
-}
-
-function selectLesson(index){
-
-  stopVoice();
-
-  currentLesson = index;
-
-  save();
-
-  renderMissions();
-  renderLesson();
-
-  $("lessonCard").scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-}
-
-function switchCourse(course){
-
-  if(!courses[course]) return;
-
-  stopVoice();
-
-  currentCourse = course;
-  currentLesson = 0;
-
-  save();
-
-  document.querySelectorAll(".course-btn")
-    .forEach(btn=>{
-      btn.classList.toggle(
-        "active",
-        btn.dataset.course === course
-      );
-    });
-
-  renderMissions();
-  renderLesson();
-
-  showToast(
-    language === "ar"
-      ? "🚀 تم فتح مهمة جديدة!"
-      : "🚀 New quest unlocked!"
+  localStorage.setItem(
+    "webquest_done",
+    JSON.stringify(done)
   );
+
 }
 
-/* ---------- RENDER LESSON ---------- */
 
-function renderLesson(){
+/* =========================================================
+   VOCAL SYSTEM
+========================================================= */
 
-  const lesson = getLesson();
+function stopVoice(){
 
-  const card = $("lessonCard");
+  if("speechSynthesis" in window){
 
-  card.classList.remove("lesson-enter");
+    window.speechSynthesis.cancel();
 
-  void card.offsetWidth;
-
-  card.classList.add("lesson-enter");
-
-  $("lessonKicker").textContent =
-    language === "ar"
-      ? `المهمة ${currentLesson+1}`
-      : `MISSION ${currentLesson+1}`;
-
-  $("lessonTitle").textContent = lesson.title;
-  $("lessonDescription").textContent = lesson.description;
-  $("explanation").textContent = lesson.explanation;
-  $("tipText").textContent = lesson.tip;
-  $("challengeText").textContent = lesson.challenge;
-
-  $("editor").value = lesson.code;
-
-  $("answer").value = "";
-  $("feedback").textContent = "";
-  $("feedback").className = "feedback";
-
-  runPreview();
-
-  if(language === "ar"){
-    $("lessonTitle").dir = "rtl";
-    $("lessonDescription").dir = "rtl";
-    $("explanation").dir = "rtl";
-    $("tipText").dir = "rtl";
-  }else{
-    $("lessonTitle").dir = "ltr";
-    $("lessonDescription").dir = "ltr";
-    $("explanation").dir = "ltr";
-    $("tipText").dir = "ltr";
-  }
-}
-
-/* ---------- PREVIEW ---------- */
-
-function runPreview(){
-
-  const code = $("editor").value;
-
-  const iframe = $("preview");
-
-  iframe.srcdoc = code;
-
-  iframe.classList.remove("updated");
-
-  void iframe.offsetWidth;
-
-  iframe.classList.add("updated");
-}
-
-/* ---------- RESET ---------- */
-
-function resetCode(){
-
-  $("editor").value = getLesson().code;
-
-  runPreview();
-
-  showToast(
-    language === "ar"
-      ? "↻ تم إعادة الكود!"
-      : "↻ Code reset!"
-  );
-}
-
-/* ---------- CHALLENGE ---------- */
-
-function check(){
-
-  const lesson = getLesson();
-
-  const answer =
-    $("answer").value
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g,"");
-
-  const expected =
-    lesson.answer
-      .toLowerCase()
-      .replace(/\s+/g,"");
-
-  const box = $("challengeBox");
-  const feedback = $("feedback");
-
-  if(answer === expected){
-
-    const key = courseKey();
-
-    if(!completed[key]){
-
-      completed[key] = true;
-
-      const oldLevel = getLevel();
-
-      xp += 20;
-
-      save();
-      updateStats();
-
-      celebrate();
-
-      const newLevel = getLevel();
-
-      if(newLevel > oldLevel){
-        setTimeout(showLevelUp,500);
-      }
-
-      feedback.textContent =
-        language === "ar"
-          ? "🎉 رائع! أكملت المهمة! +20 XP"
-          : "🎉 Amazing! Mission complete! +20 XP";
-
-    }else{
-
-      feedback.textContent =
-        language === "ar"
-          ? "✓ أكملت هذه المهمة بالفعل!"
-          : "✓ You already completed this mission!";
-    }
-
-    feedback.className = "feedback ok";
-
-    box.classList.remove("success");
-    void box.offsetWidth;
-    box.classList.add("success");
-
-    mascotReact("happy");
-
-  }else{
-
-    feedback.textContent =
-      language === "ar"
-        ? "ليس تماماً — حاول مرة أخرى! 💪"
-        : "Not quite — try again! 💪";
-
-    feedback.className = "feedback bad";
-
-    box.classList.remove("shake");
-    void box.offsetWidth;
-    box.classList.add("shake");
-
-    mascotReact("thinking");
-  }
-}
-
-/* ---------- XP ---------- */
-
-function getLevel(){
-  return Math.floor(xp / 100) + 1;
-}
-
-function updateStats(){
-
-  $("xp").textContent = xp;
-  $("level").textContent = getLevel();
-
-  const all =
-    Object.keys(courses)
-      .reduce(
-        (sum,key)=>sum + courses[key].lessons.length,
-        0
-      );
-
-  const done =
-    Object.keys(completed)
-      .filter(key=>completed[key]).length;
-
-  $("missions").textContent =
-    `${done}/${all}`;
-
-  updateProgress();
-}
-
-function updateProgress(){
-
-  const total = courses[currentCourse].lessons.length;
-
-  const done =
-    courses[currentCourse].lessons
-      .filter((_,i)=>completed[currentCourse+"-"+i])
-      .length;
-
-  const percent =
-    Math.round(done / total * 100);
-
-  $("progressPercent").textContent = percent + "%";
-
-  requestAnimationFrame(()=>{
-    $("progressFill").style.width =
-      percent + "%";
-  });
-}
-
-/* ---------- CELEBRATION ---------- */
-
-function celebrate(){
-
-  const rect =
-    $("checkBtn").getBoundingClientRect();
-
-  const xpElement =
-    document.createElement("div");
-
-  xpElement.className = "xp-float";
-
-  xpElement.textContent = "+20 XP ⭐";
-
-  xpElement.style.left =
-    (rect.left + rect.width/2) + "px";
-
-  xpElement.style.top =
-    rect.top + "px";
-
-  document.body.appendChild(xpElement);
-
-  setTimeout(()=>{
-    xpElement.remove();
-  },1400);
-
-  for(let i=0;i<38;i++){
-
-    const c = document.createElement("div");
-
-    c.className = "confetti";
-
-    c.style.left =
-      (rect.left + rect.width/2) + "px";
-
-    c.style.top =
-      (rect.top + rect.height/2) + "px";
-
-    c.style.background =
-      [
-        "#54e39a",
-        "#a78bfa",
-        "#ffd166",
-        "#ff6b6b",
-        "#5ee7ff"
-      ][Math.floor(Math.random()*5)];
-
-    c.style.setProperty(
-      "--x",
-      ((Math.random()-.5)*500) + "px"
-    );
-
-    c.style.setProperty(
-      "--y",
-      ((Math.random()-.7)*500) + "px"
-    );
-
-    document.body.appendChild(c);
-
-    setTimeout(()=>c.remove(),1600);
   }
 
-  showToast(
-    language === "ar"
-      ? "🎉 مهمة مكتملة! +20 XP"
-      : "🎉 Mission complete! +20 XP"
-  );
+  $("speakBtn").textContent =
+    lang==="en" ? "🔊 Listen" : "🔊 استمع";
+
+  $("speakBtn").classList.remove("playing");
+
 }
 
-/* ---------- LEVEL UP ---------- */
-
-function showLevelUp(){
-
-  $("levelupText").textContent =
-    language === "ar"
-      ? `أصبحت الآن في المستوى ${getLevel()}!`
-      : `You are now Level ${getLevel()}!`;
-
-  $("levelup").classList.add("show");
-
-  mascotReact("excited");
-}
-
-function closeLevelUp(){
-  $("levelup").classList.remove("show");
-}
-
-/* ---------- TOAST ---------- */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast = $("toast");
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer = setTimeout(()=>{
-    toast.classList.remove("show");
-  },2200);
-}
-
-/* ---------- MASCOT ---------- */
-
-function mascotReact(type){
-
-  const mascot = $("mascot");
-
-  mascot.classList.remove("talking");
-
-  if(type === "happy"){
-    mascot.animate(
-      [
-        {transform:"translateY(0) rotate(0)"},
-        {transform:"translateY(-12px) rotate(-5deg)"},
-        {transform:"translateY(-4px) rotate(5deg)"},
-        {transform:"translateY(0) rotate(0)"}
-      ],
-      {
-        duration:650,
-        easing:"cubic-bezier(.2,.8,.2,1)"
-      }
-    );
-  }
-
-  if(type === "thinking"){
-    mascot.animate(
-      [
-        {transform:"rotate(0)"},
-        {transform:"rotate(-8deg)"},
-        {transform:"rotate(8deg)"},
-        {transform:"rotate(0)"}
-      ],
-      {
-        duration:450
-      }
-    );
-  }
-
-  if(type === "excited"){
-    mascot.animate(
-      [
-        {transform:"scale(1)"},
-        {transform:"scale(1.2) rotate(-8deg)"},
-        {transform:"scale(1.2) rotate(8deg)"},
-        {transform:"scale(1)"}
-      ],
-      {
-        duration:900
-      }
-    );
-  }
-}
-
-/* ---------- VOICE ---------- */
-
-function chooseVoice(lang){
-
-  const voices =
-    speechSynthesis.getVoices();
-
-  if(!voices.length) return null;
-
-  if(lang === "ar"){
-
-    return voices.find(v =>
-      v.lang.toLowerCase().startsWith("ar-ae")
-    ) ||
-    voices.find(v =>
-      v.lang.toLowerCase().startsWith("ar")
-    );
-  }
-
-  return voices.find(v =>
-    v.lang.toLowerCase().startsWith("en-us")
-  ) ||
-  voices.find(v =>
-    v.lang.toLowerCase().startsWith("en")
-  );
-}
 
 function getVoiceText(){
 
-  const lesson = getLesson();
+  const m=L();
 
-  if(language === "ar"){
-    return `
-      المهمة ${currentLesson+1}.
-      ${lesson.title}.
-      ${lesson.description}.
-      ${lesson.explanation}.
-      نصيحة:
-      ${lesson.tip}.
-      التحدي:
-      ${lesson.challenge}.
-    `;
+  return [
+
+    tr(m.title),
+
+    tr(m.intro),
+
+    tr(m.explain),
+
+    tr(m.tip),
+
+    lang==="en"
+      ? "Your challenge is: "+tr(m.challenge)
+      : "التحدي الخاص بك هو: "+tr(m.challenge)
+
+  ].join(". ");
+
+}
+
+
+function chooseVoice(){
+
+  if(!("speechSynthesis" in window)) return null;
+
+  const voices=window.speechSynthesis.getVoices();
+
+  if(!voices.length) return null;
+
+  const wanted=lang==="ar"
+    ? ["ar-AE","ar-SA","ar"]
+    : ["en-US","en-GB","en"];
+
+  for(const wantedLang of wanted){
+
+    const found=voices.find(v =>
+      v.lang.toLowerCase().startsWith(
+        wantedLang.toLowerCase()
+      )
+    );
+
+    if(found) return found;
+
   }
 
-  return `
-    Mission ${currentLesson+1}.
-    ${lesson.title}.
-    ${lesson.description}.
-    ${lesson.explanation}.
-    Pro tip:
-    ${lesson.tip}.
-    Your challenge:
-    ${lesson.challenge}.
-  `;
+  return voices[0];
+
 }
+
 
 function speakLesson(){
 
   if(!("speechSynthesis" in window)){
-    showToast("Voice is not supported in this browser.");
+
+    $("output").innerHTML =
+      '<span class="err">⚠️ Speech is not supported by this browser.</span>';
+
     return;
+
   }
 
-  stopVoice(false);
+  stopVoice();
 
-  const utterance =
-    new SpeechSynthesisUtterance(
-      getVoiceText()
+  const utterance=
+    new SpeechSynthesisUtterance(getVoiceText());
+
+  utterance.lang=lang==="ar"?"ar-AE":"en-US";
+
+  utterance.rate=speechRate;
+
+  utterance.pitch=1.05;
+
+  const voice=chooseVoice();
+
+  if(voice) utterance.voice=voice;
+
+  utterance.onstart=()=>{
+
+    $("speakBtn").textContent=
+      lang==="en" ? "⏹ Stop voice" : "⏹ إيقاف الصوت";
+
+    $("speakBtn").classList.add("playing");
+
+  };
+
+  utterance.onend=()=>{
+
+    $("speakBtn").textContent=
+      lang==="en" ? "🔊 Listen" : "🔊 استمع";
+
+    $("speakBtn").classList.remove("playing");
+
+  };
+
+  utterance.onerror=()=>{
+
+    $("speakBtn").textContent=
+      lang==="en" ? "🔊 Listen" : "🔊 استمع";
+
+    $("speakBtn").classList.remove("playing");
+
+  };
+
+  window.speechSynthesis.speak(utterance);
+
+}
+
+
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+
+const translations={
+
+tagline:[
+  "Build the web. One mission at a time.",
+  "ابنِ الويب. مهمة واحدة في كل مرة."
+],
+
+level:["Level","المستوى"],
+
+missionsDone:["Missions","المهام"],
+
+missions:["Missions","المهام"],
+
+progress:["Course progress","تقدم الدورة"],
+
+livePreview:["Live preview","المعاينة المباشرة"],
+
+status:["Lesson status","حالة الدرس"],
+
+challenge:["Challenge","التحدي"],
+
+check:["Check","تحقق"],
+
+learn:["Learn","تعلم"],
+
+voiceTitle:["Lesson Voice","صوت الدرس"],
+
+play:["Play lesson","تشغيل الدرس"],
+
+pause:["Pause","إيقاف مؤقت"],
+
+stop:["Stop","إيقاف"],
+
+speed:["Speed","السرعة"]
+
+};
+
+
+/* =========================================================
+   COURSE RENDER
+========================================================= */
+
+function renderCourses(){
+
+  document
+    .querySelectorAll(".course")
+    .forEach(b=>{
+
+      b.classList.toggle(
+        "active",
+        b.dataset.course===course
+      );
+
+    });
+
+}
+
+
+function renderMissions(){
+
+  const arr=data[course];
+
+  const set=done[course]||[];
+
+  $("missionList").innerHTML=
+
+    arr.map((m,i)=>`
+
+      <button
+        class="mission ${i===idx?"active ":""}${set.includes(i)?" done":""}"
+        data-index="${i}">
+
+        <span class="dot">
+          ${set.includes(i)?"✓":i+1}
+        </span>
+
+        <span>
+          <strong>${tr(m.title)}</strong>
+          <small>${tr(m.sub)}</small>
+        </span>
+
+      </button>
+
+    `).join("");
+
+
+  document
+    .querySelectorAll(".mission")
+    .forEach(btn=>{
+
+      btn.addEventListener(
+        "click",
+        ()=>selectLesson(
+          Number(btn.dataset.index)
+        )
+      );
+
+    });
+
+
+  const pct=
+    Math.round(
+      set.length/arr.length*100
     );
 
-  utterance.lang =
-    language === "ar" ? "ar-AE" : "en-US";
+  $("progressBar").style.width=
+    pct+"%";
 
-  utterance.rate =
-    Number($("speed").value);
+  $("progressText").textContent=
+    `${set.length} / ${arr.length} · ${pct}%`;
 
-  utterance.pitch = 1.08;
+  $("level").textContent=
+    Math.floor(xp/500)+1;
 
-  const voice = chooseVoice(language);
+  $("xp").textContent=xp;
 
-  if(voice){
-    utterance.voice = voice;
-  }
+  $("doneCount").textContent=
+    Object.values(done)
+      .flat()
+      .length;
 
-  utterance.onstart = ()=>{
-    speaking = true;
-    $("mascot").classList.add("talking");
-    $("listenBtn").textContent =
-      language === "ar" ? "🔊 يتحدث..." : "🔊 Speaking...";
-  };
-
-  utterance.onend = ()=>{
-    speaking = false;
-    $("mascot").classList.remove("talking");
-    $("listenBtn").textContent =
-      language === "ar" ? "▶ استماع" : "▶ Listen";
-  };
-
-  utterance.onerror = ()=>{
-    speaking = false;
-    $("mascot").classList.remove("talking");
-  };
-
-  speechSynthesis.speak(utterance);
 }
 
-function stopVoice(resetButton=true){
 
-  if("speechSynthesis" in window){
-    speechSynthesis.cancel();
-  }
+/* =========================================================
+   MAIN RENDER
+========================================================= */
 
-  speaking = false;
+function render(){
 
-  $("mascot").classList.remove("talking");
+  stopVoice();
 
-  if(resetButton){
-    $("listenBtn").textContent =
-      language === "ar" ? "▶ استماع" : "▶ Listen";
-  }
-}
+  const m=L();
 
-function pauseVoice(){
+  const saveKey=
+    "wq_code_"+course+"_"+idx;
 
-  if(!("speechSynthesis" in window)) return;
+  $("title").textContent=
+    tr(m.title);
 
-  if(speechSynthesis.speaking){
-    speechSynthesis.pause();
-    $("pauseBtn").textContent =
-      language === "ar" ? "▶ متابعة" : "▶ Resume";
-  }else if(speechSynthesis.paused){
-    speechSynthesis.resume();
-    $("pauseBtn").textContent =
-      language === "ar" ? "Ⅱ إيقاف مؤقت" : "Ⅱ Pause";
-  }
-}
+  $("sideTitle").textContent=
+    tr(m.title);
 
-/* ---------- LANGUAGE ---------- */
+  $("subtitle").textContent=
+    tr(m.sub);
 
-function setLanguage(lang){
+  $("sideIntro").textContent=
+    tr(m.intro);
 
-  language = lang;
+  $("explain").textContent=
+    tr(m.explain);
 
-  localStorage.setItem("wq_language",lang);
+  $("sample").textContent=
+    m.sample;
+
+  $("tip").textContent=
+    tr(m.tip);
+
+  $("challengeText").textContent=
+    tr(m.challenge);
+
+  $("code").value=
+    localStorage.getItem(saveKey)||m.code;
+
+  $("feedback").textContent="";
+
+  $("answer").value="";
+
+  $("fileTab").textContent=
+    course==="html"
+      ?"📄 index.html"
+      :course==="css"
+      ?"🎨 style.html"
+      :"⚡ app.html";
+
+
+  document
+    .querySelectorAll("[data-t]")
+    .forEach(e=>{
+
+      const value=
+        translations[e.dataset.t];
+
+      if(value){
+
+        e.textContent=
+          value[lang==="en"?0:1];
+
+      }
+
+    });
+
+
+  $("answer").placeholder=
+    lang==="en"
+      ?"Type your answer…"
+      :"اكتب إجابتك…";
+
+
+  document.documentElement.lang=lang;
+
+  document.documentElement.dir=
+    lang==="ar"?"rtl":"ltr";
+
 
   $("enBtn").classList.toggle(
     "active",
-    lang === "en"
+    lang==="en"
   );
 
   $("arBtn").classList.toggle(
     "active",
-    lang === "ar"
+    lang==="ar"
   );
 
-  document.documentElement.lang = lang;
 
-  document.body.dir =
-    lang === "ar" ? "rtl" : "ltr";
-
-  $("subtitle").textContent =
-    lang === "ar"
-      ? "تعلم HTML وCSS وJavaScript من خلال إكمال المهام."
-      : "Learn HTML, CSS & JavaScript by completing missions.";
-
-  $("missionsTitle").textContent =
-    lang === "ar" ? "مهامك" : "Your Missions";
-
-  $("progressText").textContent =
-    lang === "ar" ? "تقدم الدورة" : "Course Progress";
-
-  $("learnTitle").textContent =
-    lang === "ar" ? "📚 ماذا ستتعلم" : "📚 What You'll Learn";
-
-  $("tipLabel").textContent =
-    lang === "ar" ? "نصيحة احترافية" : "Pro Tip";
-
-  $("voiceTitle").textContent =
-    lang === "ar" ? "صوت الدرس" : "Lesson Voice";
-
-  $("runBtn").textContent =
-    lang === "ar" ? "▶ تشغيل الكود" : "▶ Run Code";
-
-  $("resetBtn").textContent =
-    lang === "ar" ? "↻ إعادة" : "↻ Reset";
-
-  $("challengeTitle").textContent =
-    lang === "ar" ? "تحدي المهمة" : "Mission Challenge";
-
-  $("checkBtn").textContent =
-    lang === "ar" ? "✓ تحقق من المهمة" : "✓ Check Mission";
-
-  $("answer").placeholder =
-    lang === "ar"
-      ? "اكتب إجابتك هنا..."
-      : "Type your answer here...";
-
-  $("listenBtn").textContent =
-    lang === "ar" ? "▶ استماع" : "▶ Listen";
-
-  $("pauseBtn").textContent =
-    lang === "ar" ? "Ⅱ إيقاف مؤقت" : "Ⅱ Pause";
-
-  $("stopBtn").textContent =
-    lang === "ar" ? "■ إيقاف" : "■ Stop";
-
-  $("closeLevel").textContent =
-    lang === "ar" ? "متابعة المغامرة" : "Continue Quest";
+  renderCourses();
 
   renderMissions();
-  renderLesson();
+
+  updateLines();
+
+  runPreview();
+
 }
 
-/* ---------- CODE TYPING EFFECT ---------- */
 
-function typeCode(){
+/* =========================================================
+   CODE EDITOR
+========================================================= */
 
-  const lesson = getLesson();
+function updateLines(){
 
-  const editor = $("editor");
+  const count=
+    $("code").value.split("\n").length;
 
-  const finalCode = lesson.code;
+  $("lines").textContent=
+    Array.from(
+      {length:count},
+      (_,i)=>i+1
+    ).join("\n");
 
-  editor.value = "";
+}
 
-  let index = 0;
 
-  const timer = setInterval(()=>{
+function runPreview(){
 
-    editor.value += finalCode[index];
+  const code=$("code").value;
 
-    index++;
+  const iframe=$("preview");
 
-    if(index >= finalCode.length){
-      clearInterval(timer);
+  try{
+
+    if(course==="html"){
+
+      iframe.srcdoc=code;
+
     }
 
-  },4);
+    else if(course==="css"){
+
+      iframe.srcdoc=
+        code.includes("<style")
+          ?code
+          :`
+            <style>${code}</style>
+            <div style="padding:30px">
+              <h2>CSS Preview 🎨</h2>
+              <p>Edit the CSS and press Run.</p>
+            </div>
+          `;
+
+    }
+
+    else{
+
+      iframe.srcdoc=code;
+
+    }
+
+    $("output").innerHTML=
+      `<span class="ok">✓ ${
+        lang==="en"
+          ?"Preview updated!"
+          :"تم تحديث المعاينة!"
+      }</span>`;
+
+  }catch(error){
+
+    $("output").innerHTML=
+      `<span class="err">⚠️ ${error.message}</span>`;
+
+  }
+
 }
 
-/* ---------- EVENTS ---------- */
 
-document.querySelectorAll(".course-btn")
-.forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    switchCourse(btn.dataset.course);
+/* =========================================================
+   CHALLENGE CHECKING
+========================================================= */
+
+function check(){
+
+  const m=L();
+
+  const ans=
+    $("answer")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const code=
+    $("code")
+      .value
+      .toLowerCase();
+
+  const target=
+    m.answer.toLowerCase();
+
+  let ok=
+    ans===target ||
+    code.includes(target);
+
+
+  if(
+    course==="html" &&
+    code.includes("<h1") &&
+    code.includes("<p")
+  ){
+    ok=true;
+  }
+
+
+  if(
+    course==="css" &&
+    code.includes("<style")
+  ){
+    ok=true;
+  }
+
+
+  if(
+    course==="js" &&
+    code.includes("<script") &&
+    code.includes("document")
+  ){
+    ok=true;
+  }
+
+
+  if(ok){
+
+    done[course]=done[course]||[];
+
+    if(!done[course].includes(idx)){
+
+      done[course].push(idx);
+
+      xp+=m.xp;
+
+      save();
+
+    }
+
+    $("feedback").innerHTML=
+      `<span class="ok">
+        ✓ ${
+          lang==="en"
+            ?"Mission complete!"
+            :"اكتملت المهمة!"
+        }
+        +${m.xp} XP
+      </span>`;
+
+    renderMissions();
+
+  }
+
+  else{
+
+    $("feedback").innerHTML=
+      `<span class="err">
+        💡 ${
+          lang==="en"
+            ?"Not yet — edit the code and try again."
+            :"ليس بعد — عدّل الكود وحاول مرة أخرى."
+        }
+      </span>`;
+
+  }
+
+}
+
+
+/* =========================================================
+   LESSON NAVIGATION
+========================================================= */
+
+function selectLesson(i){
+
+  idx=i;
+
+  render();
+
+}
+
+
+/* =========================================================
+   COURSE BUTTONS
+========================================================= */
+
+document
+  .querySelectorAll(".course")
+  .forEach(b=>{
+
+    b.addEventListener("click",()=>{
+
+      course=b.dataset.course;
+
+      idx=0;
+
+      render();
+
+    });
+
   });
-});
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 $("runBtn").addEventListener(
   "click",
   runPreview
 );
 
-$("resetBtn").addEventListener(
-  "click",
-  resetCode
-);
 
 $("checkBtn").addEventListener(
   "click",
   check
 );
 
-$("answer").addEventListener(
-  "keydown",
-  e=>{
-    if(e.key === "Enter"){
-      check();
-    }
+
+$("resetBtn").addEventListener(
+  "click",
+  ()=>{
+
+    $("code").value=L().code;
+
+    localStorage.removeItem(
+      "wq_code_"+course+"_"+idx
+    );
+
+    updateLines();
+
+    runPreview();
+
   }
 );
 
-$("editor").addEventListener(
-  "keydown",
-  e=>{
 
-    if(e.key === "Tab"){
+$("saveBtn").addEventListener(
+  "click",
+  ()=>{
 
-      e.preventDefault();
+    localStorage.setItem(
+      "wq_code_"+course+"_"+idx,
+      $("code").value
+    );
 
-      const start = e.target.selectionStart;
-      const end = e.target.selectionEnd;
+    $("feedback").innerHTML=
+      `<span class="ok">
+        ✓ ${
+          lang==="en"
+            ?"Saved!"
+            :"تم الحفظ!"
+        }
+      </span>`;
 
-      e.target.value =
-        e.target.value.substring(0,start) +
-        "  " +
-        e.target.value.substring(end);
-
-      e.target.selectionStart =
-      e.target.selectionEnd =
-        start + 2;
-    }
-
-    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){
-      runPreview();
-    }
   }
 );
 
-$("listenBtn").addEventListener(
+
+/* =========================================================
+   VOICE BUTTONS
+========================================================= */
+
+$("speakBtn").addEventListener(
+  "click",
+  ()=>{
+
+    if(
+      "speechSynthesis" in window &&
+      window.speechSynthesis.speaking
+    ){
+
+      stopVoice();
+
+    }else{
+
+      speakLesson();
+
+    }
+
+  }
+);
+
+
+$("playVoice").addEventListener(
   "click",
   speakLesson
 );
 
-$("pauseBtn").addEventListener(
+
+$("pauseVoice").addEventListener(
   "click",
-  pauseVoice
+  ()=>{
+
+    if(
+      "speechSynthesis" in window &&
+      window.speechSynthesis.speaking
+    ){
+
+      window.speechSynthesis.pause();
+
+    }
+
+  }
 );
 
-$("stopBtn").addEventListener(
+
+$("stopVoice").addEventListener(
   "click",
-  ()=>stopVoice()
+  stopVoice
 );
+
+
+$("voiceSpeed").addEventListener(
+  "input",
+  e=>{
+
+    speechRate=Number(e.target.value);
+
+    $("speedValue").textContent=
+      speechRate.toFixed(1)+"x";
+
+  }
+);
+
+
+/* =========================================================
+   CODE EDITOR EVENTS
+========================================================= */
+
+$("code").addEventListener(
+  "input",
+  updateLines
+);
+
+
+$("code").addEventListener(
+  "keydown",
+  e=>{
+
+    /* TAB inserts spaces */
+
+    if(e.key==="Tab"){
+
+      e.preventDefault();
+
+      const target=e.target;
+
+      const start=target.selectionStart;
+
+      const end=target.selectionEnd;
+
+      target.value=
+        target.value.slice(0,start)+
+        "    "+
+        target.value.slice(end);
+
+      target.selectionStart=
+        target.selectionEnd=
+        start+4;
+
+      updateLines();
+
+    }
+
+
+    /* Ctrl/Cmd + Enter = Run */
+
+    if(
+      (e.ctrlKey||e.metaKey) &&
+      e.key==="Enter"
+    ){
+
+      e.preventDefault();
+
+      runPreview();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ENTER IN ANSWER = CHECK
+========================================================= */
+
+$("answer").addEventListener(
+  "keydown",
+  e=>{
+
+    if(e.key==="Enter"){
+
+      e.preventDefault();
+
+      check();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   LANGUAGE BUTTONS
+========================================================= */
 
 $("enBtn").addEventListener(
   "click",
-  ()=>setLanguage("en")
+  ()=>{
+
+    lang="en";
+
+    render();
+
+  }
 );
+
 
 $("arBtn").addEventListener(
   "click",
-  ()=>setLanguage("ar")
-);
-
-$("closeLevel").addEventListener(
-  "click",
-  closeLevel
-);
-
-$("speed").addEventListener(
-  "input",
   ()=>{
-    if(speaking){
-      speakLesson();
-    }
+
+    lang="ar";
+
+    render();
+
   }
 );
 
-/* ---------- KEYBOARD SHORTCUT ---------- */
 
-document.addEventListener("keydown",e=>{
+/* =========================================================
+   SPEECH VOICES MAY LOAD AFTER PAGE LOAD
+========================================================= */
 
-  if(e.key === "Escape"){
-    stopVoice();
-    closeLevelUp();
-  }
-
-});
-
-/* ---------- INITIALIZE ---------- */
-
-createParticles();
-
-updateStats();
-
-document.querySelectorAll(".course-btn")
-.forEach(btn=>{
-  btn.classList.toggle(
-    "active",
-    btn.dataset.course === currentCourse
-  );
-});
-
-setLanguage(language);
-
-/* Load browser voices */
 if("speechSynthesis" in window){
-  speechSynthesis.onvoiceschanged = ()=>{
-    speechSynthesis.getVoices();
+
+  window.speechSynthesis.onvoiceschanged=()=>{
+    /* Browser voices are now available */
   };
+
 }
+
+
+/* =========================================================
+   START APP
+========================================================= */
+
+render();
 
 </script>
 
